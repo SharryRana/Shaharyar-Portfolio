@@ -28,8 +28,8 @@ class VisitorCounter
 
     public function handle(Request $request, Closure $next): Response
     {
-       $ip = $this->generateRandomIpV4();
-        //$ip = $request->ip();
+        // $ip = $this->generateRandomIpV4();
+        $ip = $request->ip();
 
         $find_ip = Visitor::where('ip', $ip)->first();
 
