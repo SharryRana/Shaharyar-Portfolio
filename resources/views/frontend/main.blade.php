@@ -23,15 +23,10 @@
                                 <span class="dot yellow"></span>
                                 <span class="dot green"></span>
                             </div>
-                            <div class="code-lines">
-                                <div class="code-line short"></div>
-                                <div class="code-line"></div>
-                                <div class="code-line"></div>
-                                <div class="code-line medium"></div>
-                                <div class="code-line"></div>
-                                <div class="code-line long"></div>
+                            <div class="code-content" style="margin-bottom: 3%; margin-left: 2%;">
+                                <pre id="typed-code"></pre>
+                                <span class="cursor"></span>
                             </div>
-                            <span class="cursor"></span>
                         </div>
                         <div class="stack-icons">
                             <span class="stack-icon" title="Laravel"><i class="fab fa-laravel"></i></span>
@@ -127,20 +122,20 @@
                 <h2 class="text-center" id="projects-title">Featured Projects</h2>
 
                 <div class="projects-grid">
+                    <!-- Existing Projects -->
                     <div class="project-card">
                         <div class="project-img">
                             <i class="fas fa-shopping-cart"></i>
                         </div>
                         <div class="project-content">
                             <h3>E-Commerce Platform</h3>
-                            <p>Complete e-commerce solution with Laravel, Vue.js, and MySQL with payment integration.
-                            </p>
+                            <p>Complete e-commerce solution with Laravel, Vue.js, and MySQL with payment integration.</p>
                             <div class="project-tags">
                                 <span class="project-tag">Laravel</span>
                                 <span class="project-tag">Vue.js</span>
                                 <span class="project-tag">MySQL</span>
                             </div>
-                            <a href="#" class="btn btn-outline">View Project</a>
+                            {{-- {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
                         </div>
                     </div>
 
@@ -150,14 +145,13 @@
                         </div>
                         <div class="project-content">
                             <h3>Project Management App</h3>
-                            <p>Task management system with real-time updates using Laravel, Inertia.js and WebSockets.
-                            </p>
+                            <p>Task management system with real-time updates using Laravel, Inertia.js and WebSockets.</p>
                             <div class="project-tags">
                                 <span class="project-tag">Laravel</span>
                                 <span class="project-tag">Inertia.js</span>
                                 <span class="project-tag">WebSockets</span>
                             </div>
-                            <a href="#" class="btn btn-outline">View Project</a>
+                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
                         </div>
                     </div>
 
@@ -167,20 +161,71 @@
                         </div>
                         <div class="project-content">
                             <h3>Fitness Tracking App</h3>
-                            <p>Mobile fitness application with React Native and Firebase backend for real-time data
-                                sync.
+                            <p>Mobile fitness application with React Native and Firebase backend for real-time data sync.
                             </p>
                             <div class="project-tags">
                                 <span class="project-tag">React Native</span>
                                 <span class="project-tag">Firebase</span>
                                 <span class="project-tag">Node.js</span>
                             </div>
-                            <a href="#" class="btn btn-outline">View Project</a>
+                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
+                        </div>
+                    </div>
+
+                    <!-- New Advanced Projects -->
+                    <div class="project-card">
+                        <div class="project-img">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>AI Chatbot Assistant</h3>
+                            <p>Conversational AI chatbot built with Python, NLP, and OpenAI API, integrated into a customer
+                                support system.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">OpenAI API</span>
+                                <span class="project-tag">NLP</span>
+                            </div>
+                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-img">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Cloud File Storage</h3>
+                            <p>Secure cloud storage system with file sharing, encryption, and AWS S3 integration.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Laravel</span>
+                                <span class="project-tag">AWS S3</span>
+                                <span class="project-tag">Docker</span>
+                            </div>
+                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-img">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Stock Market Analyzer</h3>
+                            <p>Real-time stock analysis platform with predictive analytics using Machine Learning and
+                                Node.js APIs.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Node.js</span>
+                                <span class="project-tag">Machine Learning</span>
+                                <span class="project-tag">MongoDB</span>
+                            </div>
+                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
 
         <!-- Clients Section -->
         <section class="clients" id="clients" aria-labelledby="clients-title">
@@ -307,7 +352,7 @@
                             </div>
                             <div>
                                 <h3>Email</h3>
-                                <p>contact@shaharyar.com</p>
+                                <p>ranashaharyar625@gmail.com</p>
                             </div>
                         </div>
 
@@ -317,7 +362,8 @@
                             </div>
                             <div>
                                 <h3>Phone</h3>
-                                <p>+1 (555) 123-4567</p>
+                                <p>+92 (305) 7362625</p>
+                                <p>+92 (335) 9493868</p>
                             </div>
                         </div>
 
@@ -334,27 +380,27 @@
                     </div>
 
                     <div class="contact-form">
-                        <form id="contactForm" autocomplete="on">
+                        <form action="{{ route('contact.submit') }}" id="contactForm" autocomplete="on">
                             <div class="form-group">
                                 <label for="name">Your Name</label>
-                                <input type="text" id="name" name="name" class="form-control" required>
+                                <input type="text" id="name" name="name" class="form-control">
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Your Email</label>
-                                <input type="email" id="email" name="email" class="form-control" required
+                                <input type="email" id="email" name="email" class="form-control"
                                     autocomplete="email">
                             </div>
 
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" class="form-control" required
+                                <input type="text" id="subject" name="subject" class="form-control"
                                     autocomplete="on">
                             </div>
 
                             <div class="form-group">
                                 <label for="message">Your Message</label>
-                                <textarea id="message" name="message" class="form-control" required></textarea>
+                                <textarea id="message" name="message" class="form-control"></textarea>
                             </div>
 
                             <button type="submit" class="btn">Send Message</button>
