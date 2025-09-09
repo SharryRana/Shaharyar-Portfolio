@@ -28,21 +28,28 @@ class VisitorCounter
 
     public function handle(Request $request, Closure $next): Response
     {
+
         // $ip = $this->generateRandomIpV4();
-        $ip = $request->ip();
+
+
+        // Get Real IP (Shared Hosting Safe)
+        $ip = $request->server('HTTP_X_FORWARDED_FOR')
+            ?? $request->server('HTTP_CLIENT_IP')
+            ?? $request->server('HTTP_X_REAL_IP')
+            ?? $request->ip();
+
+        if ($ip && strpos($ip, ',') !== false) {
+            $ip = explode(',', $ip)[0];
+        }
 
         $find_ip = Visitor::where('ip', $ip)->first();
 
-        if ($find_ip) {
-            if ($find_ip->status !== "active") {
-                return response()->json(['error' => "You are not allowed to access my website so get away from my site....."]);
-            }
+        if ($find_ip && $find_ip->status !== "active") {
+            return response()->json(['error' => "You are not allowed to access my website so get away from my site....."]);
         }
 
         $userAgent = $request->userAgent();
         $referrer = $request->headers->get('referer');
-
-        // Get location info
         $location = Location::get($ip);
 
         Visitor::create([
