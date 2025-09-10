@@ -391,7 +391,7 @@
             <div class="card message-card {{ $msg->read_or_not == 0 ? 'unread' : '' }}"
                 data-message-id="{{ $msg->id }}" data-message-title="{{ $msg->subject }}"
                 data-message-sender="{{ $msg->name }}" data-message-time="{{ $msg->created_at->format('M d, Y h:i A') }}"
-                data-message-body="{{ $msg->message }}">
+                data-message-body="{{ $msg->message }}" data-message-email="{{ $msg->email }}">
 
                 <div class="message-item">
                     <img class="message-avatar"
@@ -406,6 +406,7 @@
                                     <span class="text-muted">{{ $msg->subject }}</span>
                                 </div>
                                 <h6 class="message-title">{{ $msg->name }}</h6>
+                                <p class="text-muted small mb-1">{{ $msg->email }}</p>
                             </div>
                             <div class="text-end">
                                 <div class="message-time">{{ $msg->created_at->diffForHumans() }}</div>
@@ -450,6 +451,7 @@
                         <div>
                             <div class="small text-muted">From</div>
                             <div class="fw-semibold" id="messageModalSender"></div>
+                            <div class="text-muted small" id="messageModalEmail"></div>
                         </div>
                         <div class="text-end">
                             <div class="small text-muted">Received</div>
@@ -528,6 +530,8 @@
                     $('#messageModalSender').text($card.data('message-sender'));
                     $('#messageModalTime').text($card.data('message-time'));
                     $('#messageModalBody').text($card.data('message-body'));
+                    $('#messageModalEmail').text($card.data('message-email'));
+
 
                     new bootstrap.Modal(document.getElementById('messageModal')).show();
 
@@ -543,7 +547,7 @@
                             $('#' + $card.data('message-id') + 'new_badge').remove();
 
                             let $unreadBtn = $(
-                            '#unreadMessageBtn'); // only unread button target karo
+                                '#unreadMessageBtn'); // only unread button target karo
                             let unreadCount = parseInt($unreadBtn.text()) - 1;
 
                             unreadCount = unreadCount < 0 ? 0 : unreadCount; // negative fix
