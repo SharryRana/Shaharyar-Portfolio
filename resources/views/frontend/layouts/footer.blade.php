@@ -42,9 +42,9 @@
               <div class="footer-col">
                   <h3>Follow Me</h3>
                   <div class="social-links">
-                      <a href="#" aria-label="Twitter" rel="noopener"><i class="fab fa-twitter"
+                      <a href="https://x.com/ShaharyarRana12" aria-label="Twitter" rel="noopener"><i class="fab fa-twitter"
                               aria-hidden="true"></i></a>
-                      <a href="#" aria-label="LinkedIn" rel="noopener"><i class="fab fa-linkedin-in"
+                      <a href="https://www.linkedin.com/in/rana-shaharyar-848620200/" aria-label="LinkedIn" rel="noopener"><i class="fab fa-linkedin-in"
                               aria-hidden="true"></i></a>
                       <a href="https://github.com/SharryRana" aria-label="GitHub" rel="noopener"><i class="fab fa-github"
                               aria-hidden="true"></i></a>
