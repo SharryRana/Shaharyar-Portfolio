@@ -23,7 +23,7 @@
         rel="stylesheet">
 
     {{-- Vite CSS --}}
-    @vite('Modules/Blog/resources/assets/css/blog.css')
+    @vite('Modules/Blog/resources/assets/css/app.css')
 
 
 </head>
