@@ -951,6 +951,11 @@ textarea.form-control {
     color: #101828;
 }
 
+/* Change text colors of form input field when mode are dark */
+:root[data-theme="dark"] .form-control:focus {
+    background: #101828;
+}
+
 :root[data-theme="light"] .form-control::placeholder {
     color: #98a2b3;
 }
