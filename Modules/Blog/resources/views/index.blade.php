@@ -144,7 +144,7 @@
             <!-- About Widget -->
             <div class="sidebar-widget">
                 <h3 class="widget-title">About Blog</h3>
-                <p class="about-text">NexusBlog is a platform for sharing ideas, tutorials, and insights about web
+                <p class="about-text">Creavibe Blog is a platform for sharing ideas, tutorials, and insights about web
                     development, design, and technology. We're passionate about helping creators build amazing digital
                     experiences.</p>
                 <div class="social-links">

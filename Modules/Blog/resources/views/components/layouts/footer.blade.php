@@ -2,7 +2,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-widget">
-                    <div class="footer-logo">NexusBlog</div>
+                    <div class="footer-logo">Creavibe Blog</div>
                     <p class="footer-text">A modern blog platform sharing insights about web development, design, and technology. Join our community of creators.</p>
                 </div>
                 <div class="footer-widget">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 NexusBlog. All rights reserved.</p>
+                <p>&copy; 2023 Creavibe Blog. All rights reserved.</p>
             </div>
         </div>
     </footer>
