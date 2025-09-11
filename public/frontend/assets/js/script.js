@@ -185,8 +185,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.success) {
                     showFlash(data.success || 'Message sent successfully!', 'success');
                     contactForm.reset();
+                } else if (data.errors) {
+                    // Grab first error message
+                    
+                    let allErrors = [];
+                    for (const field in data.errors) {
+                        allErrors.push(...data.errors[field]);
+                    }
+                    // show all errors joined or just first
+                    showFlash(allErrors.join('<br>'), 'error');
+                } else if (data.error) {
+                    showFlash(data.error, 'error');
                 } else {
-                    showFlash(data.error || 'There was an error sending your message.', 'error');
+                    showFlash('There was an error sending your message.', 'error');
                 }
             })
             .catch(error => {

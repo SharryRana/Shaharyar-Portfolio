@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact\Contactus;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Validation\ValidationException;
 
 class ContactusController extends Controller
 {
@@ -27,7 +28,7 @@ class ContactusController extends Controller
                     'name' => 'required|string|max:255',
                     'email' => 'required|email|max:255',
                     'subject' => 'required|string|max:255',
-                    'message' => 'required|string|max:2000',
+                    'message' => 'required|string|max:15000',
                 ],
                 [
                     'name.required' => 'Please enter your name.',
@@ -35,6 +36,7 @@ class ContactusController extends Controller
                     'email.email' => 'Please enter a valid email address.',
                     'subject.required' => 'Please enter the subject.',
                     'message.required' => 'Please enter your message.',
+                    'message.max' => 'Your message is too long. Maximum 15000 characters allowed.',
                 ]
             );
 
@@ -56,7 +58,17 @@ class ContactusController extends Controller
 
             return response()->json(['success' => 'Thank you for contacting us! We will get back to you soon.']);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred while submitting your message. Please try again later.'], 500);
+            if ($e instanceof ValidationException) {
+                // Return all validation errors
+                return response()->json([
+                    'errors' => $e->errors()
+                ], 422);
+            }
+
+            // Any other exception
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 
