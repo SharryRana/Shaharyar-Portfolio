@@ -25,12 +25,14 @@
     {{-- Vite CSS --}}
     @vite('Modules/Blog/resources/assets/css/app.css')
 
+    @stack('styles')
+
 
 </head>
 
 <body>
     <x-blog::layouts.header />
-    <x-blog::layouts.hero />
+    {{-- <x-blog::layouts.hero /> --}}
 
     {{ $slot }}
 

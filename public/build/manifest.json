@@ -1,6 +1,6 @@
 {
   "Modules/Blog/resources/assets/css/app.css": {
-    "file": "assets/app-DG8ianQ1.css",
+    "file": "assets/app-DuDqa85a.css",
     "src": "Modules/Blog/resources/assets/css/app.css",
     "isEntry": true,
     "names": [
@@ -8,7 +8,7 @@
     ]
   },
   "Modules/Blog/resources/assets/js/app.js": {
-    "file": "assets/app-CCNy1Lq1.js",
+    "file": "assets/app-B9wfZRWP.js",
     "name": "app",
     "src": "Modules/Blog/resources/assets/js/app.js",
     "isEntry": true

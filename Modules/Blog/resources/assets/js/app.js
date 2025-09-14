@@ -65,22 +65,22 @@
         });
 
         // Scroll to top button
-        const scrollTopButton = document.getElementById('scrollTop');
+        // const scrollTopButton = document.getElementById('scrollTop');
 
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                scrollTopButton.classList.add('active');
-            } else {
-                scrollTopButton.classList.remove('active');
-            }
-        });
+        // window.addEventListener('scroll', () => {
+        //     if (window.pageYOffset > 300) {
+        //         scrollTopButton.classList.add('active');
+        //     } else {
+        //         scrollTopButton.classList.remove('active');
+        //     }
+        // });
 
-        scrollTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+        // scrollTopButton.addEventListener('click', () => {
+        //     window.scrollTo({
+        //         top: 0,
+        //         behavior: 'smooth'
+        //     });
+        // });
 
         // Add animation to elements on scroll
         const animateOnScroll = () => {

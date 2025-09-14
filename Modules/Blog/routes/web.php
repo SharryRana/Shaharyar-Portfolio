@@ -2,7 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Blog\Http\Controllers\BlogController;
+use Modules\Blog\Http\Controllers\BlogCategoryController;
 
 Route::middleware(['auth', 'verified'])->group(function () {});
 
 Route::view('blogs', 'blog::index')->name('blog.index');
+
+Route::get('blogs-category', [BlogCategoryController::class, 'index'])->name('blog.category');
+
+Route::view('feature', 'blog::Features.feature')->name('blog.feature');
+Route::view('about-us', 'blog::About.about')->name('blog.about');
