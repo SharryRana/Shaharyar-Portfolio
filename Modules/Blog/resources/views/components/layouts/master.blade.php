@@ -39,6 +39,7 @@
     <x-blog::layouts.footer />
     {{-- Vite JS --}}
     @vite('Modules/Blog/resources/assets/js/app.js')
+    @stack('scripts')
 </body>
 
 </html>
