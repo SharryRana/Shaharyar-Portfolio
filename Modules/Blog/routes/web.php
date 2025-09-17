@@ -17,4 +17,5 @@ Route::group(['prefix' => 'blogs'], function () {
 
     Route::view('feature', 'blog::Features.feature')->name('blog.feature');
     Route::view('about-us', 'blog::About.about')->name('blog.about');
+    Route::view('contact-us', 'blog::Contactus.contactus')->name('blog.contactus');
 });
