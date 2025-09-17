@@ -8,11 +8,11 @@
                 <div class="footer-widget">
                     <h3 class="footer-title">Quick Links</h3>
                     <ul class="footer-links">
-                        <li class="footer-link"><a href="#">Home</a></li>
-                        <li class="footer-link"><a href="#">About</a></li>
-                        <li class="footer-link"><a href="#">Categories</a></li>
-                        <li class="footer-link"><a href="#">Features</a></li>
-                        <li class="footer-link"><a href="#">Contact</a></li>
+                        <li class="footer-link"><a href="{{ route('blog.index') }}">Home</a></li>
+                        <li class="footer-link"><a href="{{ route('blog.about') }}">About</a></li>
+                        <li class="footer-link"><a href="{{ route('blog.category') }}">Categories</a></li>
+                        <li class="footer-link"><a href="{{ route('blog.feature') }}">Features</a></li>
+                        <li class="footer-link"><a href="{{ route('blog.contactus') }}">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-widget">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Creavibe Blog. All rights reserved.</p>
+                <p>&copy; 2025 Creavibe Blog. All rights reserved.</p>
             </div>
         </div>
     </footer>
