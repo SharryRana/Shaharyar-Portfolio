@@ -13,7 +13,16 @@ class BlogCategory extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'parent_id',
+        'image',
+        'status',
+        'order',
+        'slug'
+    ];
 
     // protected static function newFactory(): BlogCategoryFactory
     // {

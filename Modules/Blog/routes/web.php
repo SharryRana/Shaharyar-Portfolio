@@ -19,3 +19,9 @@ Route::group(['prefix' => 'blogs'], function () {
     Route::view('about-us', 'blog::About.about')->name('blog.about');
     Route::view('contact-us', 'blog::Contactus.contactus')->name('blog.contactus');
 });
+
+
+Route::view('admin-dash', 'blog::admin.dashboard');
+
+Route::get('admin/blog/create-category', [BlogCategoryController::class, 'create'])->name('admin.category.index');
+Route::post('admin/blog/categories', [BlogCategoryController::class, 'store'])->name('admin.blog.categories.store');
