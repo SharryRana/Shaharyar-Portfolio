@@ -33,7 +33,7 @@
                     <img class="logo-img" src="https://ui-avatars.com/api/?name=A&background=3f37c9&color=fff"
                         alt="Logo">
                     <div>
-                        <h5 class="mb-0">Welcome back</h5>
+                        <h5 class="mb-0">Welcome back Blogger</h5>
                         <small class="text-muted">Sign in to continue to Admin Panel</small>
                     </div>
                 </div>

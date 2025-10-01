@@ -1,0 +1,11 @@
+{
+    "name": "BlogAdmin",
+    "alias": "blogadmin",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\BlogAdmin\\Providers\\BlogAdminServiceProvider"
+    ],
+    "files": []
+}

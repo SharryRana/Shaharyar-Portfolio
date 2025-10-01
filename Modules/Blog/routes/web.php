@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Blog\Http\Controllers\BlogController;
 use Modules\Blog\Http\Controllers\BlogCategoryController;
+use Modules\Blog\Http\Middleware\AuthCheckBlogAdmin;
 
-Route::middleware(['auth', 'verified'])->group(function () {});
+
 
 
 
@@ -21,7 +22,12 @@ Route::group(['prefix' => 'blogs'], function () {
 });
 
 
-Route::view('admin-dash', 'blog::admin.dashboard');
+Route::view('blog-login', 'blog::admin.auth.login')->name('blog.login');
 
-Route::get('admin/blog/create-category', [BlogCategoryController::class, 'create'])->name('admin.category.index');
-Route::post('admin/blog/categories', [BlogCategoryController::class, 'store'])->name('admin.blog.categories.store');
+Route::middleware([AuthCheckBlogAdmin::class])->group(function () {
+
+    Route::view('admin-dash', 'blog::admin.dashboard');
+
+    Route::get('admin/blog/create-category', [BlogCategoryController::class, 'create'])->name('admin.category.index');
+    Route::post('admin/blog/categories', [BlogCategoryController::class, 'store'])->name('admin.blog.categories.store');
+});
