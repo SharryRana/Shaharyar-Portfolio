@@ -11,15 +11,14 @@ export default defineConfig({
         manifest: true,
     },
     css: {
-        postcss: './postcss.config.js',
+        postcss: __dirname + '/postcss.config.js',
     },
     plugins: [
         laravel({
             publicDirectory: '../../public',
             buildDirectory: 'build-blogadmin',
             input: [
-                __dirname + '/resources/css/app.css',
-                __dirname + '/resources/assets/js/app.js'
+                __dirname + '/resources/js/app.js'
             ],
             refresh: true,
         }),

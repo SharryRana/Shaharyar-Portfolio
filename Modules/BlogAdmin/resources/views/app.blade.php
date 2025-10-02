@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>BlogAdmin</title>
-    @vite(['Modules/BlogAdmin/resources/css/app.css', 'Modules/BlogAdmin/resources/js/app.js'])
+    @vite(['Modules/BlogAdmin/resources/js/app.js'], 'build-blogadmin')
     @inertiaHead
 </head>
 
