@@ -22,12 +22,6 @@ Route::group(['prefix' => 'blogs'], function () {
 });
 
 
-Route::view('blog-login', 'blog::admin.auth.login')->name('blog.login');
 
-Route::middleware([AuthCheckBlogAdmin::class])->group(function () {
 
-    Route::view('admin-dash', 'blog::admin.dashboard');
 
-    Route::get('admin/blog/create-category', [BlogCategoryController::class, 'create'])->name('admin.category.index');
-    Route::post('admin/blog/categories', [BlogCategoryController::class, 'store'])->name('admin.blog.categories.store');
-});

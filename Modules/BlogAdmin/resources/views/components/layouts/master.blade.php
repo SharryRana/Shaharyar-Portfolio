@@ -19,6 +19,7 @@
 
         {{-- Vite CSS --}}
         {{-- {{ module_vite('build-blogadmin', 'resources/assets/sass/app.scss') }} --}}
+        @vite('Modules/BlogAdmin/Resources/js/app.js')
     </head>
 
     <body>

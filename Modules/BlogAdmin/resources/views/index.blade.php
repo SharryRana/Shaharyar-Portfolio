@@ -1,5 +1,5 @@
 <x-blogadmin::layouts.master>
     <h1>Hello World</h1>
 
-    <p>Module: {!! config('blogadmin.name') !!}</p>
+    <div id="blog-admin-app"></div>
 </x-blogadmin::layouts.master>
