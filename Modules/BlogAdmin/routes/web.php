@@ -12,8 +12,14 @@ use Modules\BlogAdmin\Http\Controllers\Auth\AuthController;
 
 
 Route::group(['prefix' => 'admin', 'middleware' => [InertiaRootSwitch::class]], function () {
-    Route::get('blog-dashboard', [BlogAdminController::class, 'index'])->name('blogadmin.dashboard');
+   // Route::get('blog-dashboard', [BlogAdminController::class, 'index'])->name('blogadmin.dashboard');
+    Route::get('/blog-dashboard', [BlogAdminController::class, 'index'])->name('dashboard');
+    Route::get('/categories', [BlogAdminController::class, 'categories'])->name('categories');
+    Route::get('/blogs', [BlogAdminController::class, 'blogs'])->name('blogs');
+    Route::get('/users', [BlogAdminController::class, 'users'])->name('users');
+    Route::get('/settings', [BlogAdminController::class, 'settings'])->name('settings');
 });
+
 
 
 Route::get('blog-login', [AuthController::class, 'login'])->name('blogadmin.login')->middleware([InertiaRootSwitch::class]);
