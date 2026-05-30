@@ -1,12 +1,12 @@
 <nav id="sidebar">
     <div class="sidebar-header">
-        <a href="{{ route('dashboard') }}">
+        {{-- <a href="{{ route('dashboard') }}">
             <img class="logo-img"
                 src="{{ auth()->user()->avatar
                     ? asset(auth()->user()->avatar)
                     : 'https://ui-avatars.com/api/?name=' . urlencode(auth()->user()->name) . '&background=random' }}"
                 alt="Admin Logo">
-        </a>
+        </a> --}}
         <h3>Admin Panel</h3>
     </div>
 
