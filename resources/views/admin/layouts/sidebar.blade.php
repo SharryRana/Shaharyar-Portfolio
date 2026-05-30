@@ -28,6 +28,30 @@
                             <span>Visitor</span>
                         </a>
                     </li>
+                    <li class="{{ request()->is('admin/skills*') ? 'active' : '' }}">
+                        <a href="{{ route('skills.index') }}">
+                            <i class="bi bi-lightning-charge"></i>
+                            <span>Skills</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->is('admin/featured-projects*') ? 'active' : '' }}">
+                        <a href="{{ route('featured-projects.index') }}">
+                            <i class="bi bi-window-stack"></i>
+                            <span>Projects</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->is('admin/client-work*') ? 'active' : '' }}">
+                        <a href="{{ route('client-work.index') }}">
+                            <i class="bi bi-briefcase"></i>
+                            <span>Client Work</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->is('admin/team-members*') ? 'active' : '' }}">
+                        <a href="{{ route('team-members.index') }}">
+                            <i class="bi bi-people"></i>
+                            <span>Team Members</span>
+                        </a>
+                    </li>
 
                     <li class="{{ request()->is('admin/admin-profile') ? 'active' : '' }}">
                         <a href="{{ route('admin.profile') }}">
