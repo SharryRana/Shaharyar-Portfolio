@@ -5,7 +5,7 @@
             <div class="container hero-grid">
                 <div class="hero-content">
                     <h1 id="home-title">Full-Stack Web Developer</h1>
-                    <p>Hey! I'm Shaharyar, a full-stack web developer with 4+ years of experience. I specialize in
+                    <p>Hey! I'm Shaharyar, a full-stack web developer with 5+ years of experience. I specialize in
                         Laravel
                         with Vue.js, Inertia.js, and React.js, and also work with Node.js and Django. From sleek
                         websites to
@@ -23,7 +23,7 @@
                                 <span class="dot yellow"></span>
                                 <span class="dot green"></span>
                             </div>
-                            <div class="code-content" style="margin-bottom: 3%; margin-left: 2%;">
+                            <div class="code-content">
                                 <pre id="typed-code"></pre>
                                 <span class="cursor"></span>
                             </div>
@@ -34,15 +34,21 @@
                             <span class="stack-icon" title="React"><i class="fab fa-react"></i></span>
                             <span class="stack-icon" title="Node.js"><i class="fab fa-node-js"></i></span>
                             <span class="stack-icon" title="Django"><i class="fas fa-leaf"></i></span>
+                            <span class="stack-icon" title="Golang"><i class="fas fa-code"></i></span>
+                            <span class="stack-icon" title="PostgreSQL"><i class="fas fa-database"></i></span>
                         </div>
                     </div>
                     <div class="tech-badges">
-                        <span class="chip">Laravel</span>
-                        <span class="chip">Vue.js</span>
-                        <span class="chip">React</span>
-                        <span class="chip">Node.js</span>
-                        <span class="chip">Django</span>
-                        <span class="chip">MySQL</span>
+                        <div class="chip-row">
+                            <span class="chip">Laravel</span>
+                            <span class="chip">Vue.js</span>
+                            <span class="chip">React</span>
+                            <span class="chip">Node.js</span>
+                            <span class="chip">Django</span>
+                            <span class="chip">Golang</span>
+                        </div>
+                        {{-- <span class="chip">PostgreSQL</span> --}}
+                        {{-- <span class="chip">MySQL</span> --}}
                     </div>
                 </div>
             </div>
@@ -58,219 +64,195 @@
         </section>
 
         <!-- Skills Section -->
-        <section class="skills" id="skills" aria-labelledby="skills-title">
-            <div class="container">
-                <h2 class="text-center" id="skills-title">My Skills</h2>
+        @if(($skills ?? collect())->isNotEmpty())
+            <section class="skills" id="skills" aria-labelledby="skills-title">
+                <div class="container">
+                    <h2 class="text-center" id="skills-title">My Skills</h2>
 
-                <div class="skills-grid">
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fab fa-laravel"></i>
-                        </div>
-                        <h3>Laravel Development</h3>
-                        <p>Building robust, scalable backend solutions with Laravel framework and MySQL databases.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fab fa-vuejs"></i>
-                        </div>
-                        <h3>Vue.js & Inertia.js</h3>
-                        <p>Creating dynamic, responsive frontend interfaces with Vue.js and seamless integration with
-                            Laravel.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fab fa-react"></i>
-                        </div>
-                        <h3>React.js Development</h3>
-                        <p>Building modern, interactive user interfaces with React.js and related ecosystem.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fab fa-node-js"></i>
-                        </div>
-                        <h3>Node.js & Express</h3>
-                        <p>Developing server-side applications and RESTful APIs with Node.js and Express framework.</p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-database"></i>
-                        </div>
-                        <h3>Database Design</h3>
-                        <p>Designing efficient database schemas and optimized queries for high-performance applications.
-                        </p>
-                    </div>
-
-                    <div class="skill-card">
-                        <div class="skill-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <h3>VPS & Cloud Hosting</h3>
-                        <p>Deploying and managing applications on VPS and cloud platforms for optimal performance.</p>
+                    <div class="skills-grid">
+                        @foreach($skills as $skill)
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="{{ $skill->icon ?: 'fas fa-code' }}"></i>
+                                </div>
+                                @if($skill->label)
+                                    <span class="skill-label">{{ $skill->label }}</span>
+                                @endif
+                                <h3>{{ $skill->title }}</h3>
+                                <p>{{ $skill->description }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         <!-- Projects Section -->
-        <section class="projects" id="projects" aria-labelledby="projects-title">
-            <div class="container">
-                <h2 class="text-center" id="projects-title">Featured Projects</h2>
+        @if(($featuredProjects ?? collect())->isNotEmpty())
+            <section class="projects" id="projects" aria-labelledby="projects-title">
+                <div class="container">
+                    <h2 class="text-center" id="projects-title">Featured Projects</h2>
 
-                <div class="projects-grid">
-                    <!-- Existing Projects -->
-                    <div class="project-card">
-                        <div class="project-img">
-                            <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>E-Commerce Platform</h3>
-                            <p>Complete e-commerce solution with Laravel, Vue.js, and MySQL with payment integration.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Laravel</span>
-                                <span class="project-tag">Vue.js</span>
-                                <span class="project-tag">MySQL</span>
+                    <div class="projects-grid">
+                        @foreach($featuredProjects as $project)
+                            <div class="project-card">
+                                <div class="project-img">
+                                    @if($project->image)
+                                        <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
+                                    @else
+                                        <i class="{{ $project->icon ?: 'fas fa-code' }}"></i>
+                                    @endif
+                                </div>
+                                <div class="project-content">
+                                    @if($project->category)
+                                        <span class="project-category">{{ $project->category }}</span>
+                                    @endif
+                                    <h3>{{ $project->title }}</h3>
+                                    <p>{{ $project->description }}</p>
+                                    @if(!empty($project->tags))
+                                        <div class="project-tags">
+                                            @foreach($project->tags as $tag)
+                                                <span class="project-tag">{{ $tag }}</span>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    @if($project->project_link)
+                                        <a href="{{ $project->project_link }}" class="btn btn-outline" target="_blank"
+                                            rel="noopener">View Project</a>
+                                    @endif
+                                </div>
                             </div>
-                            {{-- {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-img">
-                            <i class="fas fa-tasks"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Project Management App</h3>
-                            <p>Task management system with real-time updates using Laravel, Inertia.js and WebSockets.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Laravel</span>
-                                <span class="project-tag">Inertia.js</span>
-                                <span class="project-tag">WebSockets</span>
-                            </div>
-                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-img">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Fitness Tracking App</h3>
-                            <p>Mobile fitness application with React Native and Firebase backend for real-time data sync.
-                            </p>
-                            <div class="project-tags">
-                                <span class="project-tag">React Native</span>
-                                <span class="project-tag">Firebase</span>
-                                <span class="project-tag">Node.js</span>
-                            </div>
-                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
-                        </div>
-                    </div>
-
-                    <!-- New Advanced Projects -->
-                    <div class="project-card">
-                        <div class="project-img">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>AI Chatbot Assistant</h3>
-                            <p>Conversational AI chatbot built with Python, NLP, and OpenAI API, integrated into a customer
-                                support system.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">OpenAI API</span>
-                                <span class="project-tag">NLP</span>
-                            </div>
-                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-img">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Cloud File Storage</h3>
-                            <p>Secure cloud storage system with file sharing, encryption, and AWS S3 integration.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Laravel</span>
-                                <span class="project-tag">AWS S3</span>
-                                <span class="project-tag">Docker</span>
-                            </div>
-                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
-                        </div>
-                    </div>
-
-                    <div class="project-card">
-                        <div class="project-img">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>Stock Market Analyzer</h3>
-                            <p>Real-time stock analysis platform with predictive analytics using Machine Learning and
-                                Node.js APIs.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Node.js</span>
-                                <span class="project-tag">Machine Learning</span>
-                                <span class="project-tag">MongoDB</span>
-                            </div>
-                            {{-- <a href="#" class="btn btn-outline">View Project</a> --}}
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
 
         <!-- Clients Section -->
-        <section class="clients" id="clients" aria-labelledby="clients-title">
-            <div class="container">
-                <h2 class="text-center" id="clients-title">Client Work</h2>
+        @if(($clientWorks ?? collect())->isNotEmpty())
+            <section class="clients" id="clients" aria-labelledby="clients-title">
+                <div class="container">
+                    <h2 class="text-center" id="clients-title">Client Work</h2>
 
-                <div class="clients-grid">
-                    <div class="client-card">
-                        <div class="client-logo">
-                            <i class="fas fa-building"></i>
-                        </div>
-                    </div>
-
-                    <div class="client-card">
-                        <div class="client-logo">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                    </div>
-
-                    <div class="client-card">
-                        <div class="client-logo">
-                            <i class="fas fa-tshirt"></i>
-                        </div>
-                    </div>
-
-                    <div class="client-card">
-                        <div class="client-logo">
-                            <i class="fas fa-book"></i>
-                        </div>
-                    </div>
-
-                    <div class="client-card">
-                        <div class="client-logo">
-                            <i class="fas fa-gem"></i>
-                        </div>
-                    </div>
-
-                    <div class="client-card">
-                        <div class="client-logo">
-                            <i class="fas fa-plane"></i>
-                        </div>
+                    <div class="clients-grid">
+                        @foreach($clientWorks as $work)
+                            <div class="client-card">
+                                <div class="client-logo">
+                                    @if($work->image)
+                                        <img src="{{ asset($work->image) }}" alt="{{ $work->title }}">
+                                    @else
+                                        <i class="{{ $work->icon ?: 'fas fa-building' }}"></i>
+                                    @endif
+                                </div>
+                                <h3>{{ $work->title }}</h3>
+                                @if($work->category)
+                                    <span>{{ $work->category }}</span>
+                                @endif
+                                @if($work->description)
+                                    <p>{{ $work->description }}</p>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
+
+        <!-- Team Section -->
+        @if(($teamMembers ?? collect())->isNotEmpty())
+            <section class="team" id="team" aria-labelledby="team-title">
+                <div class="container">
+                    <div class="team-heading text-center">
+                        <h2 id="team-title">My Team</h2>
+                        <p>Meet the people behind the work - skilled, reliable, and focused on delivering high-quality digital
+                            solutions.</p>
+                    </div>
+
+                    <div class="team-grid">
+                        @foreach($teamMembers as $member)
+                            <article class="team-card">
+                                <div class="team-card-top">
+                                    <div class="team-avatar-wrap">
+                                        @if($member->profile_image)
+                                            <img class="team-avatar" src="{{ asset($member->profile_image) }}"
+                                                alt="{{ $member->name }}">
+                                        @else
+                                            <div class="team-avatar team-avatar-fallback" aria-hidden="true">
+                                                {{ collect(explode(' ', $member->name))->filter()->map(fn($part) => Str::substr($part, 0, 1))->take(2)->implode('') }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <h3>{{ $member->name }}</h3>
+                                        <p class="team-role">{{ $member->role }}</p>
+                                    </div>
+                                </div>
+
+                                <div class="team-labels">
+                                    @if($member->experience_label)
+                                        <span><i class="fas fa-award"></i>{{ $member->experience_label }}</span>
+                                    @endif
+                                    @if($member->projects_label)
+                                        <span><i class="fas fa-diagram-project"></i>{{ $member->projects_label }}</span>
+                                    @endif
+                                </div>
+
+                                @if(!empty($member->tags))
+                                    <div class="team-tags">
+                                        @foreach($member->tags as $tag)
+                                            <span>{{ $tag }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <p class="team-description">{{ $member->description }}</p>
+
+                                @if($member->mission)
+                                    <div class="team-mission">
+                                        <i class="fas fa-bullseye"></i>
+                                        <p>{{ $member->mission }}</p>
+                                    </div>
+                                @endif
+
+                                @if(!empty($member->expertise))
+                                    <div class="team-expertise">
+                                        <h4><i class="fas fa-layer-group"></i> Core Expertise</h4>
+                                        <ul>
+                                            @foreach($member->expertise as $item)
+                                                <li>{{ $item }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if(!empty($member->stats))
+                                    <div class="team-stats">
+                                        @foreach($member->stats as $stat)
+                                            <div>
+                                                <i
+                                                    class="{{ Str::contains(Str::lower($stat), ['satisfaction', 'quality']) ? 'fas fa-face-smile' : 'fas fa-briefcase' }}"></i>
+                                                <span>{{ $stat }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <div class="team-contact">
+                                    @if($member->phone)
+                                        <a href="tel:{{ preg_replace('/\s+/', '', $member->phone) }}"><i
+                                                class="fas fa-phone"></i>{{ $member->phone }}</a>
+                                    @endif
+                                    @if($member->email)
+                                        <a href="mailto:{{ $member->email }}"><i class="fas fa-envelope"></i>{{ $member->email }}</a>
+                                    @endif
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
 
         <!-- Blog Section -->
         <section class="blog" id="blog" aria-labelledby="blog-title">
@@ -368,12 +350,12 @@
                         </div>
 
                         <div class="social-links">
-                            <a href="https://x.com/ShaharyarRana12" aria-label="Twitter" rel="noopener"><i class="fab fa-twitter"
-                                    aria-hidden="true"></i></a>
-                            <a href="https://www.linkedin.com/in/rana-shaharyar-848620200/" aria-label="LinkedIn" rel="noopener"><i class="fab fa-linkedin-in"
-                                    aria-hidden="true"></i></a>
-                            <a href="https://github.com/SharryRana" aria-label="GitHub" rel="noopener"><i class="fab fa-github"
-                                    aria-hidden="true"></i></a>
+                            <a href="https://x.com/ShaharyarRana12" aria-label="Twitter" rel="noopener"><i
+                                    class="fab fa-twitter" aria-hidden="true"></i></a>
+                            <a href="https://www.linkedin.com/in/rana-shaharyar-848620200/" aria-label="LinkedIn"
+                                rel="noopener"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                            <a href="https://github.com/SharryRana" aria-label="GitHub" rel="noopener"><i
+                                    class="fab fa-github" aria-hidden="true"></i></a>
                             <a href="#" aria-label="Dribbble" rel="noopener"><i class="fab fa-dribbble"
                                     aria-hidden="true"></i></a>
                         </div>
@@ -388,14 +370,12 @@
 
                             <div class="form-group">
                                 <label for="email">Your Email</label>
-                                <input type="email" id="email" name="email" class="form-control"
-                                    autocomplete="email">
+                                <input type="email" id="email" name="email" class="form-control" autocomplete="email">
                             </div>
 
                             <div class="form-group">
                                 <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" class="form-control"
-                                    autocomplete="on">
+                                <input type="text" id="subject" name="subject" class="form-control" autocomplete="on">
                             </div>
 
                             <div class="form-group">
