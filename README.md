@@ -1,61 +1,83 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="320" alt="Laravel Logo">
 </p>
 
-## About Laravel
+<h1 align="center">Shaharyar's Portfolio</h1>
+<p align="center">
+  <b>Full-Stack Web Developer Portfolio</b><br>
+  Built with Laravel, Vue.js, React, Node.js, Django, and more.
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## About This Project
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This is the personal portfolio of Shaharyar, a full-stack web developer with 5+ years of experience. The site showcases skills, featured projects, client work, team members, and blog articles, with a modern, responsive design.
 
-## Learning Laravel
+## Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Backend:** Laravel, Node.js, Django, Golang
+- **Frontend:** Vue.js, React, Inertia.js
+- **Styling:** Tailwind CSS, custom CSS
+- **Build Tools:** Vite
+- **Database:** (Configurable, e.g., MySQL/PostgreSQL)
+- **Modular:** Uses `nwidart/laravel-modules` for modular architecture
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Hero section with animated code and tech badges
+- Dynamic skills, projects, client work, and team sections (data-driven)
+- Blog section for latest articles
+- Contact form with validation
+- Responsive and mobile-friendly UI
+- Social media links
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. **Clone the repo:**
+	```bash
+	git clone https://github.com/SharryRana/Shaharyar-Portfolio.git
+	cd Shaharyar-Portfolio
+	```
 
-### Premium Partners
+2. **Install PHP dependencies:**
+	```bash
+	composer install
+	```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. **Install Node dependencies:**
+	```bash
+	npm install
+	```
 
-## Contributing
+4. **Copy and configure environment:**
+	```bash
+	cp .env.example .env
+	# Edit .env as needed
+	php artisan key:generate
+	```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Run migrations and seeders:**
+	```bash
+	php artisan migrate --seed
+	```
 
-## Code of Conduct
+6. **Start the dev server:**
+	```bash
+	npm run dev
+	php artisan serve
+	```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+##  Contact
 
-## Security Vulnerabilities
+- **Email:** ranashaharyar625@gmail.com
+- **Location:** Remote Worldwide
+- **Phone:** +92 (305) 7362625, +92 (335) 9493868
+- **Twitter:** [@ShaharyarRana12](https://x.com/ShaharyarRana12)
+- **LinkedIn:** [rana-shaharyar-848620200](https://www.linkedin.com/in/rana-shaharyar-848620200/)
+- **GitHub:** [SharryRana](https://github.com/SharryRana)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📄 License
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced under the [MIT license](https://opensource.org/licenses/MIT).
