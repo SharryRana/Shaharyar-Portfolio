@@ -1,15 +1,45 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Skill;
+use App\Models\TeamMember;
+use App\Models\ClientWork;
+use App\Models\FeaturedProject;
 use App\Http\Middleware\VisitorCounter;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ContactusController;
+use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\DashboardManage;
+use App\Http\Controllers\Admin\ClientWorkController;
+use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\Admin\FeaturedProjectController;
 use App\Http\Controllers\Visotors\VisitorController;
 
 
 
-Route::view('/', 'frontend.main')
+Route::get('/', function () {
+    $skills = Skill::active()
+        ->orderBy('sort_order')
+        ->orderBy('title')
+        ->get();
+
+    $featuredProjects = FeaturedProject::active()
+        ->orderBy('sort_order')
+        ->orderBy('title')
+        ->get();
+
+    $clientWorks = ClientWork::active()
+        ->orderBy('sort_order')
+        ->orderBy('title')
+        ->get();
+
+    $teamMembers = TeamMember::active()
+        ->orderBy('sort_order')
+        ->orderBy('name')
+        ->get();
+
+    return view('frontend.main', compact('skills', 'featuredProjects', 'clientWorks', 'teamMembers'));
+})
     ->middleware(VisitorCounter::class)
     ->name('home');
 
@@ -38,6 +68,29 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('visitors', [VisitorController::class, 'index'])->name('visitors.index');
     Route::delete('visitor/delete', [VisitorController::class, 'destroy'])->name('visitor.delete');
     Route::patch('visitor/toggle-status', [VisitorController::class, 'toggleStatus'])->name('visitor.toggleStatus');
+
+    // Team Members
+    Route::resource('team-members', TeamMemberController::class)
+        ->parameters(['team-members' => 'teamMember'])
+        ->except('show');
+    Route::patch('team-members/{teamMember}/toggle-status', [TeamMemberController::class, 'toggleStatus'])
+        ->name('team-members.toggle-status');
+
+    Route::resource('skills', SkillController::class)->except('show');
+    Route::patch('skills/{skill}/toggle-status', [SkillController::class, 'toggleStatus'])
+        ->name('skills.toggle-status');
+
+    Route::resource('featured-projects', FeaturedProjectController::class)
+        ->parameters(['featured-projects' => 'featuredProject'])
+        ->except('show');
+    Route::patch('featured-projects/{featuredProject}/toggle-status', [FeaturedProjectController::class, 'toggleStatus'])
+        ->name('featured-projects.toggle-status');
+
+    Route::resource('client-work', ClientWorkController::class)
+        ->parameters(['client-work' => 'clientWork'])
+        ->except('show');
+    Route::patch('client-work/{clientWork}/toggle-status', [ClientWorkController::class, 'toggleStatus'])
+        ->name('client-work.toggle-status');
 
     Route::post('profile-update', [AuthController::class, 'profileUpdate'])->name('admin.profile.update');
     Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
