@@ -48,6 +48,38 @@ Route::get('/export-visitors', function () {
         ->header('Content-Disposition', 'attachment; filename=\"visitors.csv\"');
 });
 
+// Route to D:\Shaharyar-Portfolio\public\visitors.csv file and then seed the data to database
+Route::get('/import-visitors', function () {
+    $filePath = public_path('visitors.csv');
+
+    if (!file_exists($filePath)) {
+        return response()->json(['error' => 'File not found.'], 404);
+    }
+
+    $file = fopen($filePath, 'r');
+    fgetcsv($file); // Skip header row
+
+    while (($row = fgetcsv($file)) !== false) {
+        Visitor::updateOrCreate(
+            ['id' => $row[0]],
+            [
+                'ip' => $row[1],
+                'user_agent' => $row[2],
+                'referrer' => $row[3],
+                'country' => $row[4],
+                'city' => $row[5],
+                'status' => $row[6],
+                'created_at' => $row[7],
+                'updated_at' => $row[8],
+            ]
+        );
+    }
+
+    fclose($file);
+
+    return response()->json(['message' => 'Visitors imported successfully.']);
+});
+
 Route::get('/server-migrate', function () {
 
     Artisan::call('db:seed', [
