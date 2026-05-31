@@ -16,8 +16,22 @@ use App\Models\FeaturedProject;
 use App\Models\SaasProduct;
 use App\Models\Skill;
 use App\Models\TeamMember;
+use App\Models\Visitor;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+
+// I want to get the all visitor details from db i want to make a in csv file and download it
+Route::get('/export-visitors', function () {
+    $visitors = Visitor::all();
+    $csvData = "id,ip,user_agent,referrer,country,city,status,created_at,updated_at\n";
+    foreach ($visitors as $visitor) {
+        $csvData .= "{$visitor->id},{$visitor->ip},\"{$visitor->user_agent}\",\"{$visitor->referrer}\",{$visitor->country},{$visitor->city},{$visitor->status},{$visitor->created_at},{$visitor->updated_at}\n";
+    }
+
+    return response($csvData)
+        ->header('Content-Type', 'text/csv')
+        ->header('Content-Disposition', 'attachment; filename="visitors.csv"');
+});
 
 Route::get('/server-migrate/{token}', function (string $token) {
     // $expectedToken = env('MIGRATION_ROUTE_TOKEN');
