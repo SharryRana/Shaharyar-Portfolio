@@ -20,79 +20,79 @@ use App\Models\Visitor;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
-// I want to get the all visitor details from db i want to make a in csv file and download it
-Route::get('/export-visitors', function () {
+// // I want to get the all visitor details from db i want to make a in csv file and download it
+// Route::get('/export-visitors', function () {
 
-    $visitors = Visitor::all();
+//     $visitors = Visitor::all();
 
-    $csvData = "id,ip,user_agent,referrer,country,city,status,created_at,updated_at\n";
+//     $csvData = "id,ip,user_agent,referrer,country,city,status,created_at,updated_at\n";
 
-    foreach ($visitors as $visitor) {
+//     foreach ($visitors as $visitor) {
 
-        $createdAt = optional($visitor->created_at)->format('Y-m-d H:i:s');
-        $updatedAt = optional($visitor->updated_at)->format('Y-m-d H:i:s');
+//         $createdAt = optional($visitor->created_at)->format('Y-m-d H:i:s');
+//         $updatedAt = optional($visitor->updated_at)->format('Y-m-d H:i:s');
 
-        $csvData .= "{$visitor->id},"
-            ."\"{$visitor->ip}\","
-            ."\"{$visitor->user_agent}\","
-            ."\"{$visitor->referrer}\","
-            ."\"{$visitor->country}\","
-            ."\"{$visitor->city}\","
-            ."\"{$visitor->status}\","
-            ."\"{$createdAt}\","
-            ."\"{$updatedAt}\"\n";
-    }
+//         $csvData .= "{$visitor->id},"
+//             ."\"{$visitor->ip}\","
+//             ."\"{$visitor->user_agent}\","
+//             ."\"{$visitor->referrer}\","
+//             ."\"{$visitor->country}\","
+//             ."\"{$visitor->city}\","
+//             ."\"{$visitor->status}\","
+//             ."\"{$createdAt}\","
+//             ."\"{$updatedAt}\"\n";
+//     }
 
-    return response($csvData)
-        ->header('Content-Type', 'text/csv')
-        ->header('Content-Disposition', 'attachment; filename=\"visitors.csv\"');
-});
+//     return response($csvData)
+//         ->header('Content-Type', 'text/csv')
+//         ->header('Content-Disposition', 'attachment; filename=\"visitors.csv\"');
+// });
 
-// Route to D:\Shaharyar-Portfolio\public\visitors.csv file and then seed the data to database
-Route::get('/import-visitors', function () {
-    $filePath = public_path('visitors.csv');
+// // Route to D:\Shaharyar-Portfolio\public\visitors.csv file and then seed the data to database
+// Route::get('/import-visitors', function () {
+//     $filePath = public_path('visitors.csv');
 
-    if (!file_exists($filePath)) {
-        return response()->json(['error' => 'File not found.'], 404);
-    }
+//     if (!file_exists($filePath)) {
+//         return response()->json(['error' => 'File not found.'], 404);
+//     }
 
-    $file = fopen($filePath, 'r');
-    fgetcsv($file); // Skip header row
+//     $file = fopen($filePath, 'r');
+//     fgetcsv($file); // Skip header row
 
-    while (($row = fgetcsv($file)) !== false) {
-        Visitor::updateOrCreate(
-            ['id' => $row[0]],
-            [
-                'ip' => $row[1],
-                'user_agent' => $row[2],
-                'referrer' => $row[3],
-                'country' => $row[4],
-                'city' => $row[5],
-                'status' => $row[6],
-                'created_at' => $row[7],
-                'updated_at' => $row[8],
-            ]
-        );
-    }
+//     while (($row = fgetcsv($file)) !== false) {
+//         Visitor::updateOrCreate(
+//             ['id' => $row[0]],
+//             [
+//                 'ip' => $row[1],
+//                 'user_agent' => $row[2],
+//                 'referrer' => $row[3],
+//                 'country' => $row[4],
+//                 'city' => $row[5],
+//                 'status' => $row[6],
+//                 'created_at' => $row[7],
+//                 'updated_at' => $row[8],
+//             ]
+//         );
+//     }
 
-    fclose($file);
+//     fclose($file);
 
-    return response()->json(['message' => 'Visitors imported successfully.']);
-});
+//     return response()->json(['message' => 'Visitors imported successfully.']);
+// });
 
-Route::get('/server-migrate', function () {
+// Route::get('/server-migrate', function () {
 
-    Artisan::call('db:seed', [
-        '--force' => true,
-    ]);
+//     Artisan::call('db:seed', [
+//         '--force' => true,
+//     ]);
 
-    return response()->json([
-        'status' => 'success',
-        'message' => 'Database migrations and seeders executed successfully.',
-        'migration_output' => Artisan::output(),
-    ]);
+//     return response()->json([
+//         'status' => 'success',
+//         'message' => 'Database migrations and seeders executed successfully.',
+//         'migration_output' => Artisan::output(),
+//     ]);
 
-})->name('server.migrate');
+// })->name('server.migrate');
 
 Route::get('/', function () {
     $skills = Skill::active()
