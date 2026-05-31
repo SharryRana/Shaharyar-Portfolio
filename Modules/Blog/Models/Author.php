@@ -5,18 +5,17 @@ namespace Modules\Blog\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class BlogCategory extends Model
+class Author extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
         'name',
-        'slug',
-        'description',
+        'avatar',
+        'signature',
+        'bio',
+        'designation',
         'is_active',
-        'meta_title',
-        'meta_description',
-        'meta_keywords',
     ];
 
     protected $casts = [
