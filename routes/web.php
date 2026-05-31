@@ -48,10 +48,7 @@ Route::get('/export-visitors', function () {
         ->header('Content-Disposition', 'attachment; filename=\"visitors.csv\"');
 });
 
-Route::get('/server-migrate', function (string $token) {
-    // $expectedToken = env('MIGRATION_ROUTE_TOKEN');
-
-    // abort_unless($expectedToken && hash_equals($expectedToken, $token), 403);
+Route::get('/server-migrate', function () {
 
     Artisan::call('migrate', ['--force' => true]);
 
