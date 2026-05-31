@@ -289,7 +289,7 @@
         <h2>Create Blog Category</h2>
         <div id="flashArea"></div>
 
-        <form action="{{ route('admin.blog.categories.store') }}" id="createCategoryForm" method="POST"
+        <form action="{{ route('blog-admin.blog.categories.store') }}" id="createCategoryForm" method="POST"
             enctype="multipart/form-data">
             @csrf
 
