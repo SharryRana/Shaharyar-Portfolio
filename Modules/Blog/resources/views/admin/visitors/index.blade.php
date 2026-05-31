@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('blog::admin.layouts.master')
 
 @push('styles')
     <style>
