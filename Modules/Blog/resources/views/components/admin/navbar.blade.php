@@ -20,13 +20,13 @@
                     class="profile-img rounded-circle" alt="Avatar">   <span class="ms-2 d-none d-md-inline">{{ auth()->user()->name; }}</span> --}}
                </a>
                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                   <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
+                   <li><a class="dropdown-item" href="{{ route('blog-admin.profile') }}"><i class="bi bi-person me-2"></i>Profile</a>
                    </li>
-                   <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                   <li><a class="dropdown-item" href="{{ route('blog-admin.profile') }}"><i class="bi bi-gear me-2"></i>Settings</a></li>
                    <li>
                        <hr class="dropdown-divider">
                    </li>
-                   <li><a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                   <li><a class="dropdown-item" href="{{ route('blog-admin.logout') }}"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                </ul>
            </div>
        </div>

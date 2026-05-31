@@ -38,7 +38,7 @@
 
             {{-- Blog Categories --}}
             <li class="{{ request()->is('admin/blog/create-category') ? 'active' : '' }}">
-                <a href="{{ route('admin.category.index') }}">
+                <a href="{{ route('blog-admin.category.index') }}">
                     <i class="bi bi-folder"></i>
                     <span>Categories</span>
                 </a>
@@ -54,7 +54,7 @@
 
             {{-- Profile Settings --}}
             <li class="{{ request()->is('admin/admin-profile') ? 'active' : '' }}">
-                <a href="{{ route('admin.profile') }}">
+                <a href="{{ route('blog-admin.profile') }}">
                     <i class="bi bi-gear"></i>
                     <span>Profile Settings</span>
                 </a>
@@ -62,7 +62,7 @@
 
             {{-- Logout --}}
             <li>
-                <a href="{{ route('admin.logout') }}">
+                <a href="{{ route('blog-admin.logout') }}">
                     <i class="bi bi-box-arrow-right"></i>
                     <span>Logout</span>
                 </a>
