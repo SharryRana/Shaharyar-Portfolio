@@ -5,22 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Shaharyar is a full-stack web developer specializing in Laravel, Vue.js, React.js, Node.js and Django.">
+        content="@yield('meta_description', 'Shaharyar is a full-stack web developer specializing in Laravel, Vue.js, React.js, Node.js and Django.')">
+    @hasSection('meta_keywords')
+        <meta name="keywords" content="@yield('meta_keywords')">
+    @endif
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#0f172a">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Shaharyar | Full-Stack Developer">
+    @hasSection('canonical_url')
+        <link rel="canonical" href="@yield('canonical_url')">
+    @endif
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="@yield('og_title', 'Shaharyar | Full-Stack Developer')">
     <meta property="og:description"
-        content="Full-stack developer building clean, scalable web apps with Laravel, Vue.js, React.js, Node.js, and Django.">
-    <meta property="og:image" content="assets/og-image.png">
-    <meta property="og:image:alt" content="Shaharyar portfolio preview">
+        content="@yield('og_description', 'Full-stack developer building clean, scalable web apps with Laravel, Vue.js, React.js, Node.js, and Django.')">
+    <meta property="og:image" content="@yield('og_image', asset('assets/og-image.png'))">
+    <meta property="og:image:alt" content="@yield('og_image_alt', 'Shaharyar portfolio preview')">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Shaharyar | Full-Stack Developer">
+    <meta name="twitter:title" content="@yield('twitter_title', 'Shaharyar | Full-Stack Developer')">
     <meta name="twitter:description"
-        content="Full-stack developer building clean, scalable web apps with Laravel, Vue.js, React.js, Node.js, Inertia.js and Django.">
+        content="@yield('twitter_description', 'Full-stack developer building clean, scalable web apps with Laravel, Vue.js, React.js, Node.js, Inertia.js and Django.')">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="twitter:image" content="assets/og-image.png">
+    <meta name="twitter:image" content="@yield('twitter_image', asset('assets/og-image.png'))">
 
     {{-- favicon --}}
     <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96" />
@@ -32,12 +38,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <title>Shaharyar | Full-Stack Developer</title>
+    <title>@yield('title', 'Shaharyar | Full-Stack Developer')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
+    @stack('head')
 </head>
 
 <body>

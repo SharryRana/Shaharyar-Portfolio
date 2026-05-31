@@ -1,15 +1,16 @@
     <header id="header">
         <div class="container nav-container">
-            <a href="#" class="logo">Shaharyar<span>.</span></a>
+            <a href="{{ route('home') }}#home" class="logo">Creavibe<span>.</span></a>
 
             <nav class="nav-primary" aria-label="Primary">
                 <ul class="nav-menu" id="nav-menu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#clients">Clients</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{{ route('home') }}#home">Home</a></li>
+                    <li><a href="{{ route('home') }}#skills">Skills</a></li>
+                    <li><a href="{{ route('home') }}#projects">Projects</a></li>
+                    <li><a href="{{ route('home') }}#clients">Clients</a></li>
+                    <li><a href="{{ route('home') }}#team">Team</a></li>
+                    <li><a href="{{ route('home') }}#blog">Blog</a></li>
+                    <li><a href="{{ route('home') }}#contact">Contact</a></li>
                 </ul>
             </nav>
 

@@ -28,5 +28,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TeamMemberSeeder::class);
         $this->call(PortfolioContentSeeder::class);
+        $this->call(SaasProductSeeder::class);
     }
 }

@@ -40,6 +40,12 @@
                             <span>Projects</span>
                         </a>
                     </li>
+                    <li class="{{ request()->is('admin/saas-products*') ? 'active' : '' }}">
+                        <a href="{{ route('saas-products.index') }}">
+                            <i class="bi bi-box-seam"></i>
+                            <span>SaaS Products</span>
+                        </a>
+                    </li>
                     <li class="{{ request()->is('admin/client-work*') ? 'active' : '' }}">
                         <a href="{{ route('client-work.index') }}">
                             <i class="bi bi-briefcase"></i>

@@ -21,3 +21,13 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+/public/uploads/saas-products/*
+!/public/uploads/saas-products/.gitkeep
+/public/uploads/client-work/*
+!/public/uploads/client-work/.gitkeep
+/public/uploads/projects/*
+!/public/uploads/projects/.gitkeep
+/public/uploads/avatars/*
+!/public/uploads/avatars/.gitkeep
+
+

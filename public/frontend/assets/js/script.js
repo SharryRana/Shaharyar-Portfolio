@@ -91,21 +91,19 @@ window.addEventListener('load', showSection);
 document.addEventListener("DOMContentLoaded", () => {
     const codeElement = document.getElementById("typed-code");
     const codeSnippet = `
-class Developer {
+class Creavibe {
     constructor() {
-        this.name = "Shaharyar";
-        this.role = "Full-Stack";
+        this.focus = "SaaS & Business Software";
+        this.stack = ["Laravel", "Golang", "React", "Vue"];
     }
 
-    buildProject(project) {
-        return \` Building \${project}\`;
+    build(product) {
+        return \`Scaling \${product} with clean architecture\`;
     }
 }
 
-const print = null;
-const me = new Developer();
-print = me.buildProject("Awesome Web App");
-console.log(print);`;
+const agency = new Creavibe();
+console.log(agency.build("your next platform"));`;
 
     let i = 0;
     function typeCode() {
@@ -247,3 +245,33 @@ function showFlash(message, type) {
     }, 3000);
 }
 
+// SaaS screenshot lightbox
+document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('saasLightbox');
+    if (!lightbox) return;
+
+    const image = lightbox.querySelector('img');
+    const closeButton = lightbox.querySelector('button');
+
+    document.querySelectorAll('[data-lightbox-src]').forEach(button => {
+        button.addEventListener('click', () => {
+            image.src = button.dataset.lightboxSrc;
+            lightbox.classList.add('active');
+            lightbox.setAttribute('aria-hidden', 'false');
+        });
+    });
+
+    const close = () => {
+        lightbox.classList.remove('active');
+        lightbox.setAttribute('aria-hidden', 'true');
+        image.src = '';
+    };
+
+    closeButton?.addEventListener('click', close);
+    lightbox.addEventListener('click', event => {
+        if (event.target === lightbox) close();
+    });
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') close();
+    });
+});

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Skill;
 use App\Models\TeamMember;
 use App\Models\ClientWork;
+use App\Models\SaasProduct;
 use App\Models\FeaturedProject;
 use App\Http\Middleware\VisitorCounter;
 use App\Http\Controllers\Auth\AuthController;
@@ -11,8 +12,10 @@ use App\Http\Controllers\ContactusController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\DashboardManage;
 use App\Http\Controllers\Admin\ClientWorkController;
+use App\Http\Controllers\Admin\SaasProductController;
 use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Admin\FeaturedProjectController;
+use App\Http\Controllers\SaasProductPageController;
 use App\Http\Controllers\Visotors\VisitorController;
 
 
@@ -28,6 +31,11 @@ Route::get('/', function () {
         ->orderBy('title')
         ->get();
 
+    $saasProducts = SaasProduct::active()
+        ->orderBy('sort_order')
+        ->orderBy('title')
+        ->get();
+
     $clientWorks = ClientWork::active()
         ->orderBy('sort_order')
         ->orderBy('title')
@@ -38,10 +46,13 @@ Route::get('/', function () {
         ->orderBy('name')
         ->get();
 
-    return view('frontend.main', compact('skills', 'featuredProjects', 'clientWorks', 'teamMembers'));
+    return view('frontend.main', compact('skills', 'featuredProjects', 'saasProducts', 'clientWorks', 'teamMembers'));
 })
     ->middleware(VisitorCounter::class)
     ->name('home');
+
+Route::get('/projects/{slug}', [SaasProductPageController::class, 'show'])
+    ->name('projects.show');
 
 Route::post('/contact', [ContactusController::class, 'create'])
     ->name('contact.submit');
@@ -85,6 +96,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         ->except('show');
     Route::patch('featured-projects/{featuredProject}/toggle-status', [FeaturedProjectController::class, 'toggleStatus'])
         ->name('featured-projects.toggle-status');
+
+    Route::resource('saas-products', SaasProductController::class)
+        ->parameters(['saas-products' => 'saasProduct'])
+        ->except('show');
+    Route::patch('saas-products/{saasProduct}/toggle-status', [SaasProductController::class, 'toggleStatus'])
+        ->name('saas-products.toggle-status');
 
     Route::resource('client-work', ClientWorkController::class)
         ->parameters(['client-work' => 'clientWork'])

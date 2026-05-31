@@ -9,11 +9,11 @@
               <div class="footer-col">
                   <h3>Quick Links</h3>
                   <ul class="footer-links">
-                      <li><a href="#home">Home</a></li>
-                      <li><a href="#skills">Skills</a></li>
-                      <li><a href="#projects">Projects</a></li>
-                      <li><a href="#blog">Blog</a></li>
-                      <li><a href="#contact">Contact</a></li>
+                      <li><a href="{{ route('home') }}#home">Home</a></li>
+                      <li><a href="{{ route('home') }}#skills">Skills</a></li>
+                      <li><a href="{{ route('home') }}#projects">Projects</a></li>
+                      <li><a href="{{ route('home') }}#blog">Blog</a></li>
+                      <li><a href="{{ route('home') }}#contact">Contact</a></li>
                   </ul>
               </div>
               <div class="footer-col">

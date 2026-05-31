@@ -4,16 +4,26 @@
         <section class="hero" id="home" aria-labelledby="home-title">
             <div class="container hero-grid">
                 <div class="hero-content">
-                    <h1 id="home-title">Full-Stack Web Developer</h1>
-                    <p>Hey! I'm Shaharyar, a full-stack web developer with 5+ years of experience. I specialize in
-                        Laravel
-                        with Vue.js, Inertia.js, and React.js, and also work with Node.js and Django. From sleek
-                        websites to
-                        complex web apps, I deliver clean, scalable solutions.</p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn">View My Work</a>
-                        <a href="#contact" class="btn btn-outline">Contact Me</a>
+                    <span class="hero-eyebrow">Creavibe Software Agency</span>
+                    <h1 id="home-title">Build Scalable SaaS & Business Software That Drives Real Growth</h1>
+                    <p>We help startups, agencies, and enterprises build powerful SaaS platforms, business management
+                        systems, fintech applications, and automation software that scale with confidence.</p>
+                    <p class="hero-support">We transform complex business ideas into secure, high-performing digital
+                        products with premium UI/UX.</p>
+                    <div class="hero-services" aria-label="What Creavibe builds">
+                        <span>Fintech Software</span>
+                        <span>CRM & ERP Platforms</span>
+                        <span>Enterprise Dashboards</span>
                     </div>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn">Start Your Project</a>
+                        <a href="#projects" class="btn btn-outline">View Our Work</a>
+                        {{-- <a href="#contact" class="btn btn-outline">Schedule a Consultation</a> --}}
+                    </div>
+                    {{-- <div class="hero-trust-stack" aria-label="Trusted technology stack">
+                        Laravel &bull; Golang &bull; PostgreSQL &bull; Vue.js &bull; React.js &bull; Node.js &bull; AWS
+                        &bull; Docker
+                    </div> --}}
                 </div>
                 <div class="hero-visual" aria-hidden="true">
                     <div class="dev-illustration">
@@ -88,19 +98,20 @@
         @endif
 
         <!-- Projects Section -->
-        @if(($featuredProjects ?? collect())->isNotEmpty())
+        @if(($saasProducts ?? collect())->isNotEmpty())
             <section class="projects" id="projects" aria-labelledby="projects-title">
                 <div class="container">
                     <h2 class="text-center" id="projects-title">Featured Projects</h2>
 
                     <div class="projects-grid">
-                        @foreach($featuredProjects as $project)
-                            <div class="project-card">
+                        @foreach($saasProducts as $project)
+                            <a class="project-card saas-product-card" href="{{ route('projects.show', $project->slug) }}">
                                 <div class="project-img">
-                                    @if($project->image)
-                                        <img src="{{ asset($project->image) }}" alt="{{ $project->title }}">
+                                    @if($project->thumbnail)
+                                        <img src="{{ asset($project->thumbnail) }}"
+                                            alt="{{ $project->thumbnail_alt ?: $project->title }}">
                                     @else
-                                        <i class="{{ $project->icon ?: 'fas fa-code' }}"></i>
+                                        <i class="{{ $project->icon ?: 'fas fa-layer-group' }}"></i>
                                     @endif
                                 </div>
                                 <div class="project-content">
@@ -108,20 +119,17 @@
                                         <span class="project-category">{{ $project->category }}</span>
                                     @endif
                                     <h3>{{ $project->title }}</h3>
-                                    <p>{{ $project->description }}</p>
-                                    @if(!empty($project->tags))
+                                    <p>{{ $project->tagline ?: Str::limit($project->overview, 140) }}</p>
+                                    @if(!empty($project->tech_stack))
                                         <div class="project-tags">
-                                            @foreach($project->tags as $tag)
+                                            @foreach($project->tech_stack as $tag)
                                                 <span class="project-tag">{{ $tag }}</span>
                                             @endforeach
                                         </div>
                                     @endif
-                                    @if($project->project_link)
-                                        <a href="{{ $project->project_link }}" class="btn btn-outline" target="_blank"
-                                            rel="noopener">View Project</a>
-                                    @endif
+                                    <span class="project-card-link">View product <i class="fas fa-arrow-right"></i></span>
                                 </div>
-                            </div>
+                            </a>
                         @endforeach
                     </div>
                 </div>
