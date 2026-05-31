@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('blog::admin.layouts.master')
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('admin/assets/css/admin-profile.css') }}">
@@ -174,7 +174,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('admin.profile.update') }}",
+                        url: "{{ route('blog-admin.profile.update') }}",
                         data: formData,
                         processData: false, // formData k liye zaroori
                         contentType: false, // formData k liye zaroori
