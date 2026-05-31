@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Blog\database\seeders;
+namespace Modules\Blog\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
@@ -11,6 +11,12 @@ class BlogDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            AdminSeeder::class,
+            PlatformSettingsSeeder::class,
+            PageSeeder::class,
+            FaqSeeder::class,
+            ArticleSeeder::class,
+        ]);
     }
 }
