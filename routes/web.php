@@ -50,13 +50,20 @@ Route::get('/export-visitors', function () {
 
 Route::get('/server-migrate', function () {
 
-    Artisan::call('migrate', ['--force' => true]);
+    Artisan::call('migrate', [
+        '--force' => true,
+    ]);
+
+    Artisan::call('db:seed', [
+        '--force' => true,
+    ]);
 
     return response()->json([
         'status' => 'success',
-        'message' => 'Database migrations completed.',
-        'output' => Artisan::output(),
+        'message' => 'Database migrations and seeders executed successfully.',
+        'migration_output' => Artisan::output(),
     ]);
+
 })->name('server.migrate');
 
 Route::get('/', function () {
