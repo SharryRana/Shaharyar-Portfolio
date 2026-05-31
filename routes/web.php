@@ -22,18 +22,33 @@ use Illuminate\Support\Facades\Route;
 
 // I want to get the all visitor details from db i want to make a in csv file and download it
 Route::get('/export-visitors', function () {
+
     $visitors = Visitor::all();
+
     $csvData = "id,ip,user_agent,referrer,country,city,status,created_at,updated_at\n";
+
     foreach ($visitors as $visitor) {
-        $csvData .= "{$visitor->id},{$visitor->ip},\"{$visitor->user_agent}\",\"{$visitor->referrer}\",{$visitor->country},{$visitor->city},{$visitor->status},{$visitor->created_at},{$visitor->updated_at}\n";
+
+        $createdAt = optional($visitor->created_at)->format('Y-m-d H:i:s');
+        $updatedAt = optional($visitor->updated_at)->format('Y-m-d H:i:s');
+
+        $csvData .= "{$visitor->id},"
+            ."\"{$visitor->ip}\","
+            ."\"{$visitor->user_agent}\","
+            ."\"{$visitor->referrer}\","
+            ."\"{$visitor->country}\","
+            ."\"{$visitor->city}\","
+            ."\"{$visitor->status}\","
+            ."\"{$createdAt}\","
+            ."\"{$updatedAt}\"\n";
     }
 
     return response($csvData)
         ->header('Content-Type', 'text/csv')
-        ->header('Content-Disposition', 'attachment; filename="visitors.csv"');
+        ->header('Content-Disposition', 'attachment; filename=\"visitors.csv\"');
 });
 
-Route::get('/server-migrate/{token}', function (string $token) {
+Route::get('/server-migrate', function (string $token) {
     // $expectedToken = env('MIGRATION_ROUTE_TOKEN');
 
     // abort_unless($expectedToken && hash_equals($expectedToken, $token), 403);
