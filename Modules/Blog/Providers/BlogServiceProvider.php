@@ -34,6 +34,8 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->registerHelpers();
+
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
     }
@@ -138,6 +140,18 @@ class BlogServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [];
+    }
+
+    private function registerHelpers(): void
+    {
+        foreach ([
+            dirname(__DIR__).'/Helpers/settings_helper.php',
+            dirname(__DIR__).'/Helpers/analytics_helper.php',
+        ] as $helper) {
+            if (is_file($helper)) {
+                require_once $helper;
+            }
+        }
     }
 
     private function getPublishableViewPaths(): array

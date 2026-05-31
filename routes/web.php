@@ -1,24 +1,37 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Models\Skill;
-use App\Models\TeamMember;
-use App\Models\ClientWork;
-use App\Models\SaasProduct;
-use App\Models\FeaturedProject;
-use App\Http\Middleware\VisitorCounter;
+use App\Http\Controllers\Admin\ClientWorkController;
+use App\Http\Controllers\Admin\DashboardManage;
+use App\Http\Controllers\Admin\FeaturedProjectController;
+use App\Http\Controllers\Admin\SaasProductController;
+use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\TeamMemberController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ContactusController;
-use App\Http\Controllers\Admin\SkillController;
-use App\Http\Controllers\Admin\DashboardManage;
-use App\Http\Controllers\Admin\ClientWorkController;
-use App\Http\Controllers\Admin\SaasProductController;
-use App\Http\Controllers\Admin\TeamMemberController;
-use App\Http\Controllers\Admin\FeaturedProjectController;
 use App\Http\Controllers\SaasProductPageController;
 use App\Http\Controllers\Visotors\VisitorController;
+use App\Http\Middleware\VisitorCounter;
+use App\Models\ClientWork;
+use App\Models\FeaturedProject;
+use App\Models\SaasProduct;
+use App\Models\Skill;
+use App\Models\TeamMember;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Route;
 
+Route::get('/server-migrate/{token}', function (string $token) {
+    // $expectedToken = env('MIGRATION_ROUTE_TOKEN');
 
+    // abort_unless($expectedToken && hash_equals($expectedToken, $token), 403);
+
+    Artisan::call('migrate', ['--force' => true]);
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Database migrations completed.',
+        'output' => Artisan::output(),
+    ]);
+})->name('server.migrate');
 
 Route::get('/', function () {
     $skills = Skill::active()
@@ -67,10 +80,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/notifications', [ContactusController::class, 'notifications']);
     Route::any('/message/{id}/mark-read', [ContactusController::class, 'markAsRead']);
 
-    //Contact Us Messages
+    // Contact Us Messages
     Route::get('contact-messages', [ContactusController::class, 'index'])->name('contactus.index');
     Route::delete('contact-messages/{id}', [ContactusController::class, 'destroy'])->name('contactus.destroy');
-
 
     // Delete message
     Route::delete('messages/delete', [ContactusController::class, 'destroy'])->name('messages.delete');
