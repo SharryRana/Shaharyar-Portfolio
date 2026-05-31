@@ -30,13 +30,13 @@
                     </li>
 
                     <li class="{{ request()->is('admin/admin-profile') ? 'active' : '' }}">
-                        <a href="{{ route('admin.profile') }}">
+                        <a href="{{ route('blog-admin.profile') }}">
                             <i class="bi bi-gear"></i>
                             <span>Profile Settings</span>
                         </a>
                     </li>
                     <li class="{{ request()->is('admin/logout') ? 'active' : '' }}">
-                        <a href="{{ route('admin.logout') }}">
+                        <a href="{{ route('blog-admin.logout') }}">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Logout</span>
                         </a>
