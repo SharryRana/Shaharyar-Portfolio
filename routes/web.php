@@ -50,10 +50,6 @@ Route::get('/export-visitors', function () {
 
 Route::get('/server-migrate', function () {
 
-    Artisan::call('migrate', [
-        '--force' => true,
-    ]);
-
     Artisan::call('db:seed', [
         '--force' => true,
     ]);
