@@ -481,7 +481,7 @@
                     const $form = $(this).closest('form');
                     if (confirm('Are you sure you want to delete this message?')) {
                         $.ajax({
-                            url: '{{ route('messages.delete') }}',
+                            url: @json(route('messages.delete', [], false)),
                             method: 'DELETE',
                             data: $form.serialize(),
                             success: function() {

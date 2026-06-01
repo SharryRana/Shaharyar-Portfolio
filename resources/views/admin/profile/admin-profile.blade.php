@@ -174,7 +174,7 @@
 
                     $.ajax({
                         type: "POST",
-                        url: "{{ route('admin.profile.update') }}",
+                        url: @json(route('admin.profile.update', [], false)),
                         data: formData,
                         processData: false, // formData k liye zaroori
                         contentType: false, // formData k liye zaroori

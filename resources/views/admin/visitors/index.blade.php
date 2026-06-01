@@ -436,7 +436,7 @@
                 const isChecked = $(this).is(':checked');
 
                 $.ajax({
-                    url: '{{ route('visitor.toggleStatus') }}',
+                    url: @json(route('visitor.toggleStatus', [], false)),
                     method: 'PATCH',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -461,7 +461,7 @@
 
                 if (confirm('Are you sure you want to delete this message?')) {
                     $.ajax({
-                        url: '{{ route('visitor.delete') }}',
+                        url: @json(route('visitor.delete', [], false)),
                         method: 'DELETE',
                         data: $form.serialize(),
                         success: function() {
