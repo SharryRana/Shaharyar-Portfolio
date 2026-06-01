@@ -34,6 +34,49 @@
             background: #161a2e;
             color: #e2e6f3;
         }
+
+        .pagination-modern {
+            margin-bottom: 0;
+        }
+
+        .pagination-modern .page-link {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px;
+            color: var(--primary);
+            font-weight: 500;
+            background: rgba(67, 97, 238, 0.08);
+            transition: all .25s ease;
+        }
+
+        .pagination-modern .page-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(67, 97, 238, 0.25);
+            background: rgba(67, 97, 238, 0.15);
+        }
+
+        .pagination-modern .page-item.active .page-link {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            box-shadow: 0 8px 22px rgba(67, 97, 238, 0.35);
+        }
+
+        .pagination-modern .page-item.disabled .page-link {
+            opacity: 0.6;
+        }
+
+        html[data-theme="dark"] .pagination-modern .page-link {
+            background: rgba(226, 230, 243, 0.08);
+            color: #e2e6f3;
+        }
+
+        html[data-theme="dark"] .pagination-modern .page-link:hover {
+            background: rgba(226, 230, 243, 0.15);
+        }
+
+        html[data-theme="dark"] .pagination-modern .page-item.active .page-link {
+            color: #fff;
+        }
     </style>
 @endpush
 
@@ -177,7 +220,9 @@
                     </tbody>
                 </table>
             </div>
-            {{ $products->links() }}
+            <div class="mt-3 d-flex justify-content-end">
+                {{ $products->links('vendor.pagination.visitors') }}
+            </div>
         </div>
     </div>
 @endsection
