@@ -13,6 +13,7 @@ use Modules\Blog\Http\Controllers\Admin\FaqController;
 use Modules\Blog\Http\Controllers\Admin\PageController;
 use Modules\Blog\Http\Controllers\Admin\ProfileController;
 use Modules\Blog\Http\Controllers\Admin\SettingController;
+use Modules\Blog\Http\Controllers\ContactMessageController;
 use Modules\Blog\Http\Middleware\BlogAdminAuth;
 use Modules\Blog\Models\ActivityLog;
 use Modules\Blog\Models\Article;
@@ -66,6 +67,7 @@ Route::prefix('blogs')->group(function () use ($blogIndexData) {
     Route::view('feature', 'blog::Features.feature')->name('blog.feature');
     Route::view('about-us', 'blog::About.about')->name('blog.about');
     Route::view('contact-us', 'blog::Contactus.contactus')->name('blog.contactus');
+    Route::post('contact-us', [ContactMessageController::class, 'store'])->name('blog.contact-us.submit');
 });
 
 Route::prefix('blog-admin')->name('blog-admin.')->group(function () {

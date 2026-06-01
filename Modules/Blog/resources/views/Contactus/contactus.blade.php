@@ -330,8 +330,170 @@
 
         .map-container iframe {
             border-radius: 16px;
-            /* same as --border-radius */
             box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        /* ── Field validation states ── */
+        .form-group .field-error {
+            display: none;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.4rem;
+            font-size: 0.82rem;
+            color: #ef4444;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .form-group .field-error.visible {
+            display: flex;
+        }
+
+        .contact-form input.is-invalid,
+        .contact-form textarea.is-invalid {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.18);
+        }
+
+        .contact-form input.is-valid,
+        .contact-form textarea.is-valid {
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+        }
+
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20%      { transform: translateX(-7px); }
+            40%      { transform: translateX(7px); }
+            60%      { transform: translateX(-5px); }
+            80%      { transform: translateX(5px); }
+        }
+
+        .contact-form input.shake,
+        .contact-form textarea.shake {
+            animation: shake 0.45s ease;
+        }
+
+        /* ── Button loading state ── */
+        .hero-cta .btn-spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+        }
+
+        .hero-cta.loading .btn-label { display: none; }
+        .hero-cta.loading .btn-spinner { display: inline-block; }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── Success overlay modal ── */
+        #success-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        #success-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .success-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.18);
+            transform: scale(0.85) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #success-overlay.show .success-card {
+            transform: scale(1) translateY(0);
+        }
+
+        .success-icon-wrap {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+            animation: bounceIn 0.6s ease 0.2s both;
+        }
+
+        @keyframes bounceIn {
+            0%   { transform: scale(0); opacity: 0; }
+            60%  { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .success-icon-wrap svg {
+            width: 38px;
+            height: 38px;
+            stroke: #fff;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+            stroke-dasharray: 60;
+            stroke-dashoffset: 60;
+            animation: drawCheck 0.5s ease 0.7s forwards;
+        }
+
+        @keyframes drawCheck {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .success-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 0.75rem;
+        }
+
+        .success-msg {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.75rem;
+        }
+
+        .success-close-btn {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 0.85rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .success-close-btn:hover {
+            background: var(--accent-gradient);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(244, 114, 182, 0.4);
         }
     </style>
 @endpush
@@ -354,27 +516,47 @@
             <div class="contact-grid">
                 <!-- Contact Form -->
                 <div class="contact-form-container card">
-                    <form class="contact-form" action="#" method="POST">
+                    <form id="contact-ajax-form" class="contact-form" novalidate>
+                        @csrf
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" class="form-input"
-                                placeholder="Enter your name" required>
+                            <input type="text" id="name" name="first_name" class="form-input"
+                                placeholder="Enter your name" autocomplete="given-name">
+                            <span class="field-error" id="err-first_name">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="err-text"></span>
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="email">Your Email</label>
                             <input type="email" id="email" name="email" class="form-input"
-                                placeholder="Enter your email" required>
+                                placeholder="Enter your email" autocomplete="email">
+                            <span class="field-error" id="err-email">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="err-text"></span>
+                            </span>
                         </div>
                         <div class="form-group">
-                            <label for="subject">Subject</label>
+                            <label for="subject">Subject <span style="font-weight:400;color:var(--text-light);font-size:.85em">(optional)</span></label>
                             <input type="text" id="subject" name="subject" class="form-input"
                                 placeholder="Enter subject">
+                            <span class="field-error" id="err-subject">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="err-text"></span>
+                            </span>
                         </div>
                         <div class="form-group">
                             <label for="message">Your Message</label>
-                            <textarea id="message" name="message" rows="5" class="form-textarea" placeholder="Write your message" required></textarea>
+                            <textarea id="message" name="message" rows="5" class="form-textarea" placeholder="Write your message"></textarea>
+                            <span class="field-error" id="err-message">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <span class="err-text"></span>
+                            </span>
                         </div>
-                        <button type="submit" class="hero-cta">Send Message <i class="fas fa-paper-plane"></i></button>
+                        <button type="submit" class="hero-cta">
+                            <span class="btn-label">Send Message &nbsp;<i class="fas fa-paper-plane"></i></span>
+                            <span class="btn-spinner"></span>
+                        </button>
                     </form>
                 </div>
 
@@ -483,4 +665,179 @@
             </div>
         </aside>
     </div>
+<!-- ── Success overlay ── -->
+<div id="success-overlay" role="dialog" aria-modal="true" aria-labelledby="success-heading">
+    <div class="success-card">
+        <div class="success-icon-wrap">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 class="success-title" id="success-heading">Message Sent!</h2>
+        <p class="success-msg">Thanks for reaching out. We&rsquo;ve received your message and will get back to you as soon as possible.</p>
+        <button class="success-close-btn" id="success-close-btn">Awesome, thanks!</button>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+(function () {
+    const form   = document.getElementById('contact-ajax-form');
+    const overlay = document.getElementById('success-overlay');
+    const closeBtn = document.getElementById('success-close-btn');
+
+    // ── helpers ──────────────────────────────────────────────
+    function setError(fieldName, msg) {
+        const input = form.elements[fieldName];
+        const errEl = document.getElementById('err-' + fieldName);
+        if (!input || !errEl) return;
+        input.classList.add('is-invalid');
+        input.classList.remove('is-valid');
+        errEl.querySelector('.err-text').textContent = msg;
+        errEl.classList.add('visible');
+        // shake
+        input.classList.remove('shake');
+        void input.offsetWidth; // reflow
+        input.classList.add('shake');
+        input.addEventListener('animationend', () => input.classList.remove('shake'), { once: true });
+    }
+
+    function clearError(fieldName) {
+        const input = form.elements[fieldName];
+        const errEl = document.getElementById('err-' + fieldName);
+        if (!input || !errEl) return;
+        input.classList.remove('is-invalid', 'shake');
+        errEl.classList.remove('visible');
+    }
+
+    function markValid(fieldName) {
+        const input = form.elements[fieldName];
+        if (!input) return;
+        input.classList.remove('is-invalid');
+        input.classList.add('is-valid');
+        clearError(fieldName);
+    }
+
+    function clearAll() {
+        ['first_name','email','subject','message'].forEach(f => {
+            const input = form.elements[f];
+            if (input) { input.classList.remove('is-invalid','is-valid','shake'); }
+            const errEl = document.getElementById('err-' + f);
+            if (errEl) errEl.classList.remove('visible');
+        });
+    }
+
+    // ── client-side validation ───────────────────────────────
+    function validateField(fieldName) {
+        const input = form.elements[fieldName];
+        if (!input) return true;
+        const val = input.value.trim();
+
+        if (fieldName === 'first_name') {
+            if (!val) { setError('first_name', 'Your name is required.'); return false; }
+            if (val.length > 100) { setError('first_name', 'Name must be at most 100 characters.'); return false; }
+            markValid('first_name'); return true;
+        }
+        if (fieldName === 'email') {
+            if (!val) { setError('email', 'Your email address is required.'); return false; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { setError('email', 'Please enter a valid email address.'); return false; }
+            if (val.length > 255) { setError('email', 'Email is too long.'); return false; }
+            markValid('email'); return true;
+        }
+        if (fieldName === 'subject') {
+            if (val.length > 255) { setError('subject', 'Subject must be at most 255 characters.'); return false; }
+            markValid('subject'); return true;
+        }
+        if (fieldName === 'message') {
+            if (!val) { setError('message', 'A message is required.'); return false; }
+            if (val.length > 5000) { setError('message', 'Message must be at most 5000 characters.'); return false; }
+            markValid('message'); return true;
+        }
+        return true;
+    }
+
+    // Live validation on blur
+    ['first_name','email','subject','message'].forEach(name => {
+        const el = form.elements[name];
+        if (!el) return;
+        el.addEventListener('blur', () => validateField(name));
+        el.addEventListener('input', () => {
+            if (el.classList.contains('is-invalid')) validateField(name);
+        });
+    });
+
+    // ── AJAX submit ──────────────────────────────────────────
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        clearAll();
+
+        const ok = ['first_name','email','subject','message']
+            .map(f => validateField(f))
+            .every(Boolean);
+
+        if (!ok) return;
+
+        // Loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('{{ route('blog.contact-us.submit') }}', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                },
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                form.reset();
+                clearAll();
+                showSuccess();
+            } else if (response.status === 422 && data.errors) {
+                // Server-side validation errors
+                Object.entries(data.errors).forEach(([field, messages]) => {
+                    setError(field, messages[0]);
+                });
+            } else {
+                setError('message', data.message || 'Something went wrong. Please try again.');
+            }
+        } catch (_) {
+            setError('message', 'Network error. Please check your connection and try again.');
+        } finally {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }
+    });
+
+    // ── Success modal ────────────────────────────────────────
+    function showSuccess() {
+        overlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+    }
+
+    function hideSuccess() {
+        overlay.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', hideSuccess);
+
+    overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) hideSuccess();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay.classList.contains('show')) hideSuccess();
+    });
+})();
+</script>
+@endpush
+
 </x-blog::layouts.master>
