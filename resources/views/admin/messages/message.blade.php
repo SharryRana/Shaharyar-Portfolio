@@ -471,41 +471,69 @@
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteMessageModal" tabindex="-1" aria-labelledby="deleteMessageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteMessageModalLabel">Delete Message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this message? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteMessage">
+                        <i class="bi bi-trash3"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @push('scripts')
         <script>
             $(function() {
+                let pendingDeleteForm = null;
+                const deleteMessageModalEl = document.getElementById('deleteMessageModal');
+                const deleteMessageModal = new bootstrap.Modal(deleteMessageModalEl);
 
                 // Delete message
                 $(document).on('click', 'form button[title="Delete"]', function(event) {
                     event.preventDefault();
-                    const $form = $(this).closest('form');
-                    if (confirm('Are you sure you want to delete this message?')) {
-                        $.ajax({
-                            url: @json(route('messages.delete', [], false)),
-                            method: 'DELETE',
-                            data: $form.serialize(),
-                            success: function() {
-                                $form.closest('.message-card').fadeOut(300, function() {
-                                    $(this).remove();
-                                });
-                                $('<div class="alert alert-info mt-3">Message deleted successfully.</div>')
-                                    .insertBefore('.messages-list').delay(3000).fadeOut(300,
-                                        function() {
-                                            $(this).remove();
-                                        });
+                    pendingDeleteForm = $(this).closest('form');
+                    deleteMessageModal.show();
+                });
 
-                                showFlash('Message deleted successfully.', 'success');
-                            },
-                            error: function(error) {
-                                showFlash('Failed to delete message. Please try again.', 'error');
-                                $('<div class="alert alert-danger mt-3">Failed to delete message. Please try again.</div>')
-                                    .insertBefore('.messages-list').delay(3000).fadeOut(300,
-                                        function() {
-                                            $(this).remove();
-                                        });
-                            }
-                        });
+                $('#confirmDeleteMessage').on('click', function() {
+                    if (!pendingDeleteForm) {
+                        return;
                     }
+
+                    const $button = $(this);
+                    $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Deleting');
+
+                    $.ajax({
+                        url: @json(route('messages.delete', [], false)),
+                        method: 'DELETE',
+                        data: pendingDeleteForm.serialize(),
+                        success: function() {
+                            pendingDeleteForm.closest('.message-card').fadeOut(300, function() {
+                                $(this).remove();
+                            });
+
+                            deleteMessageModal.hide();
+                            showFlash('Message deleted successfully.', 'success');
+                        },
+                        error: function() {
+                            showFlash('Failed to delete message. Please try again.', 'error');
+                        },
+                        complete: function() {
+                            pendingDeleteForm = null;
+                            $button.prop('disabled', false).html('<i class="bi bi-trash3"></i> Delete');
+                        }
+                    });
                 });
 
                 // Function to show beautiful flash alerts
@@ -538,7 +566,7 @@
                     $card.removeClass('unread');
 
                     $.ajax({
-                        url: '/admin/message/' + $card.data('message-id') + '/mark-read',
+                        url: @json('/admin/message') + '/' + $card.data('message-id') + '/mark-read',
                         method: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}'

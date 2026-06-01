@@ -13,10 +13,10 @@ class VisitorController extends Controller
         $data = Visitor::orderBy('created_at', 'desc')->latest()->paginate(5);
 
         // Get stats
-        $totalCountries = Visitor::select('country')
-            ->whereNotNull('country')
-            ->distinct()
-            ->count();
+        $totalCountries = Visitor::whereNotNull('country')
+            ->where('country', '!=', '')
+            ->distinct('country')
+            ->count('country');
 
         $mobileVisitors = Visitor::where('user_agent', 'like', '%Mobile%')->count();
         $webVisitors = Visitor::where('user_agent', 'not like', '%Mobile%')->count();
