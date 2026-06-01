@@ -41,6 +41,26 @@ class Article extends Model
         return $this->hasMany(Visit::class);
     }
 
+    public function comments()
+    {
+        return $this->hasMany(ArticleComment::class);
+    }
+
+    public function approvedComments()
+    {
+        return $this->comments()->where('status', 'approved');
+    }
+
+    public function helpfulVotes()
+    {
+        return $this->hasMany(ArticleHelpfulVote::class);
+    }
+
+    public function uniqueViews()
+    {
+        return $this->hasMany(ArticleView::class);
+    }
+
     public function author()
     {
         return $this->belongsTo(Author::class)->withTrashed();

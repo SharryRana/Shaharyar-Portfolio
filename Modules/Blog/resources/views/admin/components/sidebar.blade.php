@@ -91,6 +91,20 @@
                     <span class="admin-sidebar-badge inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold leading-none text-white bg-red-500 rounded-full">{{ $unreadCount }}</span>
                 @endif
             </a>
+
+            <a href="{{ route('blog-admin.comments.index') }}" class="admin-sidebar-link {{ request()->routeIs('blog-admin.comments.*') ? 'bg-brand-accent/10 text-brand-accent dark:bg-brand-accent/20 font-bold' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white' }} flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors group mt-1" title="Comments">
+                <svg class="{{ request()->routeIs('blog-admin.comments.*') ? 'text-brand-accent' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300' }} mr-3 h-5 w-5 shrink-0 transition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h6m-8 8 4-4h8a4 4 0 004-4V7a4 4 0 00-4-4H7a4 4 0 00-4 4v5a4 4 0 004 4z" />
+                </svg>
+                <span class="admin-sidebar-label">Comments</span>
+            </a>
+
+            <a href="{{ route('blog-admin.newsletter.index') }}" class="admin-sidebar-link {{ request()->routeIs('blog-admin.newsletter.*') ? 'bg-brand-accent/10 text-brand-accent dark:bg-brand-accent/20 font-bold' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white' }} flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors group mt-1" title="Newsletter">
+                <svg class="{{ request()->routeIs('blog-admin.newsletter.*') ? 'text-brand-accent' : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-300' }} mr-3 h-5 w-5 shrink-0 transition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25V18a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18V8.25m18 0A2.25 2.25 0 0018.75 6H5.25A2.25 2.25 0 003 8.25m18 0v.243a2.25 2.25 0 01-1.07 1.916l-6.75 4.02a2.25 2.25 0 01-2.36 0l-6.75-4.02A2.25 2.25 0 013 8.493V8.25" />
+                </svg>
+                <span class="admin-sidebar-label">Newsletter</span>
+            </a>
         </div>
 
         <div class="pt-4">
