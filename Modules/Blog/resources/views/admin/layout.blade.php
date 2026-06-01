@@ -110,6 +110,34 @@
         .shadow-orange-500\/20 {
             --tw-shadow-color: rgb(79 95 246 / 0.2);
         }
+
+        .admin-accept-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 2.25rem;
+            border-radius: 0.5rem;
+            border: 1px solid #15803d;
+            background: #16a34a !important;
+            color: #ffffff !important;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 800;
+            line-height: 1;
+            box-shadow: 0 8px 18px rgba(22, 163, 74, 0.22);
+            transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .admin-accept-button:hover {
+            background: #15803d !important;
+            box-shadow: 0 10px 22px rgba(22, 163, 74, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .admin-accept-button:focus-visible {
+            outline: 3px solid rgba(22, 163, 74, 0.28);
+            outline-offset: 2px;
+        }
     </style>
 
     <script>

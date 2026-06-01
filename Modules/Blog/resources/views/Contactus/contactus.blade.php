@@ -498,6 +498,25 @@
     </style>
 @endpush
 
+@php
+    use Illuminate\Support\Str;
+
+    $categories = $categories ?? collect();
+    $popularPosts = $popularPosts ?? collect();
+    $fallbackImages = [
+        'https://images.unsplash.com/photo-1581276879432-15e50529f34b?auto=format&fit=crop&w=300&q=80',
+        'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=300&q=80',
+        'https://images.unsplash.com/photo-1547658719-da2b51169166?auto=format&fit=crop&w=300&q=80',
+    ];
+    $postImage = function ($path, int $index = 0) use ($fallbackImages) {
+        if (!$path) {
+            return $fallbackImages[$index % count($fallbackImages)];
+        }
+
+        return Str::startsWith($path, ['http://', 'https://', '//']) ? $path : asset($path);
+    };
+@endphp
+
 <x-blog::layouts.master>
     <!-- Hero Section -->
     <section class="hero">
@@ -594,9 +613,15 @@
                 <h3 class="widget-title">Newsletter</h3>
                 <p class="about-text">Subscribe to our newsletter to get the latest updates and articles directly in
                     your inbox.</p>
-                <form class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="Your email address">
-                    <button type="submit" class="newsletter-btn">Subscribe <i class="fas fa-paper-plane"></i></button>
+                <div class="newsletter-status" data-newsletter-status></div>
+                <form class="newsletter-form" action="{{ route('blog.newsletter.submit') }}" method="POST" data-newsletter-form>
+                    @csrf
+                    <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-btn">
+                        <span data-newsletter-label>Subscribe</span>
+                        <span data-newsletter-spinner class="newsletter-spinner" hidden></span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </form>
             </div>
 
@@ -604,64 +629,35 @@
             <div class="sidebar-widget">
                 <h3 class="widget-title">Categories</h3>
                 <ul class="categories-list">
-                    <li class="category-item">
-                        <a href="#" class="category-link">Web Design</a>
-                        <span class="category-count">12</span>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">Development</a>
-                        <span class="category-count">24</span>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">UX/UI</a>
-                        <span class="category-count">8</span>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">JavaScript</a>
-                        <span class="category-count">16</span>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">Productivity</a>
-                        <span class="category-count">7</span>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">Tools</a>
-                        <span class="category-count">11</span>
-                    </li>
-                    <li class="category-item">
-                        <a href="#" class="category-link">Tutorials</a>
-                        <span class="category-count">19</span>
-                    </li>
+                    @forelse($categories as $category)
+                        <li class="category-item">
+                            <a href="{{ route('blog.category.show', $category->slug) }}" class="category-link">{{ $category->name }}</a>
+                            <span class="category-count">{{ $category->articles_count }}</span>
+                        </li>
+                    @empty
+                        <li class="category-item">
+                            <span class="category-link">No categories yet</span>
+                            <span class="category-count">0</span>
+                        </li>
+                    @endforelse
                 </ul>
             </div>
 
             <!-- Popular Posts Widget -->
             <div class="sidebar-widget">
                 <h3 class="widget-title">Popular Posts</h3>
-                <div class="popular-post">
-                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
-                        alt="Popular Post" class="popular-post-img">
-                    <div class="popular-post-content">
-                        <h4 class="popular-post-title">How to Build a Responsive Website from Scratch</h4>
-                        <span class="popular-post-date">April 28, 2023</span>
-                    </div>
-                </div>
-                <div class="popular-post">
-                    <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
-                        alt="Popular Post" class="popular-post-img">
-                    <div class="popular-post-content">
-                        <h4 class="popular-post-title">VS Code Extensions for Web Developers</h4>
-                        <span class="popular-post-date">April 25, 2023</span>
-                    </div>
-                </div>
-                <div class="popular-post">
-                    <img src="https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80"
-                        alt="Popular Post" class="popular-post-img">
-                    <div class="popular-post-content">
-                        <h4 class="popular-post-title">React Performance Optimization Techniques</h4>
-                        <span class="popular-post-date">April 20, 2023</span>
-                    </div>
-                </div>
+                @forelse($popularPosts as $index => $post)
+                    <a href="{{ route('blog.show', $post->slug) }}" class="popular-post">
+                        <img src="{{ $postImage($post->image, $index) }}"
+                            alt="{{ $post->image_alt_text ?: $post->title }}" class="popular-post-img" loading="lazy">
+                        <div class="popular-post-content">
+                            <h4 class="popular-post-title">{{ $post->title }}</h4>
+                            <span class="popular-post-date">{{ optional($post->published_at)->format('F j, Y') }}</span>
+                        </div>
+                    </a>
+                @empty
+                    <p class="about-text">Popular posts will appear after articles are published.</p>
+                @endforelse
             </div>
         </aside>
     </div>

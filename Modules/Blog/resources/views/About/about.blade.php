@@ -73,6 +73,21 @@
             margin-bottom: 1rem;
         }
 
+        .about-card .about-team-initials {
+            width: 80px;
+            height: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: 0;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -178,26 +193,25 @@
         <div class="container">
             <h2>Meet the Team</h2>
             <div class="about-grid">
-                <div class="about-card">
-                    <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?crop=faces&fit=crop&w=200&h=200" alt="Team Member">
-                    <h3>John Smith</h3>
-                    <p>Lead Designer</p>
-                </div>
-                <div class="about-card">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=faces&fit=crop&w=200&h=200" alt="Team Member">
-                    <h3>Mary Johnson</h3>
-                    <p>Community Manager</p>
-                </div>
-                <div class="about-card">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=faces&fit=crop&w=200&h=200" alt="Team Member">
-                    <h3>Jane Doe</h3>
-                    <p>Founder & Editor-in-Chief</p>
-                </div>
-                <div class="about-card">
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?crop=faces&fit=crop&w=200&h=200" alt="Team Member">
-                    <h3>John Smith</h3>
-                    <p>Lead Designer</p>
-                </div>
+                @forelse(($teamMembers ?? collect()) as $member)
+                    <div class="about-card">
+                        @if($member->profile_image)
+                            <img src="{{ asset($member->profile_image) }}" alt="{{ $member->name }}">
+                        @else
+                            <span class="about-team-initials" aria-hidden="true">
+                                {{ collect(explode(' ', $member->name))->filter()->take(2)->map(fn ($part) => mb_substr($part, 0, 1))->implode('') }}
+                            </span>
+                        @endif
+                        <h3>{{ $member->name }}</h3>
+                        <p>{{ $member->role }}</p>
+                    </div>
+                @empty
+                    <div class="about-card">
+                        <span class="about-team-initials" aria-hidden="true">CV</span>
+                        <h3>Creavibe Team</h3>
+                        <p>Software Agency</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>

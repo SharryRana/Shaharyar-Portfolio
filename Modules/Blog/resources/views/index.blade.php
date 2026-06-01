@@ -188,9 +188,15 @@
                 <h3 class="widget-title">Newsletter</h3>
                 <p class="about-text">Subscribe to our newsletter to get the latest updates and articles directly in
                     your inbox.</p>
-                <form class="newsletter-form">
-                    <input type="email" class="newsletter-input" placeholder="Your email address">
-                    <button type="submit" class="newsletter-btn">Subscribe <i class="fas fa-paper-plane"></i></button>
+                <div class="newsletter-status" data-newsletter-status></div>
+                <form class="newsletter-form" action="{{ route('blog.newsletter.submit') }}" method="POST" data-newsletter-form>
+                    @csrf
+                    <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-btn">
+                        <span data-newsletter-label>Subscribe</span>
+                        <span data-newsletter-spinner class="newsletter-spinner" hidden></span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
                 </form>
             </div>
         </aside>

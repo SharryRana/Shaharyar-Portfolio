@@ -12,6 +12,7 @@
     <meta name="description" content="{{ trim($__env->yieldContent('meta_description', $description ?? 'Creavibe Blog shares practical ideas about development, design, and technology.')) }}">
     <meta name="keywords" content="{{ trim($__env->yieldContent('meta_keywords', $keywords ?? 'Creavibe Blog, web development, design, technology')) }}">
     <meta name="author" content="{{ trim($__env->yieldContent('meta_author', $author ?? 'Creavibe')) }}">
+    @include('blog::partials.favicons')
 
     @stack('meta')
 

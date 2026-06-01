@@ -10,12 +10,11 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <link rel="icon" type="image/png" href="{{ asset('frontend/assets/favicon/favicon-96x96.png') }}"
-        sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="{{ asset('frontend/assets/favicon/favicon.svg') }}" />
-    <link rel="shortcut icon" href="{{ asset('frontend/assets/favicon/favicon.ico') }}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('frontend/assets/favicon/apple-touch-icon.png') }}" />
-    <link rel="manifest" href="{{ asset('frontend/assets/favicon/site.webmanifest') }}" />
+    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" />
+    <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
+    <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}" />
     <link rel="icon" href="data:,">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
