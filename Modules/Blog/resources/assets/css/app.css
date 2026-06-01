@@ -648,6 +648,64 @@
             box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
         }
 
+        .newsletter-status,
+        .blog-inline-status {
+            display: none;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            padding: .9rem 1rem;
+            font-weight: 700;
+            font-size: .9rem;
+            animation: fadeIn .25s ease both;
+        }
+
+        .newsletter-status.is-visible,
+        .blog-inline-status.is-visible {
+            display: block;
+        }
+
+        .newsletter-status.success,
+        .blog-inline-status.success {
+            border: 1px solid rgba(16, 185, 129, .25);
+            background: rgba(16, 185, 129, .1);
+            color: #047857;
+        }
+
+        .newsletter-status.error,
+        .blog-inline-status.error {
+            border: 1px solid rgba(239, 68, 68, .25);
+            background: rgba(239, 68, 68, .1);
+            color: #b91c1c;
+        }
+
+        .newsletter-btn:disabled,
+        .comment-submit-btn:disabled {
+            cursor: not-allowed;
+            opacity: .75;
+        }
+
+        .newsletter-spinner,
+        .comment-spinner {
+            width: 16px;
+            height: 16px;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, .45);
+            border-top-color: #fff;
+            display: inline-block;
+            animation: spin .75s linear infinite;
+        }
+
+        .newsletter-spinner[hidden],
+        .comment-spinner[hidden],
+        [data-newsletter-spinner][hidden],
+        [data-comment-spinner][hidden] {
+            display: none !important;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Footer */
         footer {
             background-color: var(--bg-alt);

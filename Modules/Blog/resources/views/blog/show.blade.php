@@ -4,6 +4,10 @@
     $categories = $categories ?? collect();
     $popularPosts = $popularPosts ?? collect();
     $relatedPosts = $relatedPosts ?? collect();
+    $approvedComments = $approvedComments ?? collect();
+    $commentsEnabled = $commentsEnabled ?? false;
+    $helpfulEnabled = $helpfulEnabled ?? false;
+    $helpfulCounts = $helpfulCounts ?? ['yes' => 0, 'no' => 0];
 
     $imageUrl = function ($path, string $fallback) {
         if (!$path) {
@@ -305,6 +309,345 @@
             margin-top: 2rem;
         }
 
+        .article-feedback,
+        .comments-panel {
+            margin-top: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 25px var(--shadow);
+            padding: clamp(1.4rem, 4vw, 2.25rem);
+        }
+
+        .feedback-actions,
+        .comment-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .75rem;
+            align-items: center;
+        }
+
+        .feedback-btn,
+        .comment-reaction-btn {
+            border: 1px solid var(--border);
+            background: rgba(67, 97, 238, .06);
+            color: var(--text);
+            border-radius: 999px;
+            padding: .7rem 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .feedback-btn:hover,
+        .comment-reaction-btn:hover,
+        .feedback-btn.is-active,
+        .comment-reaction-btn.is-active {
+            transform: translateY(-2px);
+            background: var(--primary-gradient);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(67, 97, 238, .22);
+        }
+
+        .comments-list {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0 2rem;
+        }
+
+        .comments-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.25rem 0 .5rem;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: .85rem;
+            background: rgba(255, 255, 255, .48);
+        }
+
+        body.dark-mode .comments-toolbar {
+            background: rgba(255, 255, 255, .04);
+        }
+
+        .comments-count-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            border-radius: 999px;
+            background: rgba(67, 97, 238, .08);
+            color: var(--text);
+            padding: .7rem 1rem;
+            font-weight: 800;
+            font-size: .9rem;
+        }
+
+        .comments-filter-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--card-bg);
+            padding: .35rem;
+            color: var(--text-light);
+            font-weight: 800;
+            box-shadow: 0 10px 24px var(--shadow);
+        }
+
+        .comments-filter-label {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding-left: .55rem;
+        }
+
+        .comments-filter-wrap select[data-comments-sort] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .comments-sort-custom {
+            position: relative;
+        }
+
+        .comments-sort-toggle {
+            border: 0;
+            border-radius: 999px;
+            background: rgba(67, 97, 238, .08);
+            color: var(--text);
+            padding: .62rem .8rem .62rem .95rem;
+            font-weight: 900;
+            outline: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: .45rem;
+            transition: var(--transition);
+        }
+
+        .comments-sort-toggle:hover,
+        .comments-sort-custom.is-open .comments-sort-toggle {
+            background: var(--primary-gradient);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(67, 97, 238, .18);
+        }
+
+        .comments-sort-menu {
+            position: absolute;
+            right: 0;
+            top: calc(100% + .6rem);
+            z-index: 30;
+            min-width: 230px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--bg-alt);
+            padding: .45rem;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, .18);
+            opacity: 0;
+            transform: translateY(-8px) scale(.98);
+            pointer-events: none;
+            transition: opacity .18s ease, transform .18s ease;
+        }
+
+        body.dark-mode .comments-sort-menu {
+            background: #1e1e1e;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, .38);
+        }
+
+        .comments-sort-custom.is-open .comments-sort-menu {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .comments-sort-option {
+            width: 100%;
+            border: 0;
+            border-radius: 13px;
+            background: transparent;
+            color: var(--text);
+            padding: .78rem .9rem;
+            font-weight: 800;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .9rem;
+            transition: var(--transition);
+        }
+
+        .comments-sort-option:hover,
+        .comments-sort-option.is-active {
+            background: rgba(67, 97, 238, .09);
+            color: var(--primary);
+        }
+
+        .comments-sort-option.is-active::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: .82rem;
+        }
+
+        @media (max-width: 576px) {
+            .comments-toolbar,
+            .comments-filter-wrap {
+                align-items: stretch;
+            }
+
+            .comments-filter-wrap,
+            .comments-sort-custom,
+            .comments-sort-toggle {
+                width: 100%;
+            }
+
+            .comments-sort-toggle {
+                justify-content: space-between;
+            }
+
+            .comments-sort-menu {
+                left: 0;
+                right: auto;
+                width: 100%;
+            }
+        }
+
+        .comments-load-more {
+            margin: 0 auto 2rem;
+            border: 0;
+            border-radius: 999px;
+            background: var(--primary-gradient);
+            color: #fff;
+            padding: .95rem 1.35rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .55rem;
+            transition: var(--transition);
+            box-shadow: 0 10px 22px rgba(67, 97, 238, .18);
+        }
+
+        .comments-load-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(67, 97, 238, .28);
+        }
+
+        .comments-load-more[hidden] {
+            display: none !important;
+        }
+
+        .comments-loader {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .45);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .75s linear infinite;
+        }
+
+        .comments-loader[hidden] {
+            display: none !important;
+        }
+
+        .comment-card {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.1rem;
+            background: rgba(255, 255, 255, .58);
+            animation: fadeIn .28s ease both;
+        }
+
+        body.dark-mode .comment-card {
+            background: rgba(255, 255, 255, .04);
+        }
+
+        .comment-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: .75rem;
+        }
+
+        .comment-author {
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .comment-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            background: var(--accent-gradient);
+            font-weight: 900;
+            flex: 0 0 44px;
+        }
+
+        .comment-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .comment-field,
+        .comment-textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card-bg);
+            color: var(--text);
+            padding: .9rem 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .comment-field:focus,
+        .comment-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, .16);
+        }
+
+        .comment-textarea {
+            min-height: 140px;
+            resize: vertical;
+            margin-top: 1rem;
+        }
+
+        .comment-submit-btn {
+            margin-top: 1rem;
+            border: 0;
+            border-radius: 999px;
+            background: var(--primary-gradient);
+            color: #fff;
+            padding: .95rem 1.4rem;
+            font-weight: 900;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            transition: var(--transition);
+        }
+
+        .comment-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(67, 97, 238, .24);
+        }
+
         @media (max-width: 992px) {
             .article-hero-grid,
             .article-shell {
@@ -312,6 +655,10 @@
             }
 
             .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comment-form-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -379,6 +726,94 @@
                 </div>
             </article>
 
+            <section class="article-feedback" aria-labelledby="helpful-title">
+                <h2 class="section-title" id="helpful-title">Did you find this helpful?</h2>
+                <p class="about-text" style="margin-bottom: 1rem;">Your feedback helps us publish sharper, more useful articles.</p>
+                <div data-helpful-status class="blog-inline-status"></div>
+                @if($helpfulEnabled)
+                    <div class="feedback-actions">
+                        <button type="button" class="feedback-btn" data-helpful-vote="yes" data-article-id="{{ $article->id }}" data-helpful-url="{{ route('blog.articles.helpful', $article) }}">
+                            <i class="fas fa-thumbs-up"></i> Yes <span data-helpful-yes-count>{{ $helpfulCounts['yes'] ?? 0 }}</span>
+                        </button>
+                        <button type="button" class="feedback-btn" data-helpful-vote="no" data-article-id="{{ $article->id }}" data-helpful-url="{{ route('blog.articles.helpful', $article) }}">
+                            <i class="fas fa-thumbs-down"></i> No <span data-helpful-no-count>{{ $helpfulCounts['no'] ?? 0 }}</span>
+                        </button>
+                    </div>
+                @else
+                    <p class="about-text">Feedback voting will appear after the blog interaction migrations are run.</p>
+                @endif
+            </section>
+
+            <section class="comments-panel" aria-labelledby="comments-title">
+                <h2 class="section-title" id="comments-title">Reader Comments</h2>
+                <p class="about-text" style="margin-bottom: 1.5rem;">Share your opinion below. Comments appear after admin approval.</p>
+
+                @if($commentsEnabled)
+                    @php
+                        $commentsTotal = method_exists($approvedComments, 'total') ? $approvedComments->total() : $approvedComments->count();
+                        $commentsShowing = method_exists($approvedComments, 'lastItem') ? ($approvedComments->lastItem() ?? 0) : $approvedComments->count();
+                        $commentsNextPage = method_exists($approvedComments, 'hasMorePages') && $approvedComments->hasMorePages() ? 2 : '';
+                    @endphp
+                    <div class="comments-toolbar" data-comments-feed data-comments-url="{{ route('blog.comments.index', $article) }}" data-comments-page="1" data-comments-next-page="{{ $commentsNextPage }}">
+                        <span class="comments-count-pill">
+                            <i class="fas fa-comments"></i>
+                            Showing <span data-comments-showing>{{ $commentsShowing }}</span> of <span data-comments-total>{{ $commentsTotal }}</span>
+                        </span>
+                        <div class="comments-filter-wrap">
+                            <span class="comments-filter-label"><i class="fas fa-sliders"></i></span>
+                            <select data-comments-sort aria-label="Sort comments">
+                                <option value="latest">Latest</option>
+                                <option value="oldest">Oldest</option>
+                                <option value="positive">Highest positive</option>
+                                <option value="negative">Highest negative</option>
+                                <option value="popular">Most popular</option>
+                            </select>
+                            <div class="comments-sort-custom" data-comments-sort-custom>
+                                <button type="button" class="comments-sort-toggle" data-comments-sort-toggle aria-haspopup="listbox" aria-expanded="false">
+                                    <span data-comments-sort-label>Latest</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="comments-sort-menu" data-comments-sort-menu role="listbox">
+                                    <button type="button" class="comments-sort-option is-active" data-comments-sort-option value="latest" role="option" aria-selected="true">Latest</button>
+                                    <button type="button" class="comments-sort-option" data-comments-sort-option value="oldest" role="option" aria-selected="false">Oldest</button>
+                                    <button type="button" class="comments-sort-option" data-comments-sort-option value="positive" role="option" aria-selected="false">Highest positive</button>
+                                    <button type="button" class="comments-sort-option" data-comments-sort-option value="negative" role="option" aria-selected="false">Highest negative</button>
+                                    <button type="button" class="comments-sort-option" data-comments-sort-option value="popular" role="option" aria-selected="false">Most popular</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comments-list" data-comments-list>
+                        @include('blog::blog.partials.comment-cards', ['comments' => $approvedComments])
+                    </div>
+                    <button type="button" class="comments-load-more" data-comments-load-more @if(!$commentsNextPage) hidden @endif>
+                        <span data-comments-load-label>Load more comments</span>
+                        <span class="comments-loader" data-comments-loader hidden></span>
+                        <i class="fas fa-arrow-down"></i>
+                    </button>
+
+                    <div data-comment-status class="blog-inline-status"></div>
+                    <form action="{{ route('blog.comments.store', $article) }}" method="POST" data-comment-form>
+                        @csrf
+                        <div class="comment-form-grid">
+                            <input class="comment-field" type="text" name="name" placeholder="Your name" required>
+                            <input class="comment-field" type="email" name="email" placeholder="Email address" required>
+                        </div>
+                        <textarea class="comment-textarea" name="message" placeholder="Write your comment..." required></textarea>
+                        <button type="submit" class="comment-submit-btn">
+                            <span data-comment-label>Submit Comment</span>
+                            <span data-comment-spinner class="comment-spinner" hidden></span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                @else
+                    <div class="comment-card">
+                        <p class="about-text">The comment form will appear after the blog comment migrations are run.</p>
+                    </div>
+                @endif
+            </section>
+
             @if ($relatedPosts->isNotEmpty())
                 <section style="margin-top: 3rem;">
                     <h2 class="section-title">Related Articles</h2>
@@ -428,6 +863,21 @@
                 @empty
                     <p class="about-text">Popular posts will appear after more articles are viewed.</p>
                 @endforelse
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Newsletter</h3>
+                <p class="about-text">Subscribe to get the latest Creavibe articles directly in your inbox.</p>
+                <div class="newsletter-status" data-newsletter-status></div>
+                <form class="newsletter-form" action="{{ route('blog.newsletter.submit') }}" method="POST" data-newsletter-form>
+                    @csrf
+                    <input type="email" name="email" class="newsletter-input" placeholder="Your email address" required>
+                    <button type="submit" class="newsletter-btn">
+                        <span data-newsletter-label>Subscribe</span>
+                        <span data-newsletter-spinner class="newsletter-spinner" hidden></span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
             </div>
 
             <div class="sidebar-widget">
