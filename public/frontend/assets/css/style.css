@@ -2004,7 +2004,9 @@ footer {
 
 @media (max-width: 768px) {
     .nav-primary {
-        display: none;
+        display: block;
+        width: 0;
+        overflow: visible;
     }
 
     .nav-actions {
