@@ -196,33 +196,18 @@
                                 <a href="{{ route($routePrefix . '.edit', $item) }}" class="btn btn-sm btn-primary" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteContentModal{{ $routePrefix }}{{ $item->id }}" title="Delete">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
+                                <form action="{{ route($routePrefix . '.destroy', $item) }}" method="POST" class="d-inline"
+                                    data-confirm="Are you sure you want to delete {{ $item->title }}? This action cannot be undone."
+                                    data-confirm-title="Delete item?"
+                                    data-confirm-button="Delete">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
-
-                        <div class="modal fade" id="deleteContentModal{{ $routePrefix }}{{ $item->id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Delete Item</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure you want to delete <strong>{{ $item->title }}</strong>? This action cannot be undone.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="{{ route($routePrefix . '.destroy', $item) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @empty
                         <tr>
                             <td colspan="{{ count($columns) + 4 }}" class="text-center py-5">
