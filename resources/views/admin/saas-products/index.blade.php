@@ -186,32 +186,18 @@
                                 <td class="text-end">
                                     <a href="{{ route('saas-products.edit', $product) }}" class="btn btn-sm btn-primary"><i
                                             class="bi bi-pencil-square"></i></a>
-                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#deleteSaas{{ $product->id }}"><i class="bi bi-trash3"></i></button>
+                                    <form action="{{ route('saas-products.destroy', $product) }}" method="POST" class="d-inline"
+                                        data-confirm="Delete {{ $product->title }} and all related screenshots, FAQs, and pricing? This action cannot be undone."
+                                        data-confirm-title="Delete SaaS product?"
+                                        data-confirm-button="Delete Product">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-outline-danger" type="submit">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-
-                            <div class="modal fade" id="deleteSaas{{ $product->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete SaaS Product</h5><button type="button"
-                                                class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">Delete <strong>{{ $product->title }}</strong> and all related
-                                            screenshots, FAQs, and pricing?</div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary"
-                                                data-bs-dismiss="modal">Cancel</button>
-                                            <form action="{{ route('saas-products.destroy', $product) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @empty
                             <tr>
                                 <td colspan="6" class="text-center py-5">No SaaS products found.</td>
