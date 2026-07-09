@@ -87,6 +87,47 @@
             gap: 10px;
         }
 
+        /* ------------------- Filters ------------------- */
+        .visitor-filter-panel {
+            padding: 22px;
+            background:
+                radial-gradient(circle at top left, rgba(76, 201, 240, .16), transparent 32%),
+                linear-gradient(135deg, rgba(67, 97, 238, .08), rgba(63, 55, 201, .04));
+            border-bottom: 1px solid rgba(67, 97, 238, .12);
+        }
+
+        .visitor-filter-panel .form-label {
+            color: #344054;
+            font-size: .82rem;
+            font-weight: 700;
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+
+        .visitor-filter-panel .form-control,
+        .visitor-filter-panel .form-select {
+            min-height: 46px;
+            border-radius: 14px;
+            border-color: rgba(67, 97, 238, .18);
+            box-shadow: 0 10px 28px rgba(15, 18, 33, .04);
+        }
+
+        .visitor-filter-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .visitor-filter-actions .btn {
+            min-height: 46px;
+            border-radius: 14px;
+            font-weight: 700;
+        }
+
+        .visitor-summary-line {
+            color: #667085;
+            font-size: .92rem;
+        }
+
         /* ------------------- Table ------------------- */
         .table-custom {
             overflow: hidden;
@@ -187,6 +228,18 @@
             background: rgba(226, 230, 243, 0.12);
         }
 
+        html[data-theme="dark"] .visitor-filter-panel {
+            background:
+                radial-gradient(circle at top left, rgba(76, 201, 240, .12), transparent 32%),
+                linear-gradient(135deg, rgba(226, 230, 243, .07), rgba(67, 97, 238, .08));
+            border-color: rgba(255, 255, 255, .08);
+        }
+
+        html[data-theme="dark"] .visitor-filter-panel .form-label,
+        html[data-theme="dark"] .visitor-summary-line {
+            color: rgba(226, 230, 243, .78);
+        }
+
         html[data-theme="dark"] .empty-state {
             color: #aaa;
         }
@@ -284,7 +337,7 @@
 @endpush
 
 @section('main-content')
-    <div class="row mb-4">
+    <div class="row g-3 mb-4">
         <!-- Total Countries -->
         <div class="col-md-4">
             <div class="card-custom p-4 text-center">
@@ -317,6 +370,69 @@
         <div class="card-header-custom">
             <i class="fas fa-users"></i> Visitor Statistics
         </div>
+        <form method="GET" class="visitor-filter-panel">
+            <div class="row g-3 align-items-end">
+                <div class="col-lg-4 col-md-6">
+                    <label class="form-label" for="visitorSearch">Search</label>
+                    <input id="visitorSearch" type="search" name="search" class="form-control"
+                        value="{{ $filters['search'] ?? '' }}"
+                        placeholder="IP, country, city, referrer, or browser">
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label" for="visitorCountry">Country</label>
+                    <select id="visitorCountry" name="country" class="form-select">
+                        <option value="">All Countries</option>
+                        @foreach ($countryOptions as $country)
+                            <option value="{{ $country }}" @selected(($filters['country'] ?? '') === $country)>
+                                {{ $country }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label" for="visitorDevice">Device</label>
+                    <select id="visitorDevice" name="device" class="form-select">
+                        <option value="">All Devices</option>
+                        <option value="mobile" @selected(($filters['device'] ?? '') === 'mobile')>Mobile</option>
+                        <option value="desktop" @selected(($filters['device'] ?? '') === 'desktop')>Desktop/Web</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label" for="visitorStatus">Status</label>
+                    <select id="visitorStatus" name="status" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option value="active" @selected(($filters['status'] ?? '') === 'active')>Active</option>
+                        <option value="blocked" @selected(($filters['status'] ?? '') === 'blocked')>Blocked</option>
+                    </select>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label" for="visitorFrom">From</label>
+                    <input id="visitorFrom" type="date" name="date_from" class="form-control"
+                        value="{{ $filters['date_from'] ?? '' }}">
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <label class="form-label" for="visitorTo">To</label>
+                    <input id="visitorTo" type="date" name="date_to" class="form-control"
+                        value="{{ $filters['date_to'] ?? '' }}">
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="visitor-filter-actions">
+                        <button class="btn btn-primary flex-fill" type="submit">
+                            <i class="bi bi-funnel"></i> Apply Filters
+                        </button>
+                        <a href="{{ route('visitors.index') }}" class="btn btn-outline-secondary flex-fill">
+                            <i class="bi bi-arrow-counterclockwise"></i> Reset
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="visitor-summary-line">
+                        Showing {{ $data->firstItem() ?? 0 }} to {{ $data->lastItem() ?? 0 }} of
+                        {{ $data->total() }} visitor records.
+                    </div>
+                </div>
+            </div>
+        </form>
         <div class="table-responsive">
             <table class="table table-bordered table-hover align-middle table-custom mb-0">
                 <thead>
@@ -336,8 +452,8 @@
                         <tr>
                             <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
                             <td>{{ $visitor->ip }}</td>
-                            <td>{{ $visitor->country ?? '—' }}</td>
-                            <td>{{ $visitor->city ?? '—' }}</td>
+                            <td>{{ $visitor->country ?: 'N/A' }}</td>
+                            <td>{{ $visitor->city ?: 'N/A' }}</td>
 
                             <td>
                                 <span class="truncate-text" title="{{ $visitor->user_agent }}">
@@ -354,18 +470,23 @@
                                 <span class="switch-label">{{ ucfirst($visitor->status) }}</span>
                             </td>
                             <td>
-                                <form id="{{ $visitor->id . 'delete-form' }}" class="d-inline">
+                                <form id="{{ $visitor->id . 'delete-form' }}" class="d-inline visitor-delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" name="id" value="{{ $visitor->id }}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" title="Delete"><i
-                                            class="bi bi-trash3"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger visitor-delete-btn"
+                                        title="Delete"
+                                        data-confirm-title="Delete visitor?"
+                                        data-confirm-message="Are you sure you want to delete this visitor record? This action cannot be undone."
+                                        data-confirm-button="Delete Visitor">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6">
+                            <td colspan="8">
                                 <div class="empty-state">
                                     <i class="fas fa-user-slash"></i>
                                     <p>No visitor data available.</p>
@@ -432,7 +553,7 @@
             // Toggle visitor status
             $(document).on('change', '.status-toggle', function() {
                 const visitorId = $(this).data('id');
-                const $label = $(this).siblings('label');
+                const $statusCell = $(this).closest('td');
                 const isChecked = $(this).is(':checked');
 
                 $.ajax({
@@ -443,7 +564,9 @@
                         id: visitorId
                     },
                     success: function(response) {
-
+                        $statusCell.find('.switch-label').text(
+                            response.newStatus.charAt(0).toUpperCase() + response.newStatus.slice(1)
+                        );
                         showFlash(response.message, 'success');
                     },
                     error: function() {
@@ -455,11 +578,23 @@
             });
 
 
-            $(document).on('click', 'form button[title="Delete"]', function(event) {
+            $(document).on('click', '.visitor-delete-btn', function(event) {
                 event.preventDefault();
                 const $form = $(this).closest('form');
+                const $button = $(this);
 
-                if (confirm('Are you sure you want to delete this message?')) {
+                window.showAdminConfirm({
+                    title: $button.data('confirm-title') || 'Delete visitor?',
+                    message: $button.data('confirm-message') || 'This visitor record will be permanently deleted.',
+                    confirmText: $button.data('confirm-button') || 'Delete Visitor',
+                    variant: 'danger'
+                }).then((confirmed) => {
+                    if (!confirmed) {
+                        return;
+                    }
+
+                    $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+
                     $.ajax({
                         url: @json(route('visitor.delete', [], false)),
                         method: 'DELETE',
@@ -473,9 +608,12 @@
                         },
                         error: function() {
                             showFlash('Failed to delete Visitor. Please try again.', 'error');
+                        },
+                        complete: function() {
+                            $button.prop('disabled', false).html('<i class="bi bi-trash3"></i>');
                         }
                     });
-                }
+                });
             });
 
             // Function to show beautiful flash alerts
