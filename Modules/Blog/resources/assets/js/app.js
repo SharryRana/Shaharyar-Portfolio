@@ -223,7 +223,7 @@
                             item.classList.toggle('is-active', item.dataset.commentReaction === reaction);
                         });
                     } catch (error) {
-                        alert(error.message);
+                        showStatus(document.querySelector('[data-comment-status]'), error.message, 'error');
                         if (previousReaction) {
                             localStorage.setItem(storageKey, previousReaction);
                         }
