@@ -211,33 +211,18 @@
                                     <a href="{{ route('team-members.edit', $member) }}" class="btn btn-sm btn-primary" title="Edit">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteTeamModal{{ $member->id }}" title="Delete">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
+                                    <form action="{{ route('team-members.destroy', $member) }}" method="POST" class="d-inline"
+                                        data-confirm="Are you sure you want to delete {{ $member->name }}? This action cannot be undone."
+                                        data-confirm-title="Delete team member?"
+                                        data-confirm-button="Delete Member">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-
-                            <div class="modal fade" id="deleteTeamModal{{ $member->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Delete Team Member</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Are you sure you want to delete <strong>{{ $member->name }}</strong>? This action cannot be undone.
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <form action="{{ route('team-members.destroy', $member) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @empty
                             <tr>
                                 <td colspan="5" class="text-center py-5">
