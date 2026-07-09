@@ -91,6 +91,99 @@
             applyTheme(getNextTheme(current));
         });
 
+        window.showAdminFlash = function(message, type = 'success') {
+            const icon = type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle';
+            const $toast = $(`
+                <div class="admin-flash-toast ${type}" role="status">
+                    <i class="bi ${icon}"></i>
+                    <span></span>
+                </div>
+            `);
+
+            $toast.find('span').text(message);
+            $('body').append($toast);
+
+            setTimeout(() => {
+                $toast.fadeOut(220, function() {
+                    $(this).remove();
+                });
+            }, 3200);
+        };
+
+        window.showAdminConfirm = function(options = {}) {
+            return new Promise((resolve) => {
+                const modalEl = document.getElementById('adminConfirmModal');
+
+                if (!modalEl || typeof bootstrap === 'undefined') {
+                    resolve(false);
+                    return;
+                }
+
+                const $modal = $(modalEl);
+                const confirmText = options.confirmText || 'Delete';
+                const confirmClass = options.confirmClass || options.variant || 'danger';
+                let resolved = false;
+
+                $modal.find('#adminConfirmTitle').text(options.title || 'Confirm Action');
+                $modal.find('#adminConfirmMessage').text(options.message || 'Are you sure you want to continue?');
+                $modal.find('#adminConfirmAction')
+                    .removeClass('btn-danger btn-primary btn-warning btn-success')
+                    .addClass(`btn-${confirmClass}`)
+                    .text(confirmText)
+                    .prop('disabled', false);
+
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl, {
+                    backdrop: 'static',
+                    keyboard: true
+                });
+
+                const cleanup = () => {
+                    $modal.find('#adminConfirmAction').off('click.admin-confirm');
+                    $modal.off('hidden.bs.modal.admin-confirm');
+                };
+
+                $modal.find('#adminConfirmAction').one('click.admin-confirm', function() {
+                    resolved = true;
+                    cleanup();
+                    modal.hide();
+                    resolve(true);
+                });
+
+                $modal.one('hidden.bs.modal.admin-confirm', function() {
+                    cleanup();
+                    if (!resolved) {
+                        resolve(false);
+                    }
+                });
+
+                modal.show();
+            });
+        };
+
+        $(document).on('submit', 'form[data-confirm]', function(event) {
+            const form = this;
+
+            if (form.dataset.confirmed === 'true') {
+                return;
+            }
+
+            event.preventDefault();
+
+            window.showAdminConfirm({
+                title: form.dataset.confirmTitle || 'Delete item?',
+                message: form.dataset.confirm || 'This action cannot be undone.',
+                confirmText: form.dataset.confirmButton || 'Delete',
+                variant: form.dataset.confirmVariant || 'danger'
+            }).then((confirmed) => {
+                if (!confirmed) {
+                    return;
+                }
+
+                form.dataset.confirmed = 'true';
+                HTMLFormElement.prototype.submit.call(form);
+            });
+        });
+
         // Profile form validation + password strength
         const $form = $('#profileForm');
         if ($form.length) {
@@ -142,7 +235,7 @@
                 const isValidSize = file.size <= 5 * 1024 * 1024;
 
                 if (!isValidType || !isValidSize) {
-                    alert('Please select a JPG or PNG or Webp and jpeg image up to 5MB.');
+                    window.showAdminFlash('Please select a JPG, JPEG, PNG, or WebP image up to 5MB.', 'error');
                     $(this).val('');
                     return;
                 }
