@@ -411,12 +411,17 @@
                             <div class="text-end">
                                 <div class="message-time">{{ $msg->created_at->diffForHumans() }}</div>
                                 <div class="message-actions">
-                                    <form id="{{ $msg->id . 'delete-form' }}" class="d-inline">
+                                    <form id="{{ $msg->id . 'delete-form' }}" class="d-inline message-delete-form">
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="id" value="{{ $msg->id }}">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" title="Delete"><i
-                                                class="bi bi-trash3"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger message-delete-btn"
+                                            title="Delete"
+                                            data-confirm-title="Delete message?"
+                                            data-confirm-message="Are you sure you want to delete this message? This action cannot be undone."
+                                            data-confirm-button="Delete Message">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
                                     </form>
                                     <button type="button" class="btn btn-sm btn-primary view-message" title="View"><i
                                             class="bi bi-eye"></i> View</button>
@@ -476,10 +481,23 @@
             $(function() {
 
                 // Delete message
-                $(document).on('click', 'form button[title="Delete"]', function(event) {
+                $(document).on('click', '.message-delete-btn', function(event) {
                     event.preventDefault();
                     const $form = $(this).closest('form');
-                    if (confirm('Are you sure you want to delete this message?')) {
+                    const $button = $(this);
+
+                    window.showAdminConfirm({
+                        title: $button.data('confirm-title') || 'Delete message?',
+                        message: $button.data('confirm-message') || 'This message will be permanently deleted.',
+                        confirmText: $button.data('confirm-button') || 'Delete Message',
+                        variant: 'danger'
+                    }).then((confirmed) => {
+                        if (!confirmed) {
+                            return;
+                        }
+
+                        $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+
                         $.ajax({
                             url: '{{ route('messages.delete') }}',
                             method: 'DELETE',
@@ -503,9 +521,12 @@
                                         function() {
                                             $(this).remove();
                                         });
+                            },
+                            complete: function() {
+                                $button.prop('disabled', false).html('<i class="bi bi-trash3"></i>');
                             }
                         });
-                    }
+                    });
                 });
 
                 // Function to show beautiful flash alerts
