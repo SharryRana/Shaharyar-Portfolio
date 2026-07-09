@@ -354,12 +354,17 @@
                                 <span class="switch-label">{{ ucfirst($visitor->status) }}</span>
                             </td>
                             <td>
-                                <form id="{{ $visitor->id . 'delete-form' }}" class="d-inline">
+                                <form id="{{ $visitor->id . 'delete-form' }}" class="d-inline visitor-delete-form">
                                     @csrf
                                     @method('DELETE')
                                     <input type="hidden" name="id" value="{{ $visitor->id }}">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" title="Delete"><i
-                                            class="bi bi-trash3"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger visitor-delete-btn"
+                                        title="Delete"
+                                        data-confirm-title="Delete visitor?"
+                                        data-confirm-message="Are you sure you want to delete this visitor record? This action cannot be undone."
+                                        data-confirm-button="Delete Visitor">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -455,11 +460,23 @@
             });
 
 
-            $(document).on('click', 'form button[title="Delete"]', function(event) {
+            $(document).on('click', '.visitor-delete-btn', function(event) {
                 event.preventDefault();
                 const $form = $(this).closest('form');
+                const $button = $(this);
 
-                if (confirm('Are you sure you want to delete this message?')) {
+                window.showAdminConfirm({
+                    title: $button.data('confirm-title') || 'Delete visitor?',
+                    message: $button.data('confirm-message') || 'This visitor record will be permanently deleted.',
+                    confirmText: $button.data('confirm-button') || 'Delete Visitor',
+                    variant: 'danger'
+                }).then((confirmed) => {
+                    if (!confirmed) {
+                        return;
+                    }
+
+                    $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
+
                     $.ajax({
                         url: '{{ route('visitor.delete') }}',
                         method: 'DELETE',
@@ -473,9 +490,12 @@
                         },
                         error: function() {
                             showFlash('Failed to delete Visitor. Please try again.', 'error');
+                        },
+                        complete: function() {
+                            $button.prop('disabled', false).html('<i class="bi bi-trash3"></i>');
                         }
                     });
-                }
+                });
             });
 
             // Function to show beautiful flash alerts
