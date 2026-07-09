@@ -14,7 +14,7 @@
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">A list of all users registered on Creavibe.</p>
     </div>
     <div>
-        <button onclick="alert('Mock Export Users')" class="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none transition">
+        <button type="button" disabled title="Export is not available yet" class="inline-flex cursor-not-allowed items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-400 opacity-70 shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-500">
             <svg class="-ml-1 mr-2 h-5 w-5 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -106,9 +106,9 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div class="flex items-center justify-end gap-3 text-gray-400">
-                            <a href="#" onclick="alert('Mock Edit User')" class="hover:text-brand-accent transition" title="Edit">
+                            <span class="cursor-not-allowed opacity-50" title="Edit is not available yet">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                            </a>
+                            </span>
                         </div>
                     </td>
                 </tr>
