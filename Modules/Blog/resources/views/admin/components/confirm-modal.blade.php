@@ -1,4 +1,4 @@
-<div id="admin-confirm-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-gray-950/60 px-4 py-6 backdrop-blur-sm" aria-hidden="true">
+<div id="admin-confirm-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center bg-gray-950/60 px-4 py-6 backdrop-blur-sm" aria-hidden="true">
     <div class="absolute inset-0" data-confirm-cancel></div>
 
     <div class="relative w-full max-w-md overflow-hidden rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800" role="dialog" aria-modal="true" aria-labelledby="admin-confirm-title" aria-describedby="admin-confirm-message">
