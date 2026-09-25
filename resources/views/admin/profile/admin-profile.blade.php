@@ -12,7 +12,7 @@
                 <p class="text-muted mb-0">Manage your personal information and account security</p>
             </div>
             <div>
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back
+                <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back
                     to Dashboard</a>
             </div>
         </div>

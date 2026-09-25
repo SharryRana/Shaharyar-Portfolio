@@ -4,7 +4,7 @@
     @include('admin.shared.content-index', [
         'title' => 'Skills Management',
         'subtitle' => 'Manage the skill cards and experience categories on your portfolio.',
-        'routePrefix' => 'skills',
+        'routePrefix' => 'admin.skills',
         'items' => $items,
         'activeCount' => $activeCount,
         'inactiveCount' => $inactiveCount,

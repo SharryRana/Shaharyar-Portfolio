@@ -55,13 +55,13 @@
             <h4 class="mb-1">{{ $isEdit ? 'Edit Team Member' : 'Add Team Member' }}</h4>
             <p class="mb-0 opacity-75">Manage the information shown on the portfolio team cards.</p>
         </div>
-        <a href="{{ route('team-members.index') }}" class="btn btn-light">
+        <a href="{{ route('admin.team-members.index') }}" class="btn btn-light">
             <i class="bi bi-arrow-left"></i> Back
         </a>
     </div>
 
     <div class="card-body p-4">
-        <form action="{{ $isEdit ? route('team-members.update', $teamMember) : route('team-members.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $isEdit ? route('admin.team-members.update', $teamMember) : route('admin.team-members.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($isEdit)
                 @method('PUT')
@@ -164,7 +164,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
-                <a href="{{ route('team-members.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{{ route('admin.team-members.index') }}" class="btn btn-outline-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-check2-circle"></i> {{ $isEdit ? 'Update Member' : 'Create Member' }}
                 </button>

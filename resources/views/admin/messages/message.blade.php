@@ -515,7 +515,7 @@
                     $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1"></span> Deleting');
 
                     $.ajax({
-                        url: @json(route('messages.delete', [], false)),
+                        url: @json(route('admin.messages.delete', [], false)),
                         method: 'DELETE',
                         data: pendingDeleteForm.serialize(),
                         success: function() {

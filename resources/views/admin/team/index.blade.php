@@ -115,7 +115,7 @@
                 <h2 class="mb-1">Team Management</h2>
                 <p class="mb-0 opacity-75">Add, edit, reorder, and publish team members on your portfolio.</p>
             </div>
-            <a href="{{ route('team-members.create') }}" class="btn btn-light">
+            <a href="{{ route('admin.team-members.create') }}" class="btn btn-light">
                 <i class="bi bi-plus-circle"></i> Add Team Member
             </a>
         </div>
@@ -199,7 +199,7 @@
                                 </td>
                                 <td>{{ $member->sort_order }}</td>
                                 <td>
-                                    <form action="{{ route('team-members.toggle-status', $member) }}" method="POST">
+                                    <form action="{{ route('admin.team-members.toggle-status', $member) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <button class="btn btn-sm {{ $member->status === 'active' ? 'btn-success' : 'btn-outline-secondary' }}" type="submit">
@@ -208,10 +208,10 @@
                                     </form>
                                 </td>
                                 <td class="text-end">
-                                    <a href="{{ route('team-members.edit', $member) }}" class="btn btn-sm btn-primary" title="Edit">
+                                    <a href="{{ route('admin.team-members.edit', $member) }}" class="btn btn-sm btn-primary" title="Edit">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <form action="{{ route('team-members.destroy', $member) }}" method="POST" class="d-inline"
+                                    <form action="{{ route('admin.team-members.destroy', $member) }}" method="POST" class="d-inline"
                                         data-confirm="Are you sure you want to delete {{ $member->name }}? This action cannot be undone."
                                         data-confirm-title="Delete team member?"
                                         data-confirm-button="Delete Member">

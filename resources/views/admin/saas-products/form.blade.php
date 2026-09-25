@@ -103,7 +103,7 @@
         </div>
         <div class="d-flex gap-2">
             <button type="button" class="btn btn-light" id="openPreviewBtn"><i class="bi bi-eye"></i> Preview</button>
-            <a href="{{ route('saas-products.index') }}" class="btn btn-light"><i class="bi bi-arrow-left"></i> Back</a>
+            <a href="{{ route('admin.saas-products.index') }}" class="btn btn-light"><i class="bi bi-arrow-left"></i> Back</a>
         </div>
     </div>
 
@@ -119,7 +119,7 @@
             </div>
         @endif
 
-        <form id="saasProductForm" action="{{ $isEdit ? route('saas-products.update', $product) : route('saas-products.store') }}" method="POST" enctype="multipart/form-data">
+        <form id="saasProductForm" action="{{ $isEdit ? route('admin.saas-products.update', $product) : route('admin.saas-products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($isEdit) @method('PUT') @endif
 
@@ -412,7 +412,7 @@
 
             <div class="d-flex justify-content-end gap-2 mt-4">
                 <button type="button" class="btn btn-outline-primary" id="bottomPreviewBtn"><i class="bi bi-eye"></i> Preview</button>
-                <a href="{{ route('saas-products.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{{ route('admin.saas-products.index') }}" class="btn btn-outline-secondary">Cancel</a>
                 <button id="submitProductBtn" class="btn btn-primary"><i class="bi bi-check2-circle"></i> {{ $isEdit ? 'Update Product' : 'Create Product' }}</button>
             </div>
         </form>

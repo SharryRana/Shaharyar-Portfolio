@@ -94,7 +94,7 @@
                 <h2 class="mb-1">SaaS Products</h2>
                 <p class="mb-0 opacity-75">Manage product showcase pages, SEO, screenshots, videos, FAQs, and pricing.</p>
             </div>
-            <a href="{{ route('saas-products.create') }}" class="btn btn-light"><i class="bi bi-plus-circle"></i> Add
+            <a href="{{ route('admin.saas-products.create') }}" class="btn btn-light"><i class="bi bi-plus-circle"></i> Add
                 Product</a>
         </div>
     </section>
@@ -171,12 +171,12 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td><a href="{{ route('projects.show', $product->slug) }}"
+                                <td><a href="{{ route('saas.show', $product->slug) }}"
                                         target="_blank">{{ $product->slug }}</a></td>
                                 <td>{{ $product->category ?: 'N/A' }}</td>
                                 <td>{{ $product->sort_order }}</td>
                                 <td>
-                                    <form action="{{ route('saas-products.toggle-status', $product) }}" method="POST">
+                                    <form action="{{ route('admin.saas-products.toggle-status', $product) }}" method="POST">
                                         @csrf
                                         @method('PATCH')
                                         <button
@@ -184,9 +184,9 @@
                                     </form>
                                 </td>
                                 <td class="text-end">
-                                    <a href="{{ route('saas-products.edit', $product) }}" class="btn btn-sm btn-primary"><i
+                                    <a href="{{ route('admin.saas-products.edit', $product) }}" class="btn btn-sm btn-primary"><i
                                             class="bi bi-pencil-square"></i></a>
-                                    <form action="{{ route('saas-products.destroy', $product) }}" method="POST" class="d-inline"
+                                    <form action="{{ route('admin.saas-products.destroy', $product) }}" method="POST" class="d-inline"
                                         data-confirm="Delete {{ $product->title }} and all related screenshots, FAQs, and pricing? This action cannot be undone."
                                         data-confirm-title="Delete SaaS product?"
                                         data-confirm-button="Delete Product">

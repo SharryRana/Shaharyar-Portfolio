@@ -16,10 +16,10 @@
             <h4 class="mb-1">{{ $isEdit ? 'Edit Client Work' : 'Add Client Work' }}</h4>
             <p class="mb-0 opacity-75">Manage client/work category cards on your portfolio.</p>
         </div>
-        <a href="{{ route('client-work.index') }}" class="btn btn-light"><i class="bi bi-arrow-left"></i> Back</a>
+        <a href="{{ route('admin.client-work.index') }}" class="btn btn-light"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
     <div class="card-body p-4">
-        <form action="{{ $isEdit ? route('client-work.update', $item) : route('client-work.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ $isEdit ? route('admin.client-work.update', $item) : route('admin.client-work.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @if($isEdit) @method('PUT') @endif
             <div class="row g-4">
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end gap-2 mt-4">
-                <a href="{{ route('client-work.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{{ route('admin.client-work.index') }}" class="btn btn-outline-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle"></i> {{ $isEdit ? 'Update Client Work' : 'Create Client Work' }}</button>
             </div>
         </form>

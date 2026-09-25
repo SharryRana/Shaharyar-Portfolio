@@ -15,10 +15,10 @@
             <h4 class="mb-1">{{ $isEdit ? 'Edit Skill' : 'Add Skill' }}</h4>
             <p class="mb-0 opacity-75">Manage skill cards shown on the portfolio.</p>
         </div>
-        <a href="{{ route('skills.index') }}" class="btn btn-light"><i class="bi bi-arrow-left"></i> Back</a>
+        <a href="{{ route('admin.skills.index') }}" class="btn btn-light"><i class="bi bi-arrow-left"></i> Back</a>
     </div>
     <div class="card-body p-4">
-        <form action="{{ $isEdit ? route('skills.update', $item) : route('skills.store') }}" method="POST">
+        <form action="{{ $isEdit ? route('admin.skills.update', $item) : route('admin.skills.store') }}" method="POST">
             @csrf
             @if($isEdit) @method('PUT') @endif
 
@@ -73,7 +73,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
-                <a href="{{ route('skills.index') }}" class="btn btn-outline-secondary">Cancel</a>
+                <a href="{{ route('admin.skills.index') }}" class="btn btn-outline-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle"></i> {{ $isEdit ? 'Update Skill' : 'Create Skill' }}</button>
             </div>
         </form>

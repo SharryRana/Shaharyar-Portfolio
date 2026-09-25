@@ -420,7 +420,7 @@
                         <button class="btn btn-primary flex-fill" type="submit">
                             <i class="bi bi-funnel"></i> Apply Filters
                         </button>
-                        <a href="{{ route('visitors.index') }}" class="btn btn-outline-secondary flex-fill">
+                        <a href="{{ route('admin.visitors.index') }}" class="btn btn-outline-secondary flex-fill">
                             <i class="bi bi-arrow-counterclockwise"></i> Reset
                         </a>
                     </div>
@@ -557,7 +557,7 @@
                 const isChecked = $(this).is(':checked');
 
                 $.ajax({
-                    url: @json(route('visitor.toggleStatus', [], false)),
+                    url: @json(route('admin.visitor.toggleStatus', [], false)),
                     method: 'PATCH',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -596,7 +596,7 @@
                     $button.prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span>');
 
                     $.ajax({
-                        url: @json(route('visitor.delete', [], false)),
+                        url: @json(route('admin.visitor.delete', [], false)),
                         method: 'DELETE',
                         data: $form.serialize(),
                         success: function() {

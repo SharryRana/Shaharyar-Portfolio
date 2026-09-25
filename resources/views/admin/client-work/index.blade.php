@@ -4,7 +4,7 @@
     @include('admin.shared.content-index', [
         'title' => 'Client Work Management',
         'subtitle' => 'Manage client work and experience categories on the portfolio.',
-        'routePrefix' => 'client-work',
+        'routePrefix' => 'admin.client-work',
         'items' => $items,
         'activeCount' => $activeCount,
         'inactiveCount' => $inactiveCount,
