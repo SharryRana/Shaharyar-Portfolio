@@ -89,12 +89,12 @@
                         </div>
                         <div class="tech-badges">
                             <div class="chip-row">
-                                <span class="chip">Go (Golang)</span>
-                                <span class="chip">Laravel</span>
-                                <span class="chip">Vue.js</span>
-                                <span class="chip">React</span>
-                                <span class="chip">PostgreSQL</span>
-                                <span class="chip">Docker</span>
+                                <span class="chip"><i class="fab fa-golang" aria-hidden="true"></i> Go (Golang)</span>
+                                <span class="chip"><i class="fab fa-laravel" aria-hidden="true"></i> Laravel</span>
+                                <span class="chip"><i class="fab fa-vuejs" aria-hidden="true"></i> Vue.js</span>
+                                <span class="chip"><i class="fab fa-react" aria-hidden="true"></i> React</span>
+                                <span class="chip"><i class="fas fa-database" aria-hidden="true"></i> PostgreSQL</span>
+                                <span class="chip"><i class="fab fa-docker" aria-hidden="true"></i> Docker</span>
                             </div>
                         </div>
                     </div>
