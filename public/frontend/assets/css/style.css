@@ -542,21 +542,57 @@ header.scrolled {
 }
 
 .tech-badges {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
+    position: relative;
+    z-index: 2;
+}
+
+.chip-row {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-top: 20px;
+    align-items: center;
+    gap: 8px 10px;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 8px;
 }
 
 .chip {
-    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 13px;
     border-radius: 999px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.25;
     color: var(--light);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--card-bg);
     border: 1px solid var(--card-border);
-    box-shadow: 0 4px 12px rgba(2, 6, 23, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    white-space: nowrap;
+    user-select: none;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chip i {
+    font-size: 0.82rem;
+    color: var(--primary);
+    transition: transform 0.2s ease;
+}
+
+.chip:hover {
+    transform: translateY(-2px);
+    border-color: rgba(34, 211, 238, 0.4);
+    box-shadow: 0 6px 16px rgba(34, 211, 238, 0.12);
+}
+
+.chip:hover i {
+    transform: scale(1.15);
 }
 
 /* Parallax decorative layers */
@@ -1773,9 +1809,16 @@ textarea.form-control {
 }
 
 :root[data-theme="light"] .chip {
-    background: rgba(2, 6, 23, 0.04);
-    color: #101828;
-    border-color: rgba(2, 6, 23, 0.08);
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+:root[data-theme="light"] .chip:hover {
+    background: #ffffff;
+    border-color: rgba(34, 211, 238, 0.55);
+    box-shadow: 0 6px 18px rgba(34, 211, 238, 0.14);
 }
 
 :root[data-theme="light"] .project-tag {
@@ -2181,12 +2224,19 @@ footer {
     }
 
     .hero-visual {
-        min-height: 390px;
+        min-height: auto;
+        height: auto;
+    }
+
+    .dev-illustration {
+        height: auto;
     }
 
     .code-window {
-        height: 300px;
-        margin: 10px auto 16px;
+        height: auto;
+        min-height: 240px;
+        max-width: 100%;
+        margin: 10px auto 14px;
     }
 
     #typed-code {
@@ -2197,6 +2247,28 @@ footer {
     .stack-icons,
     .tech-badges {
         position: static;
+        width: 100%;
+    }
+
+    .tech-badges {
+        margin-top: 10px;
+        margin-bottom: 8px;
+    }
+
+    .chip-row {
+        gap: 7px 8px;
+        max-width: 100%;
+        padding: 0 4px;
+    }
+
+    .chip {
+        padding: 5px 11px;
+        font-size: 0.74rem;
+        gap: 5px;
+    }
+
+    .chip i {
+        font-size: 0.78rem;
     }
 
     .project-card,
