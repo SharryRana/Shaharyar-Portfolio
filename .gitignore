@@ -29,5 +29,15 @@ Thumbs.db
 !/public/uploads/projects/.gitkeep
 /public/uploads/avatars/*
 !/public/uploads/avatars/.gitkeep
+/public/uploads/articles/*
+!/public/uploads/articles/.gitkeep
+/public/uploads/team-members/*
+!/public/uploads/team-members/.gitkeep
+/public/uploads/services/*
+!/public/uploads/services/.gitkeep
+/public/uploads/experience/*
+!/public/uploads/experience/.gitkeep
+/public/uploads/testimonials/*
+!/public/uploads/testimonials/.gitkeep
 
 
