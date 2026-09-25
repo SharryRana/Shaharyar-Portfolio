@@ -50,16 +50,24 @@ class VisitorCounter
 
         $userAgent = $request->userAgent();
         $referrer = $request->headers->get('referer');
-        $location = Location::get($ip);
 
-        Visitor::create([
-            'ip' => $ip ?? 'Unknown',
-            'user_agent' => $userAgent ?? 'Unknown',
-            'referrer' => $referrer ?? 'Direct',
-            'country' => $location?->countryName ?? 'Unknown',
-            'city' => $location?->cityName ?? 'Unknown',
-            'status' => 'active',
-        ]);
+        // Check if this IP has already been recorded in the last 24 hours
+        $recentVisit = Visitor::where('ip', $ip)
+            ->where('created_at', '>=', now()->subHours(24))
+            ->exists();
+
+        if (!$recentVisit) {
+            $location = Location::get($ip);
+
+            Visitor::create([
+                'ip' => $ip ?? 'Unknown',
+                'user_agent' => $userAgent ?? 'Unknown',
+                'referrer' => $referrer ?? 'Direct',
+                'country' => $location?->countryName ?? 'Unknown',
+                'city' => $location?->cityName ?? 'Unknown',
+                'status' => 'active',
+            ]);
+        }
 
         return $next($request);
     }
