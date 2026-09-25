@@ -367,38 +367,91 @@
 
         {{-- Testimonials Section --}}
         @if(($testimonials ?? collect())->isNotEmpty())
-            <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+            <section class="testimonials-section services-section-bg" id="testimonials" aria-labelledby="testimonials-title">
                 <div class="container">
-                    <div class="text-center mb-5">
-                        <span class="hero-eyebrow" style="font-size: .8rem;">Client Recommendations</span>
-                        <h2 id="testimonials-title" style="margin-top: 4px;">What Leaders & Founders Say</h2>
-                        <p style="color: var(--gray-light); max-width: 600px; margin: 8px auto 0;">Feedback from founders, CTOs, and product directors who partnered with Creavibe.</p>
+                    <div class="section-header-centered">
+                        <span class="page-hero-eyebrow">
+                            <i class="fas fa-star" style="color: #f59e0b;" aria-hidden="true"></i>&nbsp; Client Endorsements
+                        </span>
+                        <h2 id="testimonials-title">What Leaders & Founders Say</h2>
+                        <p>Direct feedback from startup founders, CTOs, and product directors who partnered with Creavibe to scale their platforms.</p>
+
+                        <div class="testimonial-summary-bar">
+                            <div class="t-summary-item">
+                                <span class="t-summary-rating">5.0</span>
+                                <div class="t-summary-stars" aria-label="5 out of 5 stars">
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                    <i class="fas fa-star" aria-hidden="true"></i>
+                                </div>
+                                <span class="t-summary-label">Average Client Rating</span>
+                            </div>
+                            <div class="t-summary-sep" aria-hidden="true"></div>
+                            <div class="t-summary-item">
+                                <span class="t-summary-stat">100%</span>
+                                <span class="t-summary-label">On-Time Delivery</span>
+                            </div>
+                            <div class="t-summary-sep" aria-hidden="true"></div>
+                            <div class="t-summary-item">
+                                <span class="t-summary-stat">50+</span>
+                                <span class="t-summary-label">Deliveries Completed</span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="testimonials-grid">
                         @foreach($testimonials as $item)
                             <div class="testimonial-card">
-                                <div class="testimonial-header">
-                                    <div class="testimonial-stars" aria-label="{{ $item->rating }} out of 5 stars">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="fas fa-star{{ $i <= $item->rating ? '' : '-o' }}" aria-hidden="true"></i>
-                                        @endfor
+                                <div class="testimonial-top">
+                                    <div class="testimonial-rating-row">
+                                        <div class="testimonial-stars" aria-label="{{ $item->rating }} out of 5 stars">
+                                            @for($i = 1; $i <= 5; $i++)
+                                                <i class="fas fa-star{{ $i <= $item->rating ? '' : '-o' }}" aria-hidden="true"></i>
+                                            @endfor
+                                        </div>
+                                        <span class="testimonial-rating-tag">{{ number_format($item->rating, 1) }}</span>
                                     </div>
-                                    <i class="fas fa-quote-right testimonial-quote-icon" aria-hidden="true"></i>
-                                </div>
-                                <p class="testimonial-text">"{{ $item->review }}"</p>
-                                <div class="testimonial-client">
-                                    @if($item->client_avatar)
-                                        <img src="{{ asset($item->client_avatar) }}" alt="{{ $item->client_name }}" class="testimonial-avatar" loading="lazy">
+                                    @if($item->project_title)
+                                        <span class="testimonial-project-pill" title="Project: {{ $item->project_title }}">
+                                            <i class="fas fa-layer-group" aria-hidden="true"></i> {{ $item->project_title }}
+                                        </span>
                                     @else
-                                        <div class="testimonial-avatar-fallback">
-                                            {{ Str::substr($item->client_name, 0, 1) }}
+                                        <div class="testimonial-quote-badge" aria-hidden="true">
+                                            <i class="fas fa-quote-right"></i>
                                         </div>
                                     @endif
-                                    <div>
-                                        <div class="testimonial-name">{{ $item->client_name }}</div>
+                                </div>
+
+                                <blockquote class="testimonial-text">
+                                    {{ $item->review }}
+                                </blockquote>
+
+                                <div class="testimonial-client">
+                                    <div class="testimonial-avatar-wrap">
+                                        @if($item->client_avatar)
+                                            <img src="{{ asset($item->client_avatar) }}" alt="{{ $item->client_name }}" class="testimonial-avatar" loading="lazy">
+                                        @else
+                                            <div class="testimonial-avatar-fallback" aria-hidden="true">
+                                                {{ Str::substr($item->client_name, 0, 1) }}
+                                            </div>
+                                        @endif
+                                        <span class="testimonial-verified-check" title="Verified Client" aria-hidden="true">
+                                            <i class="fas fa-check"></i>
+                                        </span>
+                                    </div>
+                                    <div class="testimonial-client-meta">
+                                        <div class="testimonial-name-row">
+                                            <span class="testimonial-name">{{ $item->client_name }}</span>
+                                            <span class="testimonial-verified-badge"><i class="fas fa-shield-halved" aria-hidden="true"></i> Verified</span>
+                                        </div>
                                         <div class="testimonial-role">
-                                            {{ $item->client_title }}{{ $item->company_name ? ' ' . $item->company_name : '' }}
+                                            <span>{{ $item->client_title }}</span>
+                                            @if($item->company_name)
+                                                <span class="testimonial-company-sep">&bull;</span>
+                                                <span class="testimonial-company">{{ $item->company_name }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
