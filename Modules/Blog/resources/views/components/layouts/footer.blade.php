@@ -27,7 +27,6 @@
                 <li class="footer-link"><a href="{{ route('blog.index') }}">Home</a></li>
                 <li class="footer-link"><a href="{{ route('blog.about') }}">About</a></li>
                 <li class="footer-link"><a href="{{ route('blog.category') }}">Categories</a></li>
-                <li class="footer-link"><a href="{{ route('blog.feature') }}">Features</a></li>
                 <li class="footer-link"><a href="{{ route('blog.contactus') }}">Contact</a></li>
             </ul>
         </div>

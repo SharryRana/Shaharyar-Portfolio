@@ -184,7 +184,7 @@
             </div>
         </div>
 
-        {{-- Country scrolling strip — one per region, shown/hidden by Alpine --}}
+        {{-- Country scrolling strip  one per region, shown/hidden by Alpine --}}
         @foreach ($regions as $regionName => $list)
             <div x-show="region === '{{ $regionName }}'" x-cloak
                 class="flex items-stretch overflow-x-auto sm:overflow-hidden p-2 cr-hide-scrollbar

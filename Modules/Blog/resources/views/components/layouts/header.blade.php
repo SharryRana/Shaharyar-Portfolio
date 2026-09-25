@@ -12,7 +12,6 @@
             <ul class="nav-menu" id="navMenu">
                 <li class="nav-item"><a href="{{ route('blog.index') }}" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="{{ route('blog.category') }}" class="nav-link">Categories</a></li>
-                <li class="nav-item"><a href="{{ route('blog.feature') }}" class="nav-link">Features</a></li>
                 <li class="nav-item"><a href="{{ route('blog.about') }}" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="{{ route('blog.contactus') }}" class="nav-link">Contact</a></li>
             </ul>

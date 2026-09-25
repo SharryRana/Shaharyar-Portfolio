@@ -197,7 +197,7 @@ Route::prefix('blogs')->group(function () use ($blogIndexData) {
     ]))->name('blog.category');
     Route::get('category/{category:slug}', fn (BlogCategoryModel $category) => view('blog::index', $blogIndexData($category)))
         ->name('blog.category.show');
-    Route::view('feature', 'blog::Features.feature')->name('blog.feature');
+    // blog.feature route removed  PubWhizz-specific landing page, not relevant to Creavibe Blog
     Route::get('about-us', fn () => view('blog::About.about', [
         'teamMembers' => TeamMember::active()->orderBy('sort_order')->get(),
     ]))->name('blog.about');
@@ -370,5 +370,5 @@ Route::get('/blog-page/{slug}', function (Request $request, string $slug) use ($
 })->name('blog.articles.seo.show');
 
 Route::get('/{slug}', $showPublishedArticle)
-    ->where('slug', '^(?!admin$|admin/|api$|api/|blog$|blogs$|blogs/|blog-admin$|blog-admin/|blog-page$|blog-page/|projects$|projects/|contact$|login$|server-migrate$)[A-Za-z0-9-]+$')
+    ->where('slug', '^(?!admin$|admin/|api$|api/|blog$|blogs$|blogs/|blog-admin$|blog-admin/|blog-page$|blog-page/|projects$|projects/|saas$|saas/|services$|services/|about$|skills$|experience$|contact$|faqs$|privacy-policy$|terms-and-conditions$|login$|sitemap\.xml$|server-migrate$)[A-Za-z0-9-]+$')
     ->name('blog.show');

@@ -336,8 +336,8 @@
                         <tr>
                             <td>{{ $loop->iteration + ($data->currentPage() - 1) * $data->perPage() }}</td>
                             <td>{{ $visitor->ip }}</td>
-                            <td>{{ $visitor->country ?? '—' }}</td>
-                            <td>{{ $visitor->city ?? '—' }}</td>
+                            <td>{{ $visitor->country ?? '' }}</td>
+                            <td>{{ $visitor->city ?? '' }}</td>
 
                             <td>
                                 <span class="truncate-text" title="{{ $visitor->user_agent }}">

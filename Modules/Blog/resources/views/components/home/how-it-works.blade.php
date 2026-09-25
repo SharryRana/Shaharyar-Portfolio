@@ -9,7 +9,7 @@
             <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
                 Get Backlinks in <span class="text-[#E97A37]">3 Simple Steps</span>
             </h2>
-            <p class="text-lg text-gray-500">From browsing to live link — the entire process takes less than 5 minutes.
+            <p class="text-lg text-gray-500">From browsing to live link  the entire process takes less than 5 minutes.
             </p>
         </div>
 
