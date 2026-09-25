@@ -1,29 +1,78 @@
 @extends('frontend.layouts.master')
+
+@section('title', 'Creavibe | Software Engineering & SaaS Development')
+@section('meta_description', 'Creavibe builds scalable SaaS platforms, FinTech software, enterprise applications, and modern web systems. Software engineering by Shaharyar.')
+@section('canonical_url', route('home'))
+@section('og_title', 'Creavibe | Software Engineering & SaaS Development')
+@section('og_description', 'Creavibe builds scalable SaaS platforms, FinTech software, and modern web applications. High-performance software engineering worldwide.')
+@section('twitter_title', 'Creavibe | Software Engineering & SaaS Development')
+@section('twitter_description', 'Creavibe builds scalable SaaS platforms, FinTech software, and modern web applications.')
+
+@push('head')
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@graph": [
+        {
+            "@@type": "WebSite",
+            "name": "Creavibe",
+            "url": "{{ route('home') }}",
+            "description": "Software Engineering & SaaS Development studio"
+        },
+        {
+            "@@type": "Organization",
+            "name": "Creavibe",
+            "url": "{{ route('home') }}",
+            "logo": "{{ asset('assets/og-image.png') }}",
+            "founder": {
+                "@@type": "Person",
+                "name": "Shaharyar Shafiq"
+            },
+            "sameAs": [
+                "https://github.com/SharryRana",
+                "https://www.linkedin.com/in/rana-shaharyar-848620200/",
+                "https://x.com/ShaharyarRana12"
+            ]
+        },
+        {
+            "@@type": "Person",
+            "name": "Shaharyar Shafiq",
+            "jobTitle": "Full-Stack Software Engineer",
+            "worksFor": {
+                "@@type": "Organization",
+                "name": "Creavibe"
+            },
+            "url": "{{ route('about') }}",
+            "sameAs": [
+                "https://github.com/SharryRana",
+                "https://www.linkedin.com/in/rana-shaharyar-848620200/",
+                "https://x.com/ShaharyarRana12"
+            ]
+        }
+    ]
+}
+</script>
+@endpush
+
 @section('main-content')
     <main id="main-content">
+        {{-- Hero Section --}}
         <section class="hero" id="home" aria-labelledby="home-title">
             <div class="container hero-grid">
                 <div class="hero-content">
-                    <span class="hero-eyebrow">Creavibe Software Agency</span>
-                    <h1 id="home-title">Build Scalable SaaS & Business Software That Drives Real Growth</h1>
-                    <p>We help startups, agencies, and enterprises build powerful SaaS platforms, business management
-                        systems, fintech applications, and automation software that scale with confidence.</p>
-                    <p class="hero-support">We transform complex business ideas into secure, high-performing digital
-                        products with premium UI/UX.</p>
+                    <span class="hero-eyebrow">Creavibe &mdash; Software Engineering &amp; SaaS Development</span>
+                    <h1 id="home-title">Build Scalable SaaS &amp; Business Software That Drives Real Growth</h1>
+                    <p>Creavibe helps startups, businesses, and enterprises build powerful SaaS platforms, FinTech applications, custom APIs, and backend architectures that scale with confidence.</p>
+                    <p class="hero-support">We transform complex software requirements into secure, high-performing digital products with modern engineering practices.</p>
                     <div class="hero-services" aria-label="What Creavibe builds">
-                        <span>Fintech Software</span>
-                        <span>CRM & ERP Platforms</span>
-                        <span>Enterprise Dashboards</span>
+                        <span>SaaS Platforms</span>
+                        <span>FinTech Systems</span>
+                        <span>Backend &amp; APIs</span>
                     </div>
                     <div class="hero-buttons">
-                        <a href="#contact" class="btn">Start Your Project</a>
-                        <a href="#projects" class="btn btn-outline">View Our Work</a>
-                        {{-- <a href="#contact" class="btn btn-outline">Schedule a Consultation</a> --}}
+                        <a href="{{ route('contact') }}" class="btn">Start Your Project</a>
+                        <a href="{{ route('saas.index') }}" class="btn btn-outline">Explore SaaS Products</a>
                     </div>
-                    {{-- <div class="hero-trust-stack" aria-label="Trusted technology stack">
-                        Laravel &bull; Golang &bull; PostgreSQL &bull; Vue.js &bull; React.js &bull; Node.js &bull; AWS
-                        &bull; Docker
-                    </div> --}}
                 </div>
                 <div class="hero-visual" aria-hidden="true">
                     <div class="dev-illustration">
@@ -38,52 +87,241 @@
                                 <span class="cursor"></span>
                             </div>
                         </div>
-                        <div class="stack-icons">
-                            <span class="stack-icon" title="Laravel"><i class="fab fa-laravel"></i></span>
-                            <span class="stack-icon" title="Vue.js"><i class="fab fa-vuejs"></i></span>
-                            <span class="stack-icon" title="React"><i class="fab fa-react"></i></span>
-                            <span class="stack-icon" title="Node.js"><i class="fab fa-node-js"></i></span>
-                            <span class="stack-icon" title="Django"><i class="fas fa-leaf"></i></span>
-                            <span class="stack-icon" title="Golang"><i class="fas fa-code"></i></span>
-                            <span class="stack-icon" title="PostgreSQL"><i class="fas fa-database"></i></span>
+                        <div class="tech-badges">
+                            <div class="chip-row">
+                                <span class="chip">Go (Golang)</span>
+                                <span class="chip">Laravel</span>
+                                <span class="chip">Vue.js</span>
+                                <span class="chip">React</span>
+                                <span class="chip">PostgreSQL</span>
+                                <span class="chip">Docker</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="tech-badges">
-                        <div class="chip-row">
-                            <span class="chip">Laravel</span>
-                            <span class="chip">Vue.js</span>
-                            <span class="chip">React</span>
-                            <span class="chip">Node.js</span>
-                            <span class="chip">Django</span>
-                            <span class="chip">Golang</span>
-                        </div>
-                        {{-- <span class="chip">PostgreSQL</span> --}}
-                        {{-- <span class="chip">MySQL</span> --}}
                     </div>
                 </div>
             </div>
 
-            <!-- Floating elements for background animation -->
+            <!-- Floating background elements -->
             <div class="parallax-layer layer-1" aria-hidden="true"></div>
             <div class="parallax-layer layer-2" aria-hidden="true"></div>
             <div class="parallax-layer layer-3" aria-hidden="true"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
             <div class="scroll-indicator" aria-hidden="true"></div>
         </section>
 
-        <!-- Skills Section -->
+        {{-- Key Metrics / Impact Bar --}}
+        <section class="stats-bar-section" aria-label="Creavibe key metrics">
+            <div class="container">
+                <div class="stats-bar-grid">
+                    <div class="stat-bar-card">
+                        <div class="stat-bar-icon"><i class="fas fa-code-branch" aria-hidden="true"></i></div>
+                        <div>
+                            <div class="stat-bar-number">5+</div>
+                            <div class="stat-bar-label">Years Engineering</div>
+                        </div>
+                    </div>
+                    <div class="stat-bar-card">
+                        <div class="stat-bar-icon"><i class="fas fa-layer-group" aria-hidden="true"></i></div>
+                        <div>
+                            <div class="stat-bar-number">50+</div>
+                            <div class="stat-bar-label">Production Deliveries</div>
+                        </div>
+                    </div>
+                    <div class="stat-bar-card">
+                        <div class="stat-bar-icon"><i class="fas fa-shield-alt" aria-hidden="true"></i></div>
+                        <div>
+                            <div class="stat-bar-number">99.9%</div>
+                            <div class="stat-bar-label">System Reliability</div>
+                        </div>
+                    </div>
+                    <div class="stat-bar-card">
+                        <div class="stat-bar-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                        <div>
+                            <div class="stat-bar-number">100%</div>
+                            <div class="stat-bar-label">Remote Worldwide</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- Featured SaaS Products --}}
+        @if(($featuredSaasProducts ?? collect())->isNotEmpty())
+            <section class="projects" id="saas-products" aria-labelledby="saas-products-title">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                        <div>
+                            <span class="hero-eyebrow" style="font-size: .8rem;">Software Products</span>
+                            <h2 id="saas-products-title" style="margin-top: 4px;">Featured SaaS Products</h2>
+                        </div>
+                        <a href="{{ route('saas.index') }}" class="btn btn-outline">View All Products <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+
+                    <div class="projects-grid">
+                        @foreach($featuredSaasProducts as $product)
+                            <a class="project-card saas-product-card" href="{{ route('saas.show', $product->slug) }}">
+                                <div class="project-img">
+                                    @if($product->thumbnail)
+                                        <img src="{{ asset($product->thumbnail) }}"
+                                             alt="{{ $product->thumbnail_alt ?: $product->title }}"
+                                             loading="lazy"
+                                             decoding="async">
+                                    @else
+                                        <i class="{{ $product->icon ?: 'fas fa-layer-group' }}" aria-hidden="true"></i>
+                                    @endif
+                                </div>
+                                <div class="project-content">
+                                    @if($product->category)
+                                        <span class="project-category">{{ $product->category }}</span>
+                                    @endif
+                                    <h3>{{ $product->title }}</h3>
+                                    <p>{{ $product->tagline ?: Str::limit($product->overview, 140) }}</p>
+                                    @if(!empty($product->tech_stack))
+                                        <div class="project-tags">
+                                            @foreach(array_slice($product->tech_stack, 0, 4) as $tag)
+                                                <span class="project-tag">{{ $tag }}</span>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    <span class="project-card-link">Explore SaaS <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- Services Section --}}
+        @if(($services ?? collect())->isNotEmpty())
+            <section class="skills services-section-bg" id="services" aria-labelledby="services-title">
+                <div class="container">
+                    <div class="text-center mb-5">
+                        <span class="hero-eyebrow" style="font-size: .8rem;">What We Do</span>
+                        <h2 id="services-title" style="margin-top: 4px;">Software Engineering Services</h2>
+                        <p style="color: var(--gray-light); max-width: 600px; margin: 8px auto 0;">Production-ready engineering services tailored to your digital product goals.</p>
+                    </div>
+
+                    <div class="skills-grid">
+                        @foreach($services as $service)
+                            <div class="skill-card">
+                                <div class="skill-icon">
+                                    <i class="{{ $service->icon ?: 'fas fa-cogs' }}" aria-hidden="true"></i>
+                                </div>
+                                <h3>{{ $service->name }}</h3>
+                                <p>{{ $service->short_description }}</p>
+                                <a href="{{ route('services.show', $service->slug) }}" class="project-card-link" style="margin-top:auto;">Learn More <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- Engineering Process Section --}}
+        <section class="process-section" id="process" aria-labelledby="process-title">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <span class="hero-eyebrow" style="font-size: .8rem;">Development Workflow</span>
+                    <h2 id="process-title" style="margin-top: 4px;">From Idea to High-Performance SaaS</h2>
+                    <p style="color: var(--gray-light); max-width: 620px; margin: 8px auto 0;">A disciplined software engineering process designed for reliability, speed, and long-term maintainability.</p>
+                </div>
+
+                <div class="process-steps-grid">
+                    <div class="process-step-card">
+                        <div class="process-step-num">01</div>
+                        <div class="process-step-icon"><i class="fas fa-sitemap" aria-hidden="true"></i></div>
+                        <h3>Architecture & DB Schema</h3>
+                        <p>Detailed database modeling, API domain boundaries, and selecting the optimal tech stack for high scalability.</p>
+                    </div>
+
+                    <div class="process-step-card">
+                        <div class="process-step-num">02</div>
+                        <div class="process-step-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+                        <h3>Agile Full-Stack Build</h3>
+                        <p>Clean modular code in Laravel, Go, Vue.js, or React. Incremental sprint releases with regular updates.</p>
+                    </div>
+
+                    <div class="process-step-card">
+                        <div class="process-step-num">03</div>
+                        <div class="process-step-icon"><i class="fas fa-user-shield" aria-hidden="true"></i></div>
+                        <h3>Security & Quality Audit</h3>
+                        <p>Rigorous test suite execution, rate-limiting, CSRF/XSS sanitization, and query optimization.</p>
+                    </div>
+
+                    <div class="process-step-card">
+                        <div class="process-step-num">04</div>
+                        <div class="process-step-icon"><i class="fas fa-cloud-upload-alt" aria-hidden="true"></i></div>
+                        <h3>Deployment & Scaling</h3>
+                        <p>Automated CI/CD pipelines, cloud server configuration, logging, health monitoring, and post-launch support.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- Case Studies / Featured Projects --}}
+        @if(($featuredProjects ?? collect())->isNotEmpty())
+            <section class="projects" id="case-studies" aria-labelledby="case-studies-title">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                        <div>
+                            <span class="hero-eyebrow" style="font-size: .8rem;">Engineering Work</span>
+                            <h2 id="case-studies-title" style="margin-top: 4px;">Project Case Studies</h2>
+                        </div>
+                        <a href="{{ route('projects.index') }}" class="btn btn-outline">All Case Studies <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+
+                    <div class="projects-grid">
+                        @foreach($featuredProjects as $project)
+                            <a class="project-card saas-product-card" href="{{ route('projects.show', $project->slug) }}">
+                                <div class="project-img">
+                                    @if($project->thumbnail)
+                                        <img src="{{ asset($project->thumbnail) }}"
+                                             alt="{{ $project->thumbnail_alt ?: $project->title }}"
+                                             loading="lazy"
+                                             decoding="async">
+                                    @else
+                                        <i class="fas fa-diagram-project" aria-hidden="true"></i>
+                                    @endif
+                                </div>
+                                <div class="project-content">
+                                    @if($project->project_type)
+                                        <span class="project-category">{{ $project->project_type }}</span>
+                                    @endif
+                                    <h3>{{ $project->title }}</h3>
+                                    <p>{{ $project->summary ?: Str::limit($project->overview, 140) }}</p>
+                                    @if(!empty($project->tech_stack))
+                                        <div class="project-tags">
+                                            @foreach(array_slice($project->tech_stack, 0, 4) as $tag)
+                                                <span class="project-tag">{{ $tag }}</span>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    <span class="project-card-link">View Case Study <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endif
+
+        {{-- Technology Stack & Skills --}}
         @if(($skills ?? collect())->isNotEmpty())
             <section class="skills" id="skills" aria-labelledby="skills-title">
                 <div class="container">
-                    <h2 class="text-center" id="skills-title">My Skills</h2>
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                        <div>
+                            <span class="hero-eyebrow" style="font-size: .8rem;">Technical Expertise</span>
+                            <h2 id="skills-title" style="margin-top: 4px;">Technology Stack</h2>
+                        </div>
+                        <a href="{{ route('skills') }}" class="btn btn-outline">Full Stack Details <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
 
                     <div class="skills-grid">
-                        @foreach($skills as $skill)
+                        @foreach($skills->take(8) as $skill)
                             <div class="skill-card">
                                 <div class="skill-icon">
-                                    <i class="{{ $skill->icon ?: 'fas fa-code' }}"></i>
+                                    <i class="{{ $skill->icon ?: 'fas fa-code' }}" aria-hidden="true"></i>
                                 </div>
                                 @if($skill->label)
                                     <span class="skill-label">{{ $skill->label }}</span>
@@ -97,60 +335,20 @@
             </section>
         @endif
 
-        <!-- Projects Section -->
-        @if(($saasProducts ?? collect())->isNotEmpty())
-            <section class="projects" id="projects" aria-labelledby="projects-title">
-                <div class="container">
-                    <h2 class="text-center" id="projects-title">Featured Projects</h2>
-
-                    <div class="projects-grid">
-                        @foreach($saasProducts as $project)
-                            <a class="project-card saas-product-card" href="{{ route('projects.show', $project->slug) }}">
-                                <div class="project-img">
-                                    @if($project->thumbnail)
-                                        <img src="{{ asset($project->thumbnail) }}"
-                                            alt="{{ $project->thumbnail_alt ?: $project->title }}">
-                                    @else
-                                        <i class="{{ $project->icon ?: 'fas fa-layer-group' }}"></i>
-                                    @endif
-                                </div>
-                                <div class="project-content">
-                                    @if($project->category)
-                                        <span class="project-category">{{ $project->category }}</span>
-                                    @endif
-                                    <h3>{{ $project->title }}</h3>
-                                    <p>{{ $project->tagline ?: Str::limit($project->overview, 140) }}</p>
-                                    @if(!empty($project->tech_stack))
-                                        <div class="project-tags">
-                                            @foreach($project->tech_stack as $tag)
-                                                <span class="project-tag">{{ $tag }}</span>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                    <span class="project-card-link">View product <i class="fas fa-arrow-right"></i></span>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-        @endif
-
-
-        <!-- Clients Section -->
+        {{-- Client Work Capabilities --}}
         @if(($clientWorks ?? collect())->isNotEmpty())
             <section class="clients" id="clients" aria-labelledby="clients-title">
                 <div class="container">
-                    <h2 class="text-center" id="clients-title">Client Work</h2>
+                    <h2 class="text-center" id="clients-title">Solutions We Build</h2>
 
                     <div class="clients-grid">
                         @foreach($clientWorks as $work)
                             <div class="client-card">
                                 <div class="client-logo">
                                     @if($work->image)
-                                        <img src="{{ asset($work->image) }}" alt="{{ $work->title }}">
+                                        <img src="{{ asset($work->image) }}" alt="{{ $work->title }}" loading="lazy" decoding="async">
                                     @else
-                                        <i class="{{ $work->icon ?: 'fas fa-building' }}"></i>
+                                        <i class="{{ $work->icon ?: 'fas fa-building' }}" aria-hidden="true"></i>
                                     @endif
                                 </div>
                                 <h3>{{ $work->title }}</h3>
@@ -167,159 +365,88 @@
             </section>
         @endif
 
-        <!-- Team Section -->
-        @if(($teamMembers ?? collect())->isNotEmpty())
-            <section class="team" id="team" aria-labelledby="team-title">
+        {{-- Testimonials Section --}}
+        @if(($testimonials ?? collect())->isNotEmpty())
+            <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
                 <div class="container">
-                    <div class="team-heading text-center">
-                        <h2 id="team-title">My Team</h2>
-                        <p>Meet the people behind the work - skilled, reliable, and focused on delivering high-quality digital
-                            solutions.</p>
+                    <div class="text-center mb-5">
+                        <span class="hero-eyebrow" style="font-size: .8rem;">Client Recommendations</span>
+                        <h2 id="testimonials-title" style="margin-top: 4px;">What Leaders & Founders Say</h2>
+                        <p style="color: var(--gray-light); max-width: 600px; margin: 8px auto 0;">Feedback from founders, CTOs, and product directors who partnered with Creavibe.</p>
                     </div>
 
-                    <div class="team-grid">
-                        @foreach($teamMembers as $member)
-                            <article class="team-card">
-                                <div class="team-card-top">
-                                    <div class="team-avatar-wrap">
-                                        @if($member->profile_image)
-                                            <img class="team-avatar" src="{{ asset($member->profile_image) }}"
-                                                alt="{{ $member->name }}">
-                                        @else
-                                            <div class="team-avatar team-avatar-fallback" aria-hidden="true">
-                                                {{ collect(explode(' ', $member->name))->filter()->map(fn($part) => Str::substr($part, 0, 1))->take(2)->implode('') }}
-                                            </div>
-                                        @endif
+                    <div class="testimonials-grid">
+                        @foreach($testimonials as $item)
+                            <div class="testimonial-card">
+                                <div class="testimonial-header">
+                                    <div class="testimonial-stars" aria-label="{{ $item->rating }} out of 5 stars">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <i class="fas fa-star{{ $i <= $item->rating ? '' : '-o' }}" aria-hidden="true"></i>
+                                        @endfor
                                     </div>
+                                    <i class="fas fa-quote-right testimonial-quote-icon" aria-hidden="true"></i>
+                                </div>
+                                <p class="testimonial-text">"{{ $item->review }}"</p>
+                                <div class="testimonial-client">
+                                    @if($item->client_avatar)
+                                        <img src="{{ asset($item->client_avatar) }}" alt="{{ $item->client_name }}" class="testimonial-avatar" loading="lazy">
+                                    @else
+                                        <div class="testimonial-avatar-fallback">
+                                            {{ Str::substr($item->client_name, 0, 1) }}
+                                        </div>
+                                    @endif
                                     <div>
-                                        <h3>{{ $member->name }}</h3>
-                                        <p class="team-role">{{ $member->role }}</p>
+                                        <div class="testimonial-name">{{ $item->client_name }}</div>
+                                        <div class="testimonial-role">
+                                            {{ $item->client_title }}{{ $item->company_name ? ' ' . $item->company_name : '' }}
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="team-labels">
-                                    @if($member->experience_label)
-                                        <span><i class="fas fa-award"></i>{{ $member->experience_label }}</span>
-                                    @endif
-                                    @if($member->projects_label)
-                                        <span><i class="fas fa-diagram-project"></i>{{ $member->projects_label }}</span>
-                                    @endif
-                                </div>
-
-                                @if(!empty($member->tags))
-                                    <div class="team-tags">
-                                        @foreach($member->tags as $tag)
-                                            <span>{{ $tag }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <p class="team-description">{{ $member->description }}</p>
-
-                                @if($member->mission)
-                                    <div class="team-mission">
-                                        <i class="fas fa-bullseye"></i>
-                                        <p>{{ $member->mission }}</p>
-                                    </div>
-                                @endif
-
-                                @if(!empty($member->expertise))
-                                    <div class="team-expertise">
-                                        <h4><i class="fas fa-layer-group"></i> Core Expertise</h4>
-                                        <ul>
-                                            @foreach($member->expertise as $item)
-                                                <li>{{ $item }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
-
-                                @if(!empty($member->stats))
-                                    <div class="team-stats">
-                                        @foreach($member->stats as $stat)
-                                            <div>
-                                                <i
-                                                    class="{{ Str::contains(Str::lower($stat), ['satisfaction', 'quality']) ? 'fas fa-face-smile' : 'fas fa-briefcase' }}"></i>
-                                                <span>{{ $stat }}</span>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <div class="team-contact">
-                                    @if($member->phone)
-                                        <a href="tel:{{ preg_replace('/\s+/', '', $member->phone) }}"><i
-                                                class="fas fa-phone"></i>{{ $member->phone }}</a>
-                                    @endif
-                                    @if($member->email)
-                                        <a href="mailto:{{ $member->email }}"><i class="fas fa-envelope"></i>{{ $member->email }}</a>
-                                    @endif
-                                </div>
-                            </article>
+                            </div>
                         @endforeach
                     </div>
                 </div>
             </section>
         @endif
 
-        <!-- Blog Section -->
-        <section class="blog" id="blog" aria-labelledby="blog-title">
-            <div class="container">
-                <h2 class="text-center" id="blog-title">Latest Articles</h2>
-
-                <div class="blog-grid">
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <i class="fas fa-code"></i>
+        {{-- Dynamic Blog Section --}}
+        @if(($latestArticles ?? collect())->isNotEmpty())
+            <section class="blog" id="blog" aria-labelledby="blog-title">
+                <div class="container">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+                        <div>
+                            <span class="hero-eyebrow" style="font-size: .8rem;">Technical Content</span>
+                            <h2 id="blog-title" style="margin-top: 4px;">Latest Articles</h2>
                         </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span><i class="far fa-calendar"></i> June 15, 2023</span>
-                                <span><i class="far fa-clock"></i> 5 min read</span>
-                            </div>
-                            <h3>Laravel API Development Best Practices</h3>
-                            <p>Learn how to build robust and secure APIs with Laravel following industry best practices.
-                            </p>
-                            <a href="#" class="btn btn-outline">Read More</a>
-                        </div>
+                        <a href="{{ route('blog.index') }}" class="btn btn-outline">Visit Blog <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
 
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span><i class="far fa-calendar"></i> May 28, 2023</span>
-                                <span><i class="far fa-clock"></i> 7 min read</span>
+                    <div class="blog-grid">
+                        @foreach($latestArticles as $article)
+                            <div class="blog-card">
+                                <div class="blog-img">
+                                    @if(!empty($article->featured_image))
+                                        <img src="{{ asset($article->featured_image) }}" alt="{{ $article->title }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
+                                    @else
+                                        <i class="fas fa-newspaper" aria-hidden="true"></i>
+                                    @endif
+                                </div>
+                                <div class="blog-content">
+                                    <div class="blog-meta">
+                                        <span><i class="far fa-calendar" aria-hidden="true"></i> {{ $article->published_at ? $article->published_at->format('M d, Y') : '' }}</span>
+                                    </div>
+                                    <h3>{{ $article->title }}</h3>
+                                    <p>{{ Str::limit(strip_tags($article->summary ?: $article->content), 120) }}</p>
+                                    <a href="{{ route('blog.show', $article->slug) }}" class="btn btn-outline">Read Article</a>
+                                </div>
                             </div>
-                            <h3>Vue.js Composition API Guide</h3>
-                            <p>Complete guide to using Vue.js Composition API for better code organization and
-                                reusability.
-                            </p>
-                            <a href="#" class="btn btn-outline">Read More</a>
-                        </div>
-                    </div>
-
-                    <div class="blog-card">
-                        <div class="blog-img">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span><i class="far fa-calendar"></i> April 10, 2023</span>
-                                <span><i class="far fa-clock"></i> 6 min read</span>
-                            </div>
-                            <h3>Deploying Laravel on VPS</h3>
-                            <p>Step-by-step guide to deploying Laravel applications on VPS with Nginx and SSL.</p>
-                            <a href="#" class="btn btn-outline">Read More</a>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
-        <!-- Contact Section -->
+        {{-- Contact Section --}}
         <section class="contact" id="contact" aria-labelledby="contact-title">
             <div class="container">
                 <h2 class="text-center" id="contact-title">Get In Touch</h2>
@@ -328,7 +455,7 @@
                     <div class="contact-info">
                         <div class="contact-item">
                             <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h3>Location</h3>
@@ -338,57 +465,53 @@
 
                         <div class="contact-item">
                             <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h3>Email</h3>
-                                <p>ranashaharyar625@gmail.com</p>
+                                <p><a href="mailto:ranashaharyar625@gmail.com" class="contact-link">ranashaharyar625@gmail.com</a></p>
                             </div>
                         </div>
 
                         <div class="contact-item">
                             <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
+                                <i class="fas fa-phone" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h3>Phone</h3>
-                                <p>+92 (305) 7362625</p>
-                                <p>+92 (335) 9493868</p>
+                                <p><a href="tel:+923057362625" class="contact-link">+92 (305) 7362625</a></p>
+                                <p><a href="tel:+923359493868" class="contact-link">+92 (335) 9493868</a></p>
                             </div>
                         </div>
 
                         <div class="social-links">
-                            <a href="https://x.com/ShaharyarRana12" aria-label="Twitter" rel="noopener"><i
-                                    class="fab fa-twitter" aria-hidden="true"></i></a>
-                            <a href="https://www.linkedin.com/in/rana-shaharyar-848620200/" aria-label="LinkedIn"
-                                rel="noopener"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                            <a href="https://github.com/SharryRana" aria-label="GitHub" rel="noopener"><i
-                                    class="fab fa-github" aria-hidden="true"></i></a>
-                            <a href="#" aria-label="Dribbble" rel="noopener"><i class="fab fa-dribbble"
-                                    aria-hidden="true"></i></a>
+                            <a href="https://x.com/ShaharyarRana12" aria-label="Twitter / X" rel="noopener noreferrer" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                            <a href="https://www.linkedin.com/in/rana-shaharyar-848620200/" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
+                            <a href="https://github.com/SharryRana" aria-label="GitHub" rel="noopener noreferrer" target="_blank"><i class="fab fa-github" aria-hidden="true"></i></a>
                         </div>
                     </div>
 
                     <div class="contact-form">
-                        <form action="{{ route('contact.submit') }}" id="contactForm" autocomplete="on">
+                        <form action="{{ route('contact.submit') }}" id="contactForm" method="POST" autocomplete="on" novalidate>
+                            @csrf
                             <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input type="text" id="name" name="name" class="form-control">
+                                <label for="name">Your Name <span aria-hidden="true">*</span></label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="John Smith">
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input type="email" id="email" name="email" class="form-control" autocomplete="email">
+                                <label for="email">Your Email <span aria-hidden="true">*</span></label>
+                                <input type="email" id="email" name="email" class="form-control" autocomplete="email" placeholder="john@company.com">
                             </div>
 
                             <div class="form-group">
-                                <label for="subject">Subject</label>
-                                <input type="text" id="subject" name="subject" class="form-control" autocomplete="on">
+                                <label for="subject">Subject <span aria-hidden="true">*</span></label>
+                                <input type="text" id="subject" name="subject" class="form-control" placeholder="SaaS Project Enquiry">
                             </div>
 
                             <div class="form-group">
-                                <label for="message">Your Message</label>
-                                <textarea id="message" name="message" class="form-control"></textarea>
+                                <label for="message">Your Message <span aria-hidden="true">*</span></label>
+                                <textarea id="message" name="message" class="form-control" rows="5" placeholder="Describe your software project..."></textarea>
                             </div>
 
                             <button type="submit" class="btn">Send Message</button>

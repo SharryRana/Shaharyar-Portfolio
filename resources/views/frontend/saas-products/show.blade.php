@@ -1,11 +1,11 @@
 @extends('frontend.layouts.master')
 
-@section('title', $product->meta_title ?: $product->title . ' | SaaS Product')
+@section('title', $product->meta_title ?: $product->title . ' | SaaS Product | Creavibe')
 @section('meta_description', $product->meta_description ?: Str::limit(strip_tags($product->overview), 155))
 @section('meta_keywords', $product->meta_keywords ?: $product->focus_keyword)
-@section('canonical_url', $product->canonical_url ?: route('projects.show', $product->slug))
+@section('canonical_url', $product->canonical_url ?: route('saas.show', $product->slug))
 @section('og_type', 'product')
-@section('og_title', $product->og_title ?: $product->meta_title ?: $product->title)
+@section('og_title', $product->og_title ?: $product->meta_title ?: $product->title . ' | Creavibe')
 @section('og_description', $product->og_description ?: $product->meta_description ?: Str::limit(strip_tags($product->overview), 155))
 @section('og_image', $product->og_image ? asset($product->og_image) : ($product->thumbnail ? asset($product->thumbnail) : asset('assets/og-image.png')))
 @section('og_image_alt', $product->thumbnail_alt ?: $product->title)
@@ -20,11 +20,11 @@
         <script type="application/ld+json">
             {
                 "@@context": "https://schema.org",
-                "@type": "SoftwareApplication",
+                "@@type": "SoftwareApplication",
                 "name": @json($product->title),
                 "description": @json($product->meta_description ?: Str::limit(strip_tags($product->overview), 155)),
                 "applicationCategory": @json($product->category ?: 'BusinessApplication'),
-                "url": @json(route('projects.show', $product->slug)),
+                "url": @json(route('saas.show', $product->slug)),
                 "image": @json($product->thumbnail ? asset($product->thumbnail) : null)
             }
         </script>
