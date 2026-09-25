@@ -2,156 +2,102 @@
 
 use App\Http\Controllers\Admin\ClientWorkController;
 use App\Http\Controllers\Admin\DashboardManage;
+use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\FeaturedProjectController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SaasProductController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\TeamMemberController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ContactusController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProjectPageController;
+use App\Http\Controllers\SaasIndexController;
 use App\Http\Controllers\SaasProductPageController;
+use App\Http\Controllers\ServicePageController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Visotors\VisitorController;
 use App\Http\Middleware\VisitorCounter;
-use App\Models\ClientWork;
-use App\Models\FeaturedProject;
-use App\Models\SaasProduct;
-use App\Models\Skill;
-use App\Models\TeamMember;
-use App\Models\Visitor;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
-// // I want to get the all visitor details from db i want to make a in csv file and download it
-// Route::get('/export-visitors', function () {
+// ═══════════════════════════════════════════════
+// 301 Redirects  Preserve SEO on URL changes
+// ═══════════════════════════════════════════════
 
-//     $visitors = Visitor::all();
+// Old /blogs/* → /blog/*
+Route::redirect('/blogs', '/blog', 301);
+Route::get('/blogs/{path}', fn (string $path) => redirect('/blog/' . $path, 301))
+    ->where('path', '.*');
 
-//     $csvData = "id,ip,user_agent,referrer,country,city,status,created_at,updated_at\n";
+// ═══════════════════════════════════════════════
+// Sitemap
+// ═══════════════════════════════════════════════
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-//     foreach ($visitors as $visitor) {
-
-//         $createdAt = optional($visitor->created_at)->format('Y-m-d H:i:s');
-//         $updatedAt = optional($visitor->updated_at)->format('Y-m-d H:i:s');
-
-//         $csvData .= "{$visitor->id},"
-//             ."\"{$visitor->ip}\","
-//             ."\"{$visitor->user_agent}\","
-//             ."\"{$visitor->referrer}\","
-//             ."\"{$visitor->country}\","
-//             ."\"{$visitor->city}\","
-//             ."\"{$visitor->status}\","
-//             ."\"{$createdAt}\","
-//             ."\"{$updatedAt}\"\n";
-//     }
-
-//     return response($csvData)
-//         ->header('Content-Type', 'text/csv')
-//         ->header('Content-Disposition', 'attachment; filename=\"visitors.csv\"');
-// });
-
-// // Route to D:\Shaharyar-Portfolio\public\visitors.csv file and then seed the data to database
-// Route::get('/import-visitors', function () {
-//     $filePath = public_path('visitors.csv');
-
-//     if (!file_exists($filePath)) {
-//         return response()->json(['error' => 'File not found.'], 404);
-//     }
-
-//     $file = fopen($filePath, 'r');
-//     fgetcsv($file); // Skip header row
-
-//     while (($row = fgetcsv($file)) !== false) {
-//         Visitor::updateOrCreate(
-//             ['id' => $row[0]],
-//             [
-//                 'ip' => $row[1],
-//                 'user_agent' => $row[2],
-//                 'referrer' => $row[3],
-//                 'country' => $row[4],
-//                 'city' => $row[5],
-//                 'status' => $row[6],
-//                 'created_at' => $row[7],
-//                 'updated_at' => $row[8],
-//             ]
-//         );
-//     }
-
-//     fclose($file);
-
-//     return response()->json(['message' => 'Visitors imported successfully.']);
-// });
-
-// Route::get('/server-migrate', function () {
-
-//     Artisan::call('db:seed', [
-//         '--force' => true,
-//     ]);
-
-//     return response()->json([
-//         'status' => 'success',
-//         'message' => 'Database migrations and seeders executed successfully.',
-//         'migration_output' => Artisan::output(),
-//     ]);
-
-// })->name('server.migrate');
-
-Route::get('/', function () {
-    $skills = Skill::active()
-        ->orderBy('sort_order')
-        ->orderBy('title')
-        ->get();
-
-    $featuredProjects = FeaturedProject::active()
-        ->orderBy('sort_order')
-        ->orderBy('title')
-        ->get();
-
-    $saasProducts = SaasProduct::active()
-        ->orderBy('sort_order')
-        ->orderBy('title')
-        ->get();
-
-    $clientWorks = ClientWork::active()
-        ->orderBy('sort_order')
-        ->orderBy('title')
-        ->get();
-
-    $teamMembers = TeamMember::active()
-        ->orderBy('sort_order')
-        ->orderBy('name')
-        ->get();
-
-    return view('frontend.main', compact('skills', 'featuredProjects', 'saasProducts', 'clientWorks', 'teamMembers'));
-})
+// ═══════════════════════════════════════════════
+// Public Frontend  Main pages
+// ═══════════════════════════════════════════════
+Route::get('/', [HomeController::class, 'index'])
     ->middleware(VisitorCounter::class)
     ->name('home');
 
-Route::get('/projects/{slug}', [SaasProductPageController::class, 'show'])
-    ->name('projects.show');
+Route::get('/about',      [PageController::class, 'about'])->name('about');
+Route::get('/skills',     [PageController::class, 'skills'])->name('skills');
+Route::get('/experience', [PageController::class, 'experience'])->name('experience');
+Route::get('/contact',    [PageController::class, 'contact'])->name('contact');
+Route::get('/faqs',       [PageController::class, 'faqs'])->name('faqs');
+Route::get('/privacy-policy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/terms-and-conditions', [PageController::class, 'terms'])->name('terms');
 
 Route::post('/contact', [ContactusController::class, 'create'])
+    ->middleware('throttle:5,1')
     ->name('contact.submit');
 
-// Admin dashboard route
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+// ═══════════════════════════════════════════════
+// SaaS Products
+// ═══════════════════════════════════════════════
+Route::get('/saas',        [SaasIndexController::class, 'index'])->name('saas.index');
+Route::get('/saas/{slug}', [SaasProductPageController::class, 'show'])->name('saas.show');
+
+// ═══════════════════════════════════════════════
+// Projects (Case Studies)
+// ═══════════════════════════════════════════════
+Route::get('/projects',        [ProjectPageController::class, 'index'])->name('projects.index');
+Route::get('/projects/{slug}', [ProjectPageController::class, 'show'])->name('projects.show');
+
+// ═══════════════════════════════════════════════
+// Services
+// ═══════════════════════════════════════════════
+Route::get('/services',        [ServicePageController::class, 'index'])->name('services.index');
+Route::get('/services/{slug}', [ServicePageController::class, 'show'])->name('services.show');
+
+// ═══════════════════════════════════════════════
+// Admin Panel (auth protected)
+// ═══════════════════════════════════════════════
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
 
     Route::get('dashboard', [DashboardManage::class, 'dashboard'])->name('dashboard');
-    Route::view('admin-profile', 'admin.profile.admin-profile')->name('admin.profile');
+    Route::view('admin-profile', 'admin.profile.admin-profile')->name('profile');
 
-    // Admin Dashboard Routes
+    // Notifications & messages
     Route::get('/notifications', [ContactusController::class, 'notifications']);
-    Route::any('/message/{id}/mark-read', [ContactusController::class, 'markAsRead']);
-
-    // Contact Us Messages
+    Route::patch('/message/{id}/mark-read', [ContactusController::class, 'markAsRead']);
     Route::get('contact-messages', [ContactusController::class, 'index'])->name('contactus.index');
     Route::delete('contact-messages/{id}', [ContactusController::class, 'destroy'])->name('contactus.destroy');
-
-    // Delete message
     Route::delete('messages/delete', [ContactusController::class, 'destroy'])->name('messages.delete');
 
-    // Visitor Stats
+    // Visitors
     Route::get('visitors', [VisitorController::class, 'index'])->name('visitors.index');
     Route::delete('visitor/delete', [VisitorController::class, 'destroy'])->name('visitor.delete');
     Route::patch('visitor/toggle-status', [VisitorController::class, 'toggleStatus'])->name('visitor.toggleStatus');
+
+    // Skills
+    Route::resource('skills', SkillController::class)->except('show');
+    Route::patch('skills/{skill}/toggle-status', [SkillController::class, 'toggleStatus'])
+        ->name('skills.toggle-status');
 
     // Team Members
     Route::resource('team-members', TeamMemberController::class)
@@ -160,33 +106,55 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::patch('team-members/{teamMember}/toggle-status', [TeamMemberController::class, 'toggleStatus'])
         ->name('team-members.toggle-status');
 
-    Route::resource('skills', SkillController::class)->except('show');
-    Route::patch('skills/{skill}/toggle-status', [SkillController::class, 'toggleStatus'])
-        ->name('skills.toggle-status');
-
+    // Featured Projects (homepage cards  legacy)
     Route::resource('featured-projects', FeaturedProjectController::class)
         ->parameters(['featured-projects' => 'featuredProject'])
         ->except('show');
     Route::patch('featured-projects/{featuredProject}/toggle-status', [FeaturedProjectController::class, 'toggleStatus'])
         ->name('featured-projects.toggle-status');
 
+    // Projects (case studies)
+    Route::resource('projects', ProjectController::class)->except('show');
+    Route::patch('projects/{project}/toggle-status', [ProjectController::class, 'toggleStatus'])
+        ->name('projects.toggle-status');
+
+    // SaaS Products
     Route::resource('saas-products', SaasProductController::class)
         ->parameters(['saas-products' => 'saasProduct'])
         ->except('show');
     Route::patch('saas-products/{saasProduct}/toggle-status', [SaasProductController::class, 'toggleStatus'])
         ->name('saas-products.toggle-status');
 
+    // Services
+    Route::resource('services', ServiceController::class)->except('show');
+    Route::patch('services/{service}/toggle-status', [ServiceController::class, 'toggleStatus'])
+        ->name('services.toggle-status');
+
+    // Client Work
     Route::resource('client-work', ClientWorkController::class)
         ->parameters(['client-work' => 'clientWork'])
         ->except('show');
     Route::patch('client-work/{clientWork}/toggle-status', [ClientWorkController::class, 'toggleStatus'])
         ->name('client-work.toggle-status');
 
-    Route::post('profile-update', [AuthController::class, 'profileUpdate'])->name('admin.profile.update');
-    Route::get('logout', [AuthController::class, 'logout'])->name('admin.logout');
+    // Experience
+    Route::resource('experiences', ExperienceController::class)->except('show');
+    Route::patch('experiences/{experience}/toggle-status', [ExperienceController::class, 'toggleStatus'])
+        ->name('experiences.toggle-status');
+
+    // Testimonials
+    Route::resource('testimonials', TestimonialController::class)->except('show');
+    Route::patch('testimonials/{testimonial}/toggle-status', [TestimonialController::class, 'toggleStatus'])
+        ->name('testimonials.toggle-status');
+
+    // Profile & auth
+    Route::post('profile-update', [AuthController::class, 'profileUpdate'])->name('profile.update');
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-// Authentication routes
+// ═══════════════════════════════════════════════
+// Auth
+// ═══════════════════════════════════════════════
 Route::middleware(['guest'])->group(function () {
     Route::view('admin/login', 'admin.auth.login')->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('login.perform');
