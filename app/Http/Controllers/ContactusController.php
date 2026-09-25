@@ -67,7 +67,7 @@ class ContactusController extends Controller
 
             // Any other exception
             return response()->json([
-                'error' => $e->getMessage()
+                'error' => 'An unexpected error occurred. Please try again.'
             ], 500);
         }
     }
