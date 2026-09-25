@@ -43,7 +43,7 @@ class TeamMemberController extends Controller
     {
         TeamMember::create($this->validatedData($request));
 
-        return redirect()->route('team-members.index')->with('success', 'Team member added successfully.');
+        return redirect()->route('admin.team-members.index')->with('success', 'Team member added successfully.');
     }
 
     public function edit(TeamMember $teamMember)
@@ -55,7 +55,7 @@ class TeamMemberController extends Controller
     {
         $teamMember->update($this->validatedData($request, $teamMember));
 
-        return redirect()->route('team-members.index')->with('success', 'Team member updated successfully.');
+        return redirect()->route('admin.team-members.index')->with('success', 'Team member updated successfully.');
     }
 
     public function destroy(TeamMember $teamMember)
@@ -63,7 +63,7 @@ class TeamMemberController extends Controller
         $this->deleteImage($teamMember->profile_image);
         $teamMember->delete();
 
-        return redirect()->route('team-members.index')->with('success', 'Team member deleted successfully.');
+        return redirect()->route('admin.team-members.index')->with('success', 'Team member deleted successfully.');
     }
 
     public function toggleStatus(TeamMember $teamMember)

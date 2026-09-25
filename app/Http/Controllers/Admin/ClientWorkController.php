@@ -42,7 +42,7 @@ class ClientWorkController extends Controller
     {
         ClientWork::create($this->validatedData($request));
 
-        return redirect()->route('client-work.index')->with('success', 'Client work added successfully.');
+        return redirect()->route('admin.client-work.index')->with('success', 'Client work added successfully.');
     }
 
     public function edit(ClientWork $clientWork)
@@ -56,7 +56,7 @@ class ClientWorkController extends Controller
     {
         $clientWork->update($this->validatedData($request, $clientWork));
 
-        return redirect()->route('client-work.index')->with('success', 'Client work updated successfully.');
+        return redirect()->route('admin.client-work.index')->with('success', 'Client work updated successfully.');
     }
 
     public function destroy(ClientWork $clientWork)
@@ -64,7 +64,7 @@ class ClientWorkController extends Controller
         $this->deleteImage($clientWork->image);
         $clientWork->delete();
 
-        return redirect()->route('client-work.index')->with('success', 'Client work deleted successfully.');
+        return redirect()->route('admin.client-work.index')->with('success', 'Client work deleted successfully.');
     }
 
     public function toggleStatus(ClientWork $clientWork)

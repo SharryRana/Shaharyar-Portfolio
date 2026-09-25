@@ -25,7 +25,7 @@ class FeaturedProjectController extends Controller
         $activeCount = FeaturedProject::active()->count();
         $inactiveCount = FeaturedProject::where('status', 'inactive')->count();
 
-        return view('admin.projects.index', compact('items', 'activeCount', 'inactiveCount'));
+        return view('admin.featured-projects.index', compact('items', 'activeCount', 'inactiveCount'));
     }
 
     public function create()
@@ -35,28 +35,28 @@ class FeaturedProjectController extends Controller
             'sort_order' => (FeaturedProject::max('sort_order') ?? 0) + 1,
         ]);
 
-        return view('admin.projects.create', compact('item'));
+        return view('admin.featured-projects.create', compact('item'));
     }
 
     public function store(Request $request)
     {
         FeaturedProject::create($this->validatedData($request));
 
-        return redirect()->route('featured-projects.index')->with('success', 'Featured project added successfully.');
+        return redirect()->route('admin.featured-projects.index')->with('success', 'Featured project added successfully.');
     }
 
     public function edit(FeaturedProject $featuredProject)
     {
         $item = $featuredProject;
 
-        return view('admin.projects.edit', compact('item'));
+        return view('admin.featured-projects.edit', compact('item'));
     }
 
     public function update(Request $request, FeaturedProject $featuredProject)
     {
         $featuredProject->update($this->validatedData($request, $featuredProject));
 
-        return redirect()->route('featured-projects.index')->with('success', 'Featured project updated successfully.');
+        return redirect()->route('admin.featured-projects.index')->with('success', 'Featured project updated successfully.');
     }
 
     public function destroy(FeaturedProject $featuredProject)
@@ -64,7 +64,7 @@ class FeaturedProjectController extends Controller
         $this->deleteImage($featuredProject->image);
         $featuredProject->delete();
 
-        return redirect()->route('featured-projects.index')->with('success', 'Featured project deleted successfully.');
+        return redirect()->route('admin.featured-projects.index')->with('success', 'Featured project deleted successfully.');
     }
 
     public function toggleStatus(FeaturedProject $featuredProject)

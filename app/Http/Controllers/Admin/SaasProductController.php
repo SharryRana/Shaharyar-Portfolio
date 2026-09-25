@@ -50,7 +50,7 @@ class SaasProductController extends Controller
         $product = SaasProduct::create($this->validatedData($request));
         $this->syncNestedContent($request, $product);
 
-        return redirect()->route('saas-products.index')->with('success', 'SaaS product added successfully.');
+        return redirect()->route('admin.saas-products.index')->with('success', 'SaaS product added successfully.');
     }
 
     public function edit(SaasProduct $saasProduct)
@@ -66,7 +66,7 @@ class SaasProductController extends Controller
         $saasProduct->update($this->validatedData($request, $saasProduct));
         $this->syncNestedContent($request, $saasProduct);
 
-        return redirect()->route('saas-products.index')->with('success', 'SaaS product updated successfully.');
+        return redirect()->route('admin.saas-products.index')->with('success', 'SaaS product updated successfully.');
     }
 
     public function destroy(SaasProduct $saasProduct)
@@ -79,7 +79,7 @@ class SaasProductController extends Controller
         }
         $saasProduct->delete();
 
-        return redirect()->route('saas-products.index')->with('success', 'SaaS product deleted successfully.');
+        return redirect()->route('admin.saas-products.index')->with('success', 'SaaS product deleted successfully.');
     }
 
     public function toggleStatus(SaasProduct $saasProduct)

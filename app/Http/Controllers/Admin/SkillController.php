@@ -41,7 +41,7 @@ class SkillController extends Controller
     {
         Skill::create($this->validatedData($request));
 
-        return redirect()->route('skills.index')->with('success', 'Skill added successfully.');
+        return redirect()->route('admin.skills.index')->with('success', 'Skill added successfully.');
     }
 
     public function edit(Skill $skill)
@@ -55,14 +55,14 @@ class SkillController extends Controller
     {
         $skill->update($this->validatedData($request));
 
-        return redirect()->route('skills.index')->with('success', 'Skill updated successfully.');
+        return redirect()->route('admin.skills.index')->with('success', 'Skill updated successfully.');
     }
 
     public function destroy(Skill $skill)
     {
         $skill->delete();
 
-        return redirect()->route('skills.index')->with('success', 'Skill deleted successfully.');
+        return redirect()->route('admin.skills.index')->with('success', 'Skill deleted successfully.');
     }
 
     public function toggleStatus(Skill $skill)
