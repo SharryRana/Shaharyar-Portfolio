@@ -6,46 +6,43 @@
         <div class="flex items-center justify-between h-16 lg:h-18">
 
             {{-- Logo --}}
-            <a href="/" class="flex items-center gap-0.5 flex-shrink-0">
-                <img src="{{ asset('blog-dashboard/logo/logo.svg') }}" alt="PubWhizz Logo" class="h-6 sm:h-8 w-auto">
-                <span class="-ml-1 text-[18px] sm:text-[24px] font-bold text-gray-900">PubWhizz</span>
+            <a href="{{ route('home') }}" class="flex items-center gap-0.5 flex-shrink-0">
+                <span class="text-[20px] sm:text-[24px] font-bold text-gray-900">Creavibe<span class="text-[#06b6d4]">.</span></span>
             </a>
 
             {{-- Desktop Navigation --}}
             <div class="hidden lg:flex items-center gap-8">
-                <a href="{{ route('blog.faqs.advertisers') }}"
-                    class="text-sm font-medium {{ request()->routeIs('blog.faqs.advertisers') ? 'text-[#E97A37]' : 'text-[#686677] hover:text-[#E97A37]' }} transition-colors duration-200">For Advertisers</a>
-                <a href="{{ route('blog.faqs.publishers') }}"
-                    class="text-sm font-medium {{ request()->routeIs('blog.faqs.publishers') ? 'text-[#E97A37]' : 'text-[#686677] hover:text-[#E97A37]' }} transition-colors duration-200">For Publishers</a>
-                <a href="{{ route('blog.about-us') }}"
-                    class="text-sm font-medium {{ request()->routeIs('blog.about-us') ? 'text-[#E97A37]' : 'text-[#686677] hover:text-[#E97A37]' }} transition-colors duration-200">About</a>
+                <a href="{{ route('home') }}"
+                    class="text-sm font-medium {{ request()->routeIs('home') ? 'text-[#06b6d4]' : 'text-[#686677] hover:text-[#06b6d4]' }} transition-colors duration-200">Home</a>
+                <a href="{{ route('about') }}"
+                    class="text-sm font-medium {{ request()->routeIs('about') ? 'text-[#06b6d4]' : 'text-[#686677] hover:text-[#06b6d4]' }} transition-colors duration-200">About</a>
+                <a href="{{ route('services.index') }}"
+                    class="text-sm font-medium {{ request()->routeIs('services.*') ? 'text-[#06b6d4]' : 'text-[#686677] hover:text-[#06b6d4]' }} transition-colors duration-200">Services</a>
                 <a href="{{ route('blog.index') }}"
-                    class="text-sm font-medium {{ request()->routeIs('blog.*') ? 'text-[#E97A37]' : 'text-[#686677] hover:text-[#E97A37]' }} transition-colors duration-200">Blog</a>
+                    class="text-sm font-medium {{ request()->routeIs('blog.*') ? 'text-[#06b6d4]' : 'text-[#686677] hover:text-[#06b6d4]' }} transition-colors duration-200">Blog</a>
+                <a href="{{ route('contact') }}"
+                    class="text-sm font-medium {{ request()->routeIs('contact') ? 'text-[#06b6d4]' : 'text-[#686677] hover:text-[#06b6d4]' }} transition-colors duration-200">Contact</a>
             </div>
 
             {{-- CTAs & Mobile Hamburger --}}
             <div class="flex items-center gap-2">
                 {{-- Desktop CTAs --}}
                 <div class="hidden lg:flex items-center gap-2">
-                    <a href="#"
-                        class="text-sm font-medium text-[#686677] border border-[#686677] hover:text-white hover:bg-[#E97A37] hover:border-none transition-colors duration-200 px-6 py-2 rounded-lg">
-                        Login
-                    </a>
-                    <a href="#"
-                        class="text-sm font-medium text-[#686677] hover:text-white hover:bg-[#E97A37] hover:border-none border border-[#686677] transition-colors duration-200 px-6 py-2 rounded-lg">
-                        Sign Up
+                    <a href="{{ route('contact') }}"
+                        class="text-sm font-medium text-white bg-[#06b6d4] hover:bg-[#0891b2] transition-colors duration-200 px-5 py-2 rounded-lg">
+                        Get in Touch
                     </a>
                 </div>
 
-                {{-- Mobile Sign Up Button --}}
-                <a href="#"
-                    class="lg:hidden text-[13px] font-semibold text-white bg-[#E97A37] hover:bg-[#cf6b2d] px-4 py-2 rounded-lg transition-colors">
-                    Sign Up
+                {{-- Mobile Contact Button --}}
+                <a href="{{ route('contact') }}"
+                    class="lg:hidden text-[13px] font-semibold text-white bg-[#06b6d4] hover:bg-[#0891b2] px-3.5 py-1.5 rounded-lg transition-colors">
+                    Contact
                 </a>
 
                 {{-- Mobile Hamburger --}}
                 <button @click="open = !open"
-                    class="lg:hidden p-1.5 rounded-lg text-[#686677] hover:text-[#E97A37] transition-colors"
+                    class="lg:hidden p-1.5 rounded-lg text-[#686677] hover:text-[#06b6d4] transition-colors"
                     aria-label="Toggle menu">
                     <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -91,9 +88,8 @@
 
                 {{-- Drawer Header --}}
                 <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                    <a href="/" class="flex items-center gap-0.5">
-                        <img src="{{ asset('blog-dashboard/logo/logo.svg') }}" alt="PubWhizz Logo" class="h-7 w-auto">
-                        <span class="-ml-1 text-xl font-bold text-gray-900">Pubwhizz</span>
+                    <a href="{{ route('home') }}" class="flex items-center gap-0.5">
+                        <span class="text-xl font-bold text-gray-900">Creavibe<span class="text-[#06b6d4]">.</span></span>
                     </a>
                     <button @click="open = false" class="p-1 rounded-lg text-gray-400 hover:text-gray-500">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -103,14 +99,13 @@
                 {{-- Drawer Links --}}
                 @php
                     $mobileLinks = [
-                        ['label' => 'Home', 'href' => url('/'), 'active' => request()->is('/')],
-                        ['label' => 'Publishers', 'href' => route('blog.faqs.publishers'), 'active' => request()->routeIs('blog.faqs.publishers')],
-                        ['label' => 'Advertiser', 'href' => route('blog.faqs.advertisers'), 'active' => request()->routeIs('blog.faqs.advertisers')],
-                        ['label' => 'About', 'href' => route('blog.about-us'), 'active' => request()->routeIs('blog.about-us')],
+                        ['label' => 'Home', 'href' => route('home'), 'active' => request()->routeIs('home')],
+                        ['label' => 'About', 'href' => route('about'), 'active' => request()->routeIs('about')],
+                        ['label' => 'Services', 'href' => route('services.index'), 'active' => request()->routeIs('services.*')],
                         ['label' => 'Blog', 'href' => route('blog.index'), 'active' => request()->routeIs('blog.*')],
-                        ['label' => 'Contact Us', 'href' => route('blog.contact-us'), 'active' => request()->routeIs('blog.contact-us')],
-                        ['label' => 'Terms & Conditions', 'href' => route('blog.terms-and-conditions'), 'active' => request()->routeIs('blog.terms-and-conditions')],
-                        ['label' => 'Privacy Policy', 'href' => route('blog.privacy-policy'), 'active' => request()->routeIs('blog.privacy-policy')],
+                        ['label' => 'Contact Us', 'href' => route('contact'), 'active' => request()->routeIs('contact')],
+                        ['label' => 'Privacy Policy', 'href' => route('privacy'), 'active' => request()->routeIs('privacy')],
+                        ['label' => 'Terms & Conditions', 'href' => route('terms'), 'active' => request()->routeIs('terms')],
                     ];
                 @endphp
 
