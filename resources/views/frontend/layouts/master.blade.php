@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+    {{-- Google tag (gtag.js) --}}
+    @if(config('app.google_analytics_id'))
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.google_analytics_id') }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{ config('app.google_analytics_id') }}');
+    </script>
+    @endif
+
     <script>
         (function() {
             var theme = localStorage.getItem('theme') || 'light';
@@ -38,18 +51,6 @@
     <meta name="twitter:image" content="@yield('twitter_image', asset('assets/og-image.png'))">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    {{-- Analytics (injected from .env, empty by default) --}}
-    @if(config('app.google_analytics_id'))
-    <!-- Google Analytics: GA4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('app.google_analytics_id') }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '{{ config('app.google_analytics_id') }}');
-    </script>
-    @endif
     @if(config('app.microsoft_clarity_id'))
     <!-- Microsoft Clarity -->
     <script type="text/javascript">
