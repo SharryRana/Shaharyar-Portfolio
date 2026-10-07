@@ -56,7 +56,7 @@ return [
 
     'force_https' => env('FORCE_HTTPS', false),
 
-    'google_analytics_id' => env('GOOGLE_ANALYTICS_ID', 'G-9D6E17MWXB'),
+    'google_analytics_id' => env('GOOGLE_ANALYTICS_ID'),
 
     /*
     |--------------------------------------------------------------------------
